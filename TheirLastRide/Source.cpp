@@ -6,6 +6,7 @@ int main(void)
 	Application app;
 	using namespace std;
 	// Pointers to our window and surface
+ 
 	SDL_Surface* winSurface = NULL;
 	SDL_Window* window = NULL;
 
