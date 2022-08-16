@@ -2,15 +2,15 @@
 
 int Person::getPixelX()
 {
-	return pixelX;
+	return _PixelX;
 }
 
 int Person::getPixelY()
 {
-	return pixelY;
+	return _PixelY;
 }
 
 int Person::getName()
 {
-	return Name;
+	return _Name;
 }

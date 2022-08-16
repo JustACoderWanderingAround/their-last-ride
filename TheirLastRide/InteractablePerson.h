@@ -3,8 +3,8 @@
 class InteractablePerson :
     public Person
 {
-public:
 
+public:
 protected:
 
     //data members
