@@ -63,6 +63,12 @@ void Texture::setBlendMode(SDL_BlendMode bm)
     SDL_SetTextureBlendMode(_texture, bm);
 }
 
+void Texture::setScale(float x, float y)
+{
+    _width *= x;
+    _height *= y;
+}
+
 void Texture::free()
 {
     if (_texture != NULL) {

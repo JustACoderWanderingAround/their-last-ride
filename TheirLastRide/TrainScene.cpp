@@ -12,6 +12,7 @@ void TrainScene::Init()
 {
 	_cabins.push_back(TrainCabin());
     showImage("Sprites//chair.png");
+    _txt.setScale(0.25, 0.25);
     dest.x = 1280 / 2;
     dest.y = 720 / 2;
     dest.w = 100;
@@ -31,6 +32,7 @@ void TrainScene::Update(double dt)
 void TrainScene::Render()
 {
    /* SDL_Rect clip = { 300, 300, 100, 100 };*/
+    SDL_RenderClear(m_Renderer);
     _txt.Render(500, 25);
     SDL_RenderPresent(m_Renderer);
 }
