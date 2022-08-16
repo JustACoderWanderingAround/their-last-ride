@@ -44,24 +44,31 @@ void Application::Init()
         // End the program
         exit(0);
     }
-    
+
+    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
+    if (_renderer == NULL) {
+        std::cout << "Error getting renderer: " << SDL_GetError() << std::endl;
+        system("pause");
+        // End the program
+        exit(0);
+    }
 }
 
 Application::Application()
-    :   _winSurface(NULL), _window(NULL), _targetFps(60)
+    :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60)
 {
 }
 
 void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
-    Scene* mainScene = new TrainScene(_window, _winSurface);
+    Scene* mainScene = new TrainScene(_window, _winSurface, _renderer);
     mainScene->Init();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         mainScene->Update(_timer.getElapsedTime());
         mainScene->Render();
-        SDL_UpdateWindowSurface(_window);
+        /*SDL_UpdateWindowSurface(_window);*/
         _timer.waitUntil(time_between_frames);
     }
     mainScene->Exit();

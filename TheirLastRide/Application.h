@@ -12,6 +12,7 @@ private:
 	Timer _timer;
 	SDL_Surface* _winSurface;
 	SDL_Window* _window;
+	SDL_Renderer* _renderer;
 public:
 	Application();
 	void Init();
