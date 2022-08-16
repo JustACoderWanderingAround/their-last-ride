@@ -34,7 +34,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -155,6 +155,7 @@
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="TrainCabin.cpp" />
     <ClCompile Include="TrainScene.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="NonInteractivePerson.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="TrainCabin.h" />
     <ClInclude Include="TrainScene.h" />
