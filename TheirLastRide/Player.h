@@ -1,6 +1,6 @@
 #include "InteractablePerson.h"
 #include "NonInteractivePerson.h"
-#include "TIcket.h"
+#include "Ticket.h"
 #include <string>
 
 class Player {
