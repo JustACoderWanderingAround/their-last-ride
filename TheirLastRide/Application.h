@@ -7,7 +7,7 @@
 class Application
 {
 private:
-	float _target_fps;
+	float _targetFps;
 	Timer _timer;
 	SDL_Surface* _winSurface;
 	SDL_Window* _window;

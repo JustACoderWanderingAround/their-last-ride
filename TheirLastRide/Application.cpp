@@ -8,7 +8,7 @@ constexpr int SCR_HEIGHT = 720;
 
 void Application::Init()
 {
-    _target_fps = 60;
+    _targetFps = 60;
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
@@ -38,13 +38,13 @@ void Application::Init()
 }
 
 Application::Application()
-    :   _winSurface(NULL), _window(NULL), _target_fps(60)
+    :   _winSurface(NULL), _window(NULL), _targetFps(60)
 {
 }
 
 void Application::Run()
 {
-    float time_between_frames = 1 / _target_fps;
+    float time_between_frames = 1 / _targetFps;
     Scene* mainScene = new TrainScene(_window, _winSurface);
     mainScene->Init();
     _timer.startTimer();

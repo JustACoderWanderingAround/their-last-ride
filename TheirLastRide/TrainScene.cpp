@@ -3,10 +3,10 @@ const SDL_Color DARK_LIME = { 153, 203, 14 };
 TrainScene::TrainScene(SDL_Window* w, SDL_Surface* s)
 	: Scene(w, s)
 {
-
 }
 void TrainScene::Init()
 {
+	TrainCabin firstCabin;
 }
 
 void TrainScene::Exit()
