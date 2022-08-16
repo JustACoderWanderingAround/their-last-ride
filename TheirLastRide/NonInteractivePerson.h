@@ -3,5 +3,6 @@
 class NonInteractivePerson :
     public Person
 {
+
 };
 
