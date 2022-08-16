@@ -1,11 +1,12 @@
 #pragma once
 #include "Scene.h"
 #include "timer.h"
+#include "Singleton.h"
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_image.h>
 
-class Application
+class Application : public Singleton<Application>
 {
 private:
 	float _targetFps;
@@ -20,7 +21,7 @@ public:
 	void Exit();
 	SDL_Window* getWindow() const;
 	SDL_Surface* getWindowSurface() const;
-
+	SDL_Renderer* getRenderer() const;
 	static bool IsKeyPressed(unsigned short key);
 };
 

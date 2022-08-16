@@ -11,7 +11,7 @@ TrainScene::TrainScene(SDL_Window* w, SDL_Surface* s, SDL_Renderer* r)
 void TrainScene::Init()
 {
 	_cabins.push_back(TrainCabin());
-    chair = loadImage("Sprites//chair.png");
+    showImage("Sprites//chair.png");
     dest.x = 1280 / 2;
     dest.y = 720 / 2;
     dest.w = 100;
@@ -30,30 +30,38 @@ void TrainScene::Update(double dt)
 
 void TrainScene::Render()
 {
-    SDL_RenderClear(m_Renderer);
-    SDL_SetTextureBlendMode(chair, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderTarget(m_Renderer, NULL);
-    SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 0);
-    SDL_RenderFillRect(m_Renderer, &dest);
-    SDL_RenderCopy(m_Renderer, chair, NULL, &dest);
+   /* SDL_Rect clip = { 300, 300, 100, 100 };*/
+    _txt.Render(500, 25);
     SDL_RenderPresent(m_Renderer);
 }
 
-SDL_Texture* TrainScene::loadImage(std::string path)
+bool TrainScene::showImage(std::string path)
 {
-    SDL_Surface* optimizedSurface = NULL;
-    SDL_Surface* loadedImage = IMG_Load(path.c_str());
-    if (loadedImage == NULL)  
-        std::cout << "Unable to load image %s! SDL_image Error:"<< path.c_str() << IMG_GetError() << std::endl;
-    else
-    {
-        optimizedSurface = SDL_ConvertSurface(loadedImage, m_Surface->format, 0);
-        if (optimizedSurface == NULL)
-            std::cout << "Unable to optimize image %s! SDL Error" << path.c_str() << SDL_GetError() << std::endl;
-        SDL_FreeSurface(loadedImage);
+    if (!_txt.loadImage(path)) {
+        std::cout << "Failed to load image.\n";
+        return false;
     }
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_Renderer, optimizedSurface);
-    SDL_FreeSurface(optimizedSurface);
-    return texture;
+    else {
+        if (!_txt.lockTexture()) {
+            std::cout << "Unable to lock texture\n";
+            _txt.free();
+            return false;
+        }
+        else {
+            auto fmt = SDL_GetWindowPixelFormat(Application::GetInstance()->getWindow());
+            SDL_PixelFormat* mpfmt = SDL_AllocFormat(fmt);
+            Uint32* pixels = static_cast<Uint32*>(_txt.getPixels());
+            int pixelCount = (_txt.getPitch() / 4) * _txt.getHeight();
+            Uint32 colorKey = SDL_MapRGB(mpfmt, 255, 255, 0);
+            Uint32 transparent = SDL_MapRGBA(mpfmt, 255, 255, 255, 0);
+            for (int i = 0; i < pixelCount; i++)
+            {
+                if (pixels[i] == colorKey)
+                    pixels[i] = transparent;
+            }
+            _txt.unlockTexture();
+            SDL_FreeFormat(mpfmt);
+        }
+    }
+    return true;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Texture.h"
 #include "Scene.h"
 #include "TrainCabin.h"
 #include <vector>
@@ -6,6 +7,7 @@
 class TrainScene : public Scene
 {
 private:
+	Texture _txt;
 	std::vector<TrainCabin> _cabins;
 public:
 	TrainScene(SDL_Window* w, SDL_Surface* s, SDL_Renderer* r);
@@ -13,6 +15,6 @@ public:
 	void Exit();
 	void Update(double dt);
 	void Render();
-	SDL_Texture* loadImage(std::string path);
+	bool showImage(std::string path);
 };
 

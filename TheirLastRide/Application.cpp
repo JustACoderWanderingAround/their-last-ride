@@ -96,3 +96,8 @@ SDL_Surface* Application::getWindowSurface() const
 {
     return _winSurface;
 }
+
+SDL_Renderer* Application::getRenderer() const
+{
+    return _renderer;
+}
