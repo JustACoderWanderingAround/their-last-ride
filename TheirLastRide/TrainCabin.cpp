@@ -21,7 +21,7 @@ TrainCabin::~TrainCabin()
 void TrainCabin::fillSeats()
 {
 	unsigned short amountOfNonInteractablePeople = rand() % 5 + 1;
-	unsigned short amountOfInteractablePeople = 5;
+	unsigned short amountOfInteractablePeople = 5; // to be changed according to level.
 	std::vector<int> positions;
 	for (int i = 0; i < number_of_seats; i++)
 	{
@@ -48,6 +48,11 @@ void TrainCabin::fillSeats()
 	{
 		std::cout << _seats[i] << std::endl;
 	}*/
+}
+
+std::array<Person*, number_of_seats> TrainCabin::getSeats()
+{
+	return _seats;
 }
 
 SDL_Point TrainCabin::ConvertToPoint(const int& position)

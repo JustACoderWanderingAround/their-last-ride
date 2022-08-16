@@ -10,6 +10,7 @@ void Application::Init()
 {
     _targetFps = 60;
     // Initialize SDL. SDL_Init will return -1 if it fails.
+    IMG_Init(IMG_INIT_PNG);
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
         system("pause");
@@ -24,9 +25,17 @@ void Application::Init()
         // End the program
         exit(0);
     }
+    int imgFlags = IMG_INIT_PNG;
 
     // Get the surface from the window
-    _winSurface = SDL_GetWindowSurface(_window);
+    if (!(IMG_Init(imgFlags) & imgFlags))
+    {
+        std::cout << "SDL_image could not initialize! SDL_image Error:" <<  IMG_GetError() << std::endl;
+        system("pause");
+        exit(0);
+    }
+    else
+        _winSurface = SDL_GetWindowSurface(_window);
 
     // Make sure getting the surface succeeded
     if (!_winSurface) {
@@ -35,6 +44,7 @@ void Application::Init()
         // End the program
         exit(0);
     }
+    
 }
 
 Application::Application()
