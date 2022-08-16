@@ -4,7 +4,7 @@ class TrainScene : public Scene
 {
 private:
 public:
-	TrainScene() {}
+	TrainScene(SDL_Window* w, SDL_Surface* s);
 	void Init();
 	void Exit();
 	void Update(double dt);
