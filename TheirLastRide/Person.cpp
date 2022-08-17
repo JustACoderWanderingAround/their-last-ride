@@ -1,16 +1,17 @@
-#include "Person.h"
+#include "Passenger.h"
 
-int Person::getPixelX()
+int Passenger::getPixelX()
 {
 	return _PixelX;
 }
 
-int Person::getPixelY()
+int Passenger::getPixelY()
 {
 	return _PixelY;
 }
 
-int Person::getName()
+int Passenger::getName()
 {
 	return _Name;
 }
+

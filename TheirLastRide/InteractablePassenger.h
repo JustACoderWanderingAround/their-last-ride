@@ -1,9 +1,9 @@
 #pragma once
-#include "Person.h"
+#include "Passenger.h"
 #include "Ticket.h"
 class Ticket;
-class InteractablePerson :
-    public Person
+class InteractablePassenger :
+    public Passenger
 {
 
 public:

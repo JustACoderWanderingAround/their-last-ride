@@ -1,2 +1,2 @@
-#include "NonInteractivePerson.h"
+#include "NonInteractivePassenger.h"
 
