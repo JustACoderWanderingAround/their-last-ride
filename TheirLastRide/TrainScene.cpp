@@ -24,13 +24,23 @@ void TrainScene::Init()
     if (!createImage("Sprites//chair.png", chair)) {
         std::cout << "Image not imported.\n";
     }
-    chair.setScale(0.25);
+    chair.setScale(.35);
     chair.setBlendMode(SDL_BLENDMODE_BLEND);
-    Object chair_object = Object(chair, { 10, 600 });
-    _objs.push_back(chair_object);
-    chair_object.setCoords({ 200, 600 });
-    _objs.push_back(chair_object);
 
+    const int y_level = 480;
+    const int x_offset = 190;
+    Object chair_object = Object(chair, { 35, y_level });
+    for (int i = 0; i < 3; i++)
+    {
+        _objs.push_back(chair_object);
+        chair_object.setCoords({ chair_object.getCoords().x + x_offset, y_level});
+    }
+    chair_object.setCoords({ chair_object.getCoords().x + 105, y_level });
+    for (int i = 0; i < 3; i++)
+    {
+        _objs.push_back(chair_object);
+        chair_object.setCoords({ chair_object.getCoords().x + x_offset, y_level });
+    }
 
     dest.x = 1280 / 2;
     dest.y = 720 / 2;
