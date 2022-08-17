@@ -1,14 +1,16 @@
 #pragma once
+#include <string>
+
 class RailPass
 {
 public:
-	int getName();
-	int getPassType();
-	int getExpiry();
+	std::string getName();
+	std::string getPassType();
+	std::string getExpiry();
 
 protected:
-	int _Name;
-	int _PassType;
-	int _Expiry;
+	std::string _Name;
+	std::string _PassType;
+	std::string _Expiry;
 };
 

@@ -1,16 +1,16 @@
 #include "RailPass.h"
 
-int RailPass::getName()
+std::string RailPass::getName()
 {
 	return _Name;
 }
 
-int RailPass::getPassType()
+std::string RailPass::getPassType()
 {
 	return _PassType;
 }
 
-int RailPass::getExpiry()
+std::string RailPass::getExpiry()
 {
 	return _Expiry;
 }
