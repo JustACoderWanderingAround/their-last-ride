@@ -38,16 +38,16 @@ void Player::playerMovement()
 	switch (movementKeys)
 	{
 	case 'W':
-		y--;
+		_coords.y--;
 		break;
 	case 'A':
-		x--;
+		_coords.x--;
 		break;
 	case 'S':
-		x++;
+		_coords.x++;
 		break;
 	case 'D':
-		y++;
+		_coords.y++;
 		break;
 	}
 }
