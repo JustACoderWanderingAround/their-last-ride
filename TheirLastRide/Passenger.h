@@ -12,7 +12,7 @@ public:
 protected:
 
 	//data members
-	virtual void interact(Passenger p) = 0;
+	virtual void interact() = 0;
 	int _PixelX;
 	int _PixelY;
 	int _Name;

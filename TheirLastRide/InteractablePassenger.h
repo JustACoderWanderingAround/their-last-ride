@@ -7,14 +7,18 @@ class InteractablePassenger :
 {
 
 public:
+    void interact();
+    bool verdictChecker(bool _PlayerVerdict);
+    Ticket getTicket();
 protected:
 
     //data members
-    int _PredetermindedVerdict;
-    int _Verdict; //player's verdict of whether passenger is dead or alive
+    void interact();
+    bool _PredeterminedPassType;
+    bool _PredetermindedVerdict;
     int _ScytheUse; //for unwilling passengers only 
 
 private:
-    Ticket _ticket;
+    Ticket _Ticket;
 };
 

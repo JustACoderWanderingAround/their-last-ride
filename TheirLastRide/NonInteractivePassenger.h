@@ -3,6 +3,9 @@
 class NonInteractivePassenger :
     public Passenger
 {
+    void interact();
 
+
+private:
+    int _NonInteractiveReply;
 };
-
