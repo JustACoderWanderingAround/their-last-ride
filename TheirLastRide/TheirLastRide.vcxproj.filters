@@ -60,6 +60,9 @@
     <ClCompile Include="NonInteractivePerson.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="Ticket.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
     <ClInclude Include="NonInteractivePerson.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Ticket.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
   </ItemGroup>
