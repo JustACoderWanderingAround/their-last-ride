@@ -151,6 +151,7 @@
     <ClCompile Include="InteractablePerson.cpp" />
     <ClCompile Include="NonInteractivePerson.cpp" />
     <ClCompile Include="Person.cpp" />
+    <ClCompile Include="RailPass.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="InteractablePerson.h" />
     <ClInclude Include="NonInteractivePerson.h" />
     <ClInclude Include="Person.h" />
+    <ClInclude Include="RailPass.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="TrainCabin.h" />
