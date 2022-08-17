@@ -7,6 +7,7 @@
 #include <string>
 #include <array>
 #include "TextManager.h"
+#include "ObjectBuilder.h"
 
 enum OBJECT {
 	OBJECT_BACKGROUND1,
@@ -27,6 +28,7 @@ public:
 	void Exit();
 	void Update(double dt);
 	void Render();
+	void createBottomRowChairs();
 	bool createImage(std::string path, Texture& _txt);
 	bool createText(const std::string& message, SDL_Color textcolor, TTF_Font* font, Texture& _txt);
 };

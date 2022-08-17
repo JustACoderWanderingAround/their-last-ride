@@ -182,6 +182,16 @@ int Texture::getPitch()
     return _pitch;
 }
 
+void Texture::setWidth(int w)
+{
+    _width = w;
+}
+
+void Texture::setHeight(int h)
+{
+    _height = h;
+}
+
 void* Texture::getPixels()
 {
     return _pixels;

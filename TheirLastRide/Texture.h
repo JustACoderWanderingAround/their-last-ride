@@ -28,6 +28,8 @@ public:
 	int getWidth();
 	int getHeight();
 	int getPitch();
+	void setWidth(int w);
+	void setHeight(int h);
 
 	bool lockTexture();
 	bool unlockTexture();

@@ -33,3 +33,13 @@ void Object::setTexture(const Texture& txt)
 {
     _txt = txt;
 }
+
+void Object::setToScale(float scalar)
+{
+    _txt.setScale(scalar);
+}
+
+void Object::setToScale(float x, float y)
+{
+    _txt.setScale(x, y);
+}

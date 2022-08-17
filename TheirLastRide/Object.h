@@ -14,5 +14,7 @@ public:
 	SDL_Point getCoords() const;
 	void setCoords(const SDL_Point& coords);
 	void setTexture(const Texture& txt);
+	void setToScale(float scalar);
+	void setToScale(float x, float y);
 };
 

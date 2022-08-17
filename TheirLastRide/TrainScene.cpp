@@ -2,59 +2,25 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <SDL_ttf.h>
+
 TrainScene::TrainScene()
 {
 
 }
+
 void TrainScene::Init()
 {
 	_cabins.push_back(TrainCabin());
 
-    Texture background;
-    if (!createImage("Sprites//trainCarBG.png", background)) {
-        std::cout << "Image not imported.\n";
-    }     
-    background.setBlendMode(SDL_BLENDMODE_NONE);
-    _objList[OBJECT_BACKGROUND1] = Object(background, { 0, 0 });
+    _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//tmStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PLAYER].setToScale(1.1);
+    _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject("This is a objectbuilder test", White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
+
+    // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
-
-
-    Texture player;
-    if (!createImage("Sprites//tmStand.png", player)) {
-        std::cout << "Image not imported.\n";
-    }
-    player.setBlendMode(SDL_BLENDMODE_BLEND);
-    player.setScale(1.1);
-    _objList[OBJECT_PLAYER] = Object(player, { 700, 300 });
     _renderQueue.push_back(_objList[OBJECT_PLAYER]);
-
-    Texture chair;
-    if (!createImage("Sprites//chair.png", chair)) {
-        std::cout << "Image not imported.\n";
-    }
-    chair.setScale(.35);
-    chair.setBlendMode(SDL_BLENDMODE_BLEND);
-
-    const int y_level = 480;
-    const int x_offset = 190;
-    Object chair_object = Object(chair, { 35, y_level });
-    for (int i = 0; i < 3; i++)
-    {
-        _renderQueue.push_back(chair_object);
-        chair_object.setCoords({ chair_object.getCoords().x + x_offset, y_level});
-    }
-    chair_object.setCoords({ chair_object.getCoords().x + 105, y_level });
-    for (int i = 0; i < 3; i++)
-    {
-        _renderQueue.push_back(chair_object);
-        chair_object.setCoords({ chair_object.getCoords().x + x_offset, y_level });
-    }
-    Texture text;
-    if (!createText("among us sussy morbing ye",White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], text)) {
-        std::cout << "Text not imported.\n";
-    }
-    text.setBlendMode(SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_TEXT] = Object(text, {1280 / 2, 720 / 2});
+    createBottomRowChairs();
     _renderQueue.push_back(_objList[OBJECT_TEXT]);
 }
 
@@ -77,6 +43,27 @@ void TrainScene::Render()
     /*tm->RenderText("Fortnite", tm->getFonts()[FONT_REDENSEK], { 0, 0, 100, 100 }, White);*/
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer());
+}
+
+void TrainScene::createBottomRowChairs()
+{
+    const int x_level = 35;
+    const int y_level = 480;
+    const int x_offset = 190;
+    Object chair_object = ObjectBuilder::CreateObject("Sprites//chair.png", { x_level, y_level }, SDL_BLENDMODE_BLEND);
+    chair_object.setToScale(0.35);
+    for (int i = 0; i < 3; i++)
+    {
+        _renderQueue.push_back(chair_object);
+        chair_object.setCoords({ chair_object.getCoords().x + x_offset, y_level });
+    }
+    chair_object.setCoords({ chair_object.getCoords().x + 105, y_level });
+    for (int i = 0; i < 3; i++)
+    {
+        _renderQueue.push_back(chair_object);
+        chair_object.setCoords({ chair_object.getCoords().x + x_offset, y_level });
+    }
+
 }
 
 bool TrainScene::createImage(std::string path, Texture& _txt)
