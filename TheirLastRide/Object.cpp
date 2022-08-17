@@ -1,5 +1,9 @@
 #include "Object.h"
 
+Object::Object()
+{
+}
+
 Object::Object(const Texture& t, const SDL_Point& c)
     :_txt(t), _coords(c)
 {

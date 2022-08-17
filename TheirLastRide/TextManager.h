@@ -5,7 +5,7 @@
 #include <array>
 #include <string>
 #include "Texture.h"
-enum Font
+enum FONT
 {
 	FONT_REDENSEK,
 	NUM_FONT

@@ -7,6 +7,7 @@ private:
 	Texture _txt;
 	SDL_Point _coords;
 public:
+	Object();
 	Object(const Texture& t, const SDL_Point& c);
 	virtual ~Object();
 	Texture getTexture() const;
