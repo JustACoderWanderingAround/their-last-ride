@@ -5,6 +5,7 @@
 #include "TrainCabin.h"
 #include <vector>
 #include <string>
+
 class TrainScene : public Scene
 {
 private:

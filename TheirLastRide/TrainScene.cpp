@@ -1,12 +1,14 @@
 #include "TrainScene.h"
 #include <SDL_image.h>
 #include <iostream>
+#include <SDL_ttf.h>
 TrainScene::TrainScene()
 {
 
 }
 void TrainScene::Init()
 {
+    TTF_Font* Redensek = TTF_OpenFont("Fonts//REDENSEK.TTF",24);
 	_cabins.push_back(TrainCabin());
 
     Texture background;
