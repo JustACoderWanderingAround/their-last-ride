@@ -158,6 +158,7 @@
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="TrainCabin.cpp" />
     <ClCompile Include="TrainScene.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Ticket.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="TrainCabin.h" />
     <ClInclude Include="TrainScene.h" />
