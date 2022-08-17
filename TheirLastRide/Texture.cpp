@@ -55,7 +55,8 @@ bool Texture::loadImage(std::string path)
 
 bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor)
 {
-    SDL_Surface* textSurface = TTF_RenderText_Solid(font, message.c_str(), textcolor);
+    const int maxWidth = 600; //to be determined, and put in TextManager class probably.
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, message.c_str(), textcolor, maxWidth);
     if (textSurface != NULL)
     {
         //Create texture from surface pixels

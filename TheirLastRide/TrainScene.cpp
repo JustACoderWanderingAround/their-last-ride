@@ -15,7 +15,7 @@ void TrainScene::Init()
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
     _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//tmStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER].setToScale(1.1);
-    _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject("This is a objectbuilder test", White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject("This is a objectbuilder test XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
 
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
