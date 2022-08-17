@@ -6,7 +6,7 @@
 class Player {
 	int x;
 	int y;
-	std::string rulebook;
+	std::string rulebook[5];
 public: 
 	Player();
 	~Player();
@@ -15,7 +15,6 @@ public:
 	void openBook();
 	void checkTicket(InteractablePerson passenger);
 	void compareToBook(Ticket* ticket);
-	void talkToPassenger(InteractablePerson passenger);
-	void talkToPassenger(NonInteractivePerson passenger);
+	void interact(Person p);
 };
 	

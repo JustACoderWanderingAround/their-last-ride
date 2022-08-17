@@ -31,11 +31,8 @@ void Player::compareToBook(Ticket* ticket)
 
 }
 
-void Player::talkToPassenger(InteractablePerson passenger)
+void Player::interact(Person p)
 {
 }
 
-void Player::talkToPassenger(NonInteractivePerson passenger)
-{
-}
 
