@@ -19,6 +19,13 @@ void TrainScene::Init()
     background.setBlendMode(SDL_BLENDMODE_NONE);
     _objs.push_back(Object(background, {0, 0}));
 
+    Texture player;
+    if (!createImage("Sprites//tmStand.png", player)) {
+        std::cout << "Image not imported.\n";
+    }
+    player.setBlendMode(SDL_BLENDMODE_BLEND);
+    player.setScale(1.1);
+    _objs.push_back(Object(player, { 700, 300 }));
 
     Texture chair;
     if (!createImage("Sprites//chair.png", chair)) {
