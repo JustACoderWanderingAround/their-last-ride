@@ -1,7 +1,11 @@
 #pragma once
 #include <array>
 #include "Person.h"
-constexpr unsigned int number_of_seats = 12;
+#include "InteractablePerson.h"
+#include "NonInteractivePerson.h"
+#include <SDL.h>
+
+constexpr unsigned int number_of_seats = 24;
 class TrainCabin
 {
 private:
@@ -9,5 +13,9 @@ private:
 public:
 	TrainCabin();
 	~TrainCabin();
+	void fillSeats();
+	std::array<Person*, number_of_seats> getSeats();
+	static SDL_Point ConvertToPoint(const int& position);
+	static int ConvertToPosition(const SDL_Point& vec);
 };
 

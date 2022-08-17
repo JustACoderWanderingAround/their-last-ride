@@ -27,7 +27,9 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <LocalDebuggerEnvironment>PATH=%PATH%;$(SolutionDir)SDL2\lib\x86</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=%PATH%;$(SolutionDir)SDL2\lib\x86
+    PATH=%PATH%;$(SolutionDir)\SDL2image\lib\x86
+    </LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -74,8 +76,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDL2\include;$(SolutionDir)SDL2image\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDL2\lib\x86;$(SolutionDir)SDL2image\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -98,7 +100,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -150,10 +152,13 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="InteractablePerson.cpp" />
     <ClCompile Include="NonInteractivePerson.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Ticket.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="TrainCabin.cpp" />
     <ClCompile Include="TrainScene.cpp" />
@@ -163,14 +168,19 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="InteractablePerson.h" />
     <ClInclude Include="NonInteractivePerson.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Person.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="Ticket.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="TrainCabin.h" />
     <ClInclude Include="TrainScene.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Sprites\chair.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
