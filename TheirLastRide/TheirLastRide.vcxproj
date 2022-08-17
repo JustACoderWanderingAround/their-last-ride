@@ -157,6 +157,7 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="TrainCabin.cpp" />
     <ClCompile Include="TrainScene.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -168,6 +169,8 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="TrainCabin.h" />
     <ClInclude Include="TrainScene.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
