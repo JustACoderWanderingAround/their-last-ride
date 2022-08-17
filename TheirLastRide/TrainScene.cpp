@@ -40,7 +40,6 @@ void TrainScene::Render()
     for (auto i : _renderQueue) {
         i.getTexture().Render(i.getCoords().x, i.getCoords().y);
     }
-    /*tm->RenderText("Fortnite", tm->getFonts()[FONT_REDENSEK], { 0, 0, 100, 100 }, White);*/
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer());
 }
@@ -66,20 +65,3 @@ void TrainScene::createBottomRowChairs()
 
 }
 
-bool TrainScene::createImage(std::string path, Texture& _txt)
-{
-    if (!_txt.loadImage(path)) {
-        std::cout << "Failed to load image.\n";
-        return false;
-    }
-    return true;
-}
-
-bool TrainScene::createText(const std::string& message, SDL_Color textcolor, TTF_Font* font, Texture& _txt)
-{
-    if (!_txt.loadText(message, font, textcolor)) {
-        std::cout << "Failed to load text.\n";
-        return false;
-    }
-    return true;
-}

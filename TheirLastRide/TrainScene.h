@@ -29,7 +29,5 @@ public:
 	void Update(double dt);
 	void Render();
 	void createBottomRowChairs();
-	bool createImage(std::string path, Texture& _txt);
-	bool createText(const std::string& message, SDL_Color textcolor, TTF_Font* font, Texture& _txt);
 };
 
