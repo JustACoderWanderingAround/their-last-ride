@@ -2,16 +2,15 @@
 #include "NonInteractivePerson.h"
 #include "Ticket.h"
 #include <string>
+#include <SDL.h>
 
 class Player {
-	int x;
-	int y;
+	SDL_Point _coords;
 	std::string ruleBook[5];
 public: 
 	Player();
 	~Player();
-	int getX();
-	int getY();
+	SDL_Point getCoords();
 	bool checkTicket(InteractablePerson passenger);
 	bool compareToBook(Ticket* ticket);
 	bool giveVerdict(std::string chosenVerdict);

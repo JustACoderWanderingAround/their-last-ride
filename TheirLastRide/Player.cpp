@@ -2,21 +2,17 @@
 
 
 Player::Player() {
-	this->x = 0;
-	this->y = 0;
+
 }
 Player::~Player() {
 
 }
-int Player::getX()
+
+SDL_Point Player::getCoords()
 {
-	return x;
+	return _coords;
 }
 
-int Player::getY()
-{
-	return y;
-}
 
 bool Player::compareToBook(Ticket* ticket)
 {
@@ -25,9 +21,8 @@ bool Player::compareToBook(Ticket* ticket)
 
 bool Player::checkTicket(InteractablePerson passenger)
 {
-	for (int ticketAttribute = 0; ticketAttribute < 3; ticketAttribute++) {
 		compareToBook(passenger.getTicket());
-	}
+	
 }
 
 
