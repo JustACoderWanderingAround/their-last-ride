@@ -19,6 +19,7 @@ public:
 	void Init();
 	void Run();
 	void Exit();
+	void pause(long long time);
 	SDL_Window* getWindow() const;
 	SDL_Surface* getWindowSurface() const;
 	SDL_Renderer* getRenderer() const;

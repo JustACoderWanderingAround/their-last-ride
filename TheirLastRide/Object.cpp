@@ -43,3 +43,10 @@ void Object::setToScale(float x, float y)
 {
     _txt.setScale(x, y);
 }
+
+void Object::updateText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_BlendMode& bm)
+{
+    _txt.free();
+    _txt.loadText(msg, font, color);
+    _txt.setBlendMode(bm);
+}

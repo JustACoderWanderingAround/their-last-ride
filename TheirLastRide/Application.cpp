@@ -74,18 +74,30 @@ void Application::Run()
     mainScene->Init();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
+        if (IsKeyPressed(VK_DOWN)) {
+            //std::cout << "Input work.\n";
+            std::cout << static_cast<TrainScene*>(mainScene)->writingText << std::endl;
+            static_cast<TrainScene*>(mainScene)->WriteText("This works!", White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+        }
         mainScene->Update(_timer.getElapsedTime());
         mainScene->Render();
+
         _timer.waitUntil(time_between_frames);
     }
     mainScene->Exit();
     delete mainScene;
 }
 
+
 void Application::Exit()
 {
     SDL_DestroyWindow(_window);
     SDL_Quit();
+}
+
+void Application::pause(long long time)
+{
+    _timer.waitUntil(time);
 }
 
 bool Application::IsKeyPressed(unsigned short key)
