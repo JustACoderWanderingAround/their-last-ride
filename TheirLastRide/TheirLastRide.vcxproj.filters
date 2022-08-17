@@ -60,6 +60,10 @@
     <ClCompile Include="NonInteractivePerson.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="Ticket.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+  <ClCompile Include="Texture.cpp">
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
@@ -95,6 +99,10 @@
     <ClInclude Include="NonInteractivePerson.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="Ticket.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+ <ClInclude Include="Singleton.h">
     <ClInclude Include="Singleton.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>

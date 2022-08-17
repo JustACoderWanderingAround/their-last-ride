@@ -157,10 +157,12 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="TrainCabin.cpp" />
     <ClCompile Include="TrainScene.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -168,12 +170,14 @@
     <ClInclude Include="NonInteractivePerson.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Person.h" />
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Ticket.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="TrainCabin.h" />
     <ClInclude Include="TrainScene.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sprites\chair.png" />

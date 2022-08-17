@@ -3,5 +3,9 @@
 class NonInteractivePerson :
     public Person
 {
-};
+    void interact();
 
+
+private:
+    int _NonInteractiveReply;
+};
