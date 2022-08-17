@@ -9,7 +9,9 @@ Texture::Texture()
 
 Texture::~Texture()
 {
-	
+    SDL_DestroyTexture(_texture);
+    delete _texture;
+    delete _pixels;
 }
 
 bool Texture::loadImage(std::string path)
@@ -17,10 +19,7 @@ bool Texture::loadImage(std::string path)
     SDL_Texture* texture;
     SDL_Surface* optimizedSurface = NULL;
     SDL_Surface* loadedImage = IMG_Load(path.c_str());
-    /*texture = IMG_LoadTexture(Application::GetInstance()->getRenderer(), path.c_str());
-    _width = loadedImage->w;
-    _height = loadedImage->h;
-    return true;*/
+
     if (loadedImage == NULL) {
         std::cout << "Unable to load image! SDL_image Error:" << path.c_str() << IMG_GetError() << std::endl;
         return false;

@@ -8,10 +8,10 @@
 class TrainScene : public Scene
 {
 private:
-	std::vector<Object> _objs;
+	std::vector<Object> _objs; //maybe change to deque/priority queue?
 	std::vector<TrainCabin> _cabins;
 public:
-	TrainScene(SDL_Window* w, SDL_Surface* s, SDL_Renderer* r);
+	TrainScene();
 	void Init();
 	void Exit();
 	void Update(double dt);

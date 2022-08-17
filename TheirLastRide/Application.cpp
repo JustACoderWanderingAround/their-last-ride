@@ -76,13 +76,12 @@ Application::Application()
 void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
-    Scene* mainScene = new TrainScene(_window, _winSurface, _renderer);
+    Scene* mainScene = new TrainScene();
     mainScene->Init();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         mainScene->Update(_timer.getElapsedTime());
         mainScene->Render();
-        /*SDL_UpdateWindowSurface(_window);*/
         _timer.waitUntil(time_between_frames);
     }
     mainScene->Exit();

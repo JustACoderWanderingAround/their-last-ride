@@ -5,6 +5,11 @@ Object::Object(const Texture& t, const SDL_Point& c)
 {
 }
 
+Object::~Object()
+{
+
+}
+
 Texture Object::getTexture() const
 {
     return _txt;
