@@ -9,9 +9,7 @@ Texture::Texture()
 
 Texture::~Texture()
 {
-    SDL_DestroyTexture(_texture);
-    delete _texture;
-    delete _pixels;
+
 }
 
 bool Texture::loadImage(std::string path)
