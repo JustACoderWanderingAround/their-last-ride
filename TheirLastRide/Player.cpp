@@ -10,29 +10,33 @@ Player::~Player() {
 }
 int Player::getX()
 {
-	return this->x;
+	return x;
 }
 
 int Player::getY()
 {
-	return this->y;
+	return y;
 }
 
-void Player::openBook()
+bool Player::compareToBook(Ticket* ticket)
 {
+	return false;
 }
 
-void Player::checkTicket(InteractablePerson passenger)
+bool Player::checkTicket(InteractablePerson passenger)
 {
+	for (int ticketAttribute = 0; ticketAttribute < 3; ticketAttribute++) {
+		compareToBook(passenger.getTicket());
+	}
 }
 
-void Player::compareToBook(Ticket* ticket)
-{
 
-}
 
-void Player::interact(Person p)
+bool Player::giveVerdict(std::string chosenVerdict)
 {
+	bool verdict;
+	verdict = (chosenVerdict == "alive") ? true : false;
+	return verdict;
 }
 
 

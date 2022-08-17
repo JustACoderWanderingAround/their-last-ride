@@ -3,5 +3,6 @@
 class InteractablePerson :
     public Person
 {
+
 };
 

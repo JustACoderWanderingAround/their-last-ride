@@ -6,15 +6,14 @@
 class Player {
 	int x;
 	int y;
-	std::string rulebook[5];
+	std::string ruleBook[5];
 public: 
 	Player();
 	~Player();
 	int getX();
 	int getY();
-	void openBook();
-	void checkTicket(InteractablePerson passenger);
-	void compareToBook(Ticket* ticket);
-	void interact(Person p);
+	bool checkTicket(InteractablePerson passenger);
+	bool compareToBook(Ticket* ticket);
+	bool giveVerdict(std::string chosenVerdict);
 };
 	
