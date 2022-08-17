@@ -1,8 +1,9 @@
 #include "InteractablePerson.h"
+#include "Player.h"
 #include <iostream>
 
 
-void InteractablePerson::interact()
+void InteractablePerson::interact(Player p)
 {
 	std::cout << "temp" << std::endl;
 }

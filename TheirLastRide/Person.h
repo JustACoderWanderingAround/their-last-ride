@@ -1,5 +1,5 @@
 #pragma once
-#include "player.h"
+class Player;
 class Person
 {
 	virtual void interact(Player p) = 0;

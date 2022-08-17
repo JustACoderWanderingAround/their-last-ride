@@ -13,7 +13,6 @@ public:
 protected:
 
     //data members
-    void interact();
     bool _PredeterminedPassType;
     bool _PredetermindedVerdict;
     int _ScytheUse; //for unwilling passengers only 
