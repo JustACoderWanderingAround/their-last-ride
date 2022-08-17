@@ -1,6 +1,7 @@
 #pragma once
 #include "Person.h"
 #include "Ticket.h"
+class Ticket;
 class InteractablePerson :
     public Person
 {
@@ -14,6 +15,6 @@ protected:
     int _ScytheUse; //for unwilling passengers only 
 
 private:
-    tick
+    Ticket _ticket;
 };
 
