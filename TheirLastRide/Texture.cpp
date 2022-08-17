@@ -69,6 +69,12 @@ void Texture::setScale(float x, float y)
     _height *= y;
 }
 
+void Texture::setScale(float scalar)
+{
+    _width *= scalar;
+    _height *= scalar;
+}
+
 void Texture::free()
 {
     if (_texture != NULL) {

@@ -21,6 +21,7 @@ public:
 			_instance = nullptr;
 		}
 	}
+	void operator=(const Singleton&) = delete;
 	Singleton(const Singleton&) = delete;
 };
 
