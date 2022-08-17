@@ -1,7 +1,7 @@
 #pragma once
-#include "Passenger.h"
-class NonInteractivePassenger :
-    public Passenger
+#include "Person.h"
+class NonInteractivePerson :
+    public Person
 {
     void interact();
 

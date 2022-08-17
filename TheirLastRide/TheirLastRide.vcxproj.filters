@@ -51,13 +51,13 @@
     <ClCompile Include="TrainCabin.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="Passenger.cpp">
+    <ClCompile Include="Person.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="InteractablePassenger.cpp">
+    <ClCompile Include="InteractablePerson.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="NonInteractivePassenger.cpp">
+    <ClCompile Include="NonInteractivePerson.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="Ticket.cpp">
@@ -80,13 +80,13 @@
     <ClInclude Include="TrainCabin.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="Passenger.h">
+    <ClInclude Include="Person.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="InteractablePassenger.h">
+    <ClInclude Include="InteractablePerson.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="NonInteractivePassenger.h">
+    <ClInclude Include="NonInteractivePerson.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
     <ClInclude Include="Ticket.h">
