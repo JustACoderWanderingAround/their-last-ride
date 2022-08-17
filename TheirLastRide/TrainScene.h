@@ -16,6 +16,7 @@ public:
 	void Exit();
 	void Update(double dt);
 	void Render();
+	void HandleKeyPress();
 	bool createImage(std::string path, Texture& _txt);
 };
 

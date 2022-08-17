@@ -57,6 +57,7 @@ void TrainScene::Exit()
 
 void TrainScene::Update(double dt)
 {
+    HandleKeyPress();
 }
 
 void TrainScene::Render()
@@ -68,6 +69,11 @@ void TrainScene::Render()
     }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer());
+}
+
+void TrainScene::HandleKeyPress()
+{
+
 }
 
 bool TrainScene::createImage(std::string path, Texture& _txt)
