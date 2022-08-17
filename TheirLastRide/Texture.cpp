@@ -17,18 +17,26 @@ bool Texture::loadImage(std::string path)
     SDL_Texture* texture;
     SDL_Surface* optimizedSurface = NULL;
     SDL_Surface* loadedImage = IMG_Load(path.c_str());
+    /*texture = IMG_LoadTexture(Application::GetInstance()->getRenderer(), path.c_str());
+    _width = loadedImage->w;
+    _height = loadedImage->h;
+    return true;*/
     if (loadedImage == NULL) {
         std::cout << "Unable to load image! SDL_image Error:" << path.c_str() << IMG_GetError() << std::endl;
         return false;
     }
     else
     {
-        optimizedSurface = SDL_ConvertSurface(loadedImage, Application::GetInstance()->getWindowSurface()->format, 0);
+        /*optimizedSurface = SDL_ConvertSurface(loadedImage, Application::GetInstance()->getWindowSurface()->format, 0);*/
+        optimizedSurface = SDL_ConvertSurfaceFormat(loadedImage, SDL_PIXELFORMAT_ARGB8888, 0);
         if (optimizedSurface == NULL) {
             std::cout << "Unable to optimize image %s! SDL Error" << path.c_str() << SDL_GetError() << std::endl;
             return false;
         }
-        texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_GetWindowPixelFormat(Application::GetInstance()->getWindow()), SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);
+        Uint32 colorkey = SDL_MapRGB(optimizedSurface->format, 0, 0, 0);
+        SDL_SetColorKey(optimizedSurface, SDL_TRUE, colorkey);
+        texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);
+        /*texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_GetWindowPixelFormat(Application::GetInstance()->getWindow()), SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);*/
         if (texture == NULL) {
             std::cout << "Unable to texturize image! SDL Error" << path.c_str() << SDL_GetError() << std::endl;
             return false;

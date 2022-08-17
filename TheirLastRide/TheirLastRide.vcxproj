@@ -152,6 +152,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="InteractablePerson.cpp" />
     <ClCompile Include="NonInteractivePerson.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Singleton.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="InteractablePerson.h" />
     <ClInclude Include="NonInteractivePerson.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Singleton.h" />

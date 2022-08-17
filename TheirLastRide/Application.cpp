@@ -26,17 +26,31 @@ void Application::Init()
         exit(0);
     }
     int imgFlags = IMG_INIT_PNG;
+    Uint32 rmask, gmask, bmask, amask;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    rmask = 0xff000000;
+    gmask = 0x00ff0000;
+    bmask = 0x0000ff00;
+    amask = 0x000000ff;
+#else
+    rmask = 0x000000ff;
+    gmask = 0x0000ff00;
+    bmask = 0x00ff0000;
+    amask = 0xff000000;
+#endif
 
     // Get the surface from the window
     if (!(IMG_Init(imgFlags) & imgFlags))
     {
-        std::cout << "SDL_image could not initialize! SDL_image Error:" <<  IMG_GetError() << std::endl;
+        std::cout << "SDL_image could not initialize! SDL_image Error:" << IMG_GetError() << std::endl;
         system("pause");
         exit(0);
     }
-    else
+    else     
         _winSurface = SDL_GetWindowSurface(_window);
-
+        /*_winSurface = SDL_CreateRGBSurface(0, SCR_WIDTH, SCR_HEIGHT, 32, rmask, gmask, bmask, amask);*/
+    /*SDL_ConvertSurfaceFormat(_winSurface, SDL_PIXELFORMAT_RGBA8888, 0);*/
+    SDL_SetSurfaceBlendMode(_winSurface, SDL_BLENDMODE_BLEND);
     // Make sure getting the surface succeeded
     if (!_winSurface) {
         std::cout << "Error getting surface: " << SDL_GetError() << std::endl;

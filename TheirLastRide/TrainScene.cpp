@@ -11,8 +11,27 @@ TrainScene::TrainScene(SDL_Window* w, SDL_Surface* s, SDL_Renderer* r)
 void TrainScene::Init()
 {
 	_cabins.push_back(TrainCabin());
-    showImage("Sprites//chair.png");
-    _txt.setScale(0.25, 0.25);
+
+    Texture background;
+    if (!createImage("Sprites//trainCarBG.png", background)) {
+        std::cout << "Image not imported.\n";
+    }     
+    background.setBlendMode(SDL_BLENDMODE_NONE);
+    _objs.push_back(Object(background, {0, 0}));
+
+
+    Texture chair;
+    if (!createImage("Sprites//chair.png", chair)) {
+        std::cout << "Image not imported.\n";
+    }
+    chair.setScale(0.25);
+    chair.setBlendMode(SDL_BLENDMODE_BLEND);
+    Object chair_object = Object(chair, { 10, 600 });
+    _objs.push_back(chair_object);
+    chair_object.setCoords({ 200, 600 });
+    _objs.push_back(chair_object);
+
+
     dest.x = 1280 / 2;
     dest.y = 720 / 2;
     dest.w = 100;
@@ -33,37 +52,39 @@ void TrainScene::Render()
 {
    /* SDL_Rect clip = { 300, 300, 100, 100 };*/
     SDL_RenderClear(m_Renderer);
-    _txt.Render(500, 25);
+    for (auto i : _objs) {
+        i.getTexture().Render(i.getCoords().x, i.getCoords().y);
+    }
     SDL_RenderPresent(m_Renderer);
 }
 
-bool TrainScene::showImage(std::string path)
+bool TrainScene::createImage(std::string path, Texture& _txt)
 {
     if (!_txt.loadImage(path)) {
         std::cout << "Failed to load image.\n";
         return false;
     }
     else {
-        if (!_txt.lockTexture()) {
-            std::cout << "Unable to lock texture\n";
-            _txt.free();
-            return false;
-        }
-        else {
-            auto fmt = SDL_GetWindowPixelFormat(Application::GetInstance()->getWindow());
-            SDL_PixelFormat* mpfmt = SDL_AllocFormat(fmt);
-            Uint32* pixels = static_cast<Uint32*>(_txt.getPixels());
-            int pixelCount = (_txt.getPitch() / 4) * _txt.getHeight();
-            Uint32 colorKey = SDL_MapRGB(mpfmt, 255, 255, 0);
-            Uint32 transparent = SDL_MapRGBA(mpfmt, 255, 255, 255, 0);
-            for (int i = 0; i < pixelCount; i++)
-            {
-                if (pixels[i] == colorKey)
-                    pixels[i] = transparent;
-            }
-            _txt.unlockTexture();
-            SDL_FreeFormat(mpfmt);
-        }
+        //if (!_txt.lockTexture()) {
+        //    std::cout << "Unable to lock texture\n";
+        //    _txt.free();
+        //    return false;
+        //}
+        //else {
+        //    /*auto fmt = SDL_GetWindowPixelFormat(Application::GetInstance()->getWindow());
+        //    SDL_PixelFormat* mpfmt = SDL_AllocFormat(fmt);
+        //    Uint32* pixels = static_cast<Uint32*>(_txt.getPixels());
+        //    int pixelCount = (_txt.getPitch() / 4) * _txt.getHeight();
+        //    Uint32 colorKey = SDL_MapRGB(mpfmt, 0, 0, 0);
+        //    Uint32 transparent = SDL_MapRGBA(mpfmt, 255, 255, 255, 0);
+        //    for (int i = 0; i < pixelCount; i++)
+        //    {
+        //        if (pixels[i] == colorKey)
+        //            pixels[i] = transparent;
+        //    }
+        //    _txt.unlockTexture();
+        //    SDL_FreeFormat(mpfmt);*/
+        //}
     }
     return true;
 }
