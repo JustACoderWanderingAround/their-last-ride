@@ -1,11 +1,20 @@
 #include "TextManager.h"
+#include "Application.h"
+#include <iostream>
 
 TextManager::TextManager()
 {
-	_fonts[FONT_RENDESEK] = TTF_OpenFont("Fonts//REDENSEK.TTF", 24);
+	if (TTF_OpenFont("Fonts//REDENSEK.ttf", 24) == NULL) {
+		std::cout << "Cannot open font." << TTF_GetError();
+	}
+	else {
+		_fonts[FONT_REDENSEK] = TTF_OpenFont("Fonts//REDENSEK.ttf", 24);
+	}
+	std::cout << _fonts[FONT_REDENSEK];
 }
 
-void TextManager::RenderText(const std::string& message)
+std::array<TTF_Font*, NUM_FONT> TextManager::getFonts() const
 {
-
+	return _fonts;
 }
+

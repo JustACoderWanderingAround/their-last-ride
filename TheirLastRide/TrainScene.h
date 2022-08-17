@@ -5,6 +5,7 @@
 #include "TrainCabin.h"
 #include <vector>
 #include <string>
+#include "TextManager.h"
 
 class TrainScene : public Scene
 {
@@ -18,5 +19,6 @@ public:
 	void Update(double dt);
 	void Render();
 	bool createImage(std::string path, Texture& _txt);
+	bool createText(const std::string& message, SDL_Color textcolor, TTF_Font* font, Texture& _txt);
 };
 

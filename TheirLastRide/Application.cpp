@@ -2,6 +2,7 @@
 #include "TrainScene.h"
 #include <WinUser.h>
 #include <iostream>
+#include <SDL_ttf.h>
 
 constexpr int SCR_WIDTH = 1280;
 constexpr int SCR_HEIGHT = 720;
@@ -10,6 +11,12 @@ void Application::Init()
 {
     _targetFps = 60;
     // Initialize SDL. SDL_Init will return -1 if it fails.
+    if (TTF_Init() < 0) {
+        std::cout << "Error initializing TTF: " << TTF_GetError() << std::endl;
+        system("pause");
+        // End the program
+        exit(0);
+    }
     IMG_Init(IMG_INIT_PNG);
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
