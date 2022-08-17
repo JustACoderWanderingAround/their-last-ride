@@ -15,5 +15,6 @@ public:
 	bool checkTicket(InteractablePerson passenger);
 	bool compareToBook(Ticket* ticket);
 	bool giveVerdict(std::string chosenVerdict);
+	void playerMovement();
 };
 	
