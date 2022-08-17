@@ -1,8 +1,12 @@
 #pragma once
+#define SDL_MAIN_HANDLED
+#include <SDL.h>
+#include "Application.h"
 class Scene
 {
+protected:
 public:
-	Scene() {}
+	Scene();
 
 	virtual void Init() = 0;
 	virtual void Update(double dt) = 0;
