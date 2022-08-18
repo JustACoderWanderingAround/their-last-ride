@@ -54,9 +54,9 @@ void TrainScene::Init()
     //createBottomRowChairs();
     _renderQueue.push_back(_objList[OBJECT_TEXT]);
 
-    offSetX = 0;
-    offSetY = 0;
 
+    offSetX = 700;
+    offSetY = 300;
 }
 
 void TrainScene::Exit()
@@ -72,6 +72,7 @@ void TrainScene::Update(double dt)
 {
    
     HandleKeyPress();
+
     if (_textQueue.size() > 0) {
         iterator += dt * text_type_speed;
         if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
