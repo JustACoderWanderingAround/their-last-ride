@@ -35,6 +35,6 @@ public:
 	void HandleKeyPress();
 	int offSetX;
 	int offSetY;
-  void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
+	void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
 };
 

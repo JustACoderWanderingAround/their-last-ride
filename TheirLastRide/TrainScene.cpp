@@ -6,6 +6,7 @@
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
+const float speed = 1;
 double iterator = 0;
 
 TrainScene::TrainScene()
@@ -32,8 +33,8 @@ void TrainScene::Init()
     //createBottomRowChairs();
     _renderQueue.push_back(_objList[OBJECT_TEXT]);
 
-    offSetX = 0;
-    offSetY = 0;
+    offSetX = 700;
+    offSetY = 300;
 }
 
 void TrainScene::Exit()
@@ -62,6 +63,12 @@ void TrainScene::Update(double dt)
     }
     _objList[OBJECT_TEXT]->updateText(_displayText, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
    
+    _objList[OBJECT_PLAYER]->setCoords({offSetX, offSetY});
+
+    if (offSetX <= 0)
+    {
+        speed == 0;
+    }
 }
 
 void TrainScene::Render()
@@ -79,25 +86,25 @@ void TrainScene::HandleKeyPress()
 {
     if (Application::IsKeyPressed('W'))
     {
-        offSetY--;
-        std::cout << offSetY;
+        offSetY -= speed;
+       
     }
 
     if (Application::IsKeyPressed('A'))
     {
-        offSetX--;
-        std::cout << offSetX;
+        offSetX -= speed;
+        
     }
 
     if (Application::IsKeyPressed('S'))
     {
-        offSetY++;
+        offSetY += speed;
         std::cout << offSetY;
     }
 
     if (Application::IsKeyPressed('D'))
     {
-        offSetX++;
+        offSetX += speed;
         std::cout << offSetX;
     }
 }
