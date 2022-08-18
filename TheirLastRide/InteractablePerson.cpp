@@ -3,6 +3,11 @@
 #include <iostream>
 
 
+InteractablePerson::InteractablePerson()
+{
+	
+}
+
 void InteractablePerson::interact(Player p)
 {
 	std::cout << "temp" << std::endl;

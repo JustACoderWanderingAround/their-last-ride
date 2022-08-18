@@ -18,7 +18,6 @@ class TextManager : public Singleton<TextManager>
 {
 private:
 	std::array<TTF_Font*, NUM_FONT> _fonts;
-	std::vector<Node*> _nodes;
 public:
 	int maxWidth;
 	TextManager();

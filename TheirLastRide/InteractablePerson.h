@@ -7,6 +7,7 @@ class InteractablePerson :
 {
 
 public:
+    InteractablePerson();
     void interact(Player p);
     bool verdictChecker(bool _PlayerVerdict);
     Ticket getTicket();
