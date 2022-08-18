@@ -14,11 +14,13 @@ private:
 	SDL_Surface* _winSurface;
 	SDL_Window* _window;
 	SDL_Renderer* _renderer;
+	SDL_Event _event;
 public:
 	Application();
 	void Init();
 	void Run();
 	void Exit();
+	void pause(long long time);
 	SDL_Window* getWindow() const;
 	SDL_Surface* getWindowSurface() const;
 	SDL_Renderer* getRenderer() const;

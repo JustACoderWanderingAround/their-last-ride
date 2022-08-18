@@ -5,20 +5,36 @@
 #include "TrainCabin.h"
 #include <vector>
 #include <string>
+#include <array>
+#include "TextManager.h"
+#include "ObjectBuilder.h"
+
+enum OBJECT {
+	OBJECT_BACKGROUND1,
+	OBJECT_PLAYER,
+	OBJECT_CHAIR_ROW,
+	OBJECT_TEXT,
+	NUM_OBJECT
+};
+
 class TrainScene : public Scene
 {
 private:
-	std::vector<Object> _objs; //maybe change to deque/priority queue?
+	std::array<Object*, NUM_OBJECT> _objList;
+	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin> _cabins;
+	std::vector<std::string> _textQueue;
+	std::string _displayText;
 public:
+	bool writingText;
 	TrainScene();
 	void Init();
 	void Exit();
 	void Update(double dt);
 	void Render();
 	void HandleKeyPress();
-	bool createImage(std::string path, Texture& _txt);
 	int offSetX;
 	int offSetY;
+  void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
 };
 
