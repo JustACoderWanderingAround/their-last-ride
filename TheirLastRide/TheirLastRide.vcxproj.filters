@@ -152,6 +152,9 @@
     <ClInclude Include="LinkedList.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sprites\chair.png">
