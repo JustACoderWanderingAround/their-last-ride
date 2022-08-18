@@ -15,6 +15,3 @@ std::string RailPass::getExpiry()
 	return _Expiry;
 }
 
-void RailPass::test() {
-	void;
-}
