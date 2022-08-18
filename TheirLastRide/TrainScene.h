@@ -28,24 +28,10 @@ enum OBJECT {
 	NUM_OBJECT
 };
 
-enum TM_ANIM {
-
-	TM_ANIM_STAND_L,
-	TM_ANIM_STAND_R,
-	TM_ANIM_WALK_L_1,
-	TM_ANIM_WALK_L_2,
-	TM_ANIM_WALK_R_1,
-	TM_ANIM_WALK_R_2,
-	TM_ANIM_FRONT,
-	TM_ANIM_BACK,
-	NUM_TM_ANIM
-};
-
 class TrainScene : public Scene
 {
 private:
 	std::array<Object*, NUM_OBJECT> _objList;
-	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin> _cabins;
 	std::vector<Text> _textQueue;
