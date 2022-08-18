@@ -1,7 +1,10 @@
 #include "Player.h"
 
 Player::Player() {
-
+	ruleBook[0] = "Noston Central, Noston East, Ewing Bridge";
+	ruleBook[1] = "Noston Central";
+	_ruleBookDay = 0;
+	_coords = { 700, 300 };
 }
 Player::~Player() {
 
@@ -13,15 +16,24 @@ SDL_Point Player::getCoords()
 }
 
 
-bool Player::compareToBook(Ticket ticket)
+bool Player::compareToBook(InteractablePerson p, int attribute)
 {
-	return false;
-}
-
-bool Player::checkTicket(InteractablePerson passenger)
-{
-		compareToBook(passenger.getTicket());
-		return false;
+	Ticket ticket = p.getTicket();
+	RailPass railpass = p.getRailPass();
+	switch (attribute) {
+	case 1:
+		return (ruleBook[0].find(ticket.getDestination()));
+	case 2:
+		return (getDay() == ticket.getIssueDate());
+	case 3:
+		return (ruleBook[1] == ticket.getIssuingStn());
+	case 4:
+		return (railpass.getName() == p.getName());
+	case 5: 
+		return (railpass.getPassType() == p.getPassType());
+	case 6: 
+		return (railpass.getExpiry() <= getDay());
+	}
 }
 
 bool Player::giveVerdict(std::string chosenVerdict)
@@ -50,6 +62,16 @@ void Player::playerMovement()
 		_coords.y++;
 		break;
 	}
+}
+
+bool Player::getPassType()
+{
+	return _ruleBookPassType;
+}
+
+int Player::getDay()
+{
+	return _ruleBookDay;
 }
 
 

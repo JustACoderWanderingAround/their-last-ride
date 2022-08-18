@@ -6,14 +6,17 @@
 
 class Player {
 	SDL_Point _coords;
-	std::string ruleBook[5];
+	std::string ruleBook[2];
+	int _ruleBookDay;
+	bool _ruleBookPassType;
 public: 
 	Player();
 	~Player();
 	SDL_Point getCoords();
-	bool checkTicket(InteractablePerson passenger);
-	bool compareToBook(Ticket ticket);
+	bool compareToBook(InteractablePerson p, int attribute);
 	bool giveVerdict(std::string chosenVerdict);
 	void playerMovement();
+	bool getPassType();
+	int getDay();
 };
 	

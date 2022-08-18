@@ -54,4 +54,18 @@ Ticket InteractablePerson::getTicket()
 {
 	return _Ticket;
 }
+RailPass InteractablePerson::getRailPass()
+{
+	return _RailPass;
+}
 
+
+std::string InteractablePerson::getName() 
+{
+	return _name;
+}
+
+bool InteractablePerson::getPassType()
+{
+	return _PassType;
+}
