@@ -26,7 +26,7 @@ bool Player::compareToBook(InteractablePerson p, int attribute)
 	case 2:
 		return (getDay() == ticket.getIssueDate());
 	case 3:
-		return (ruleBook[2] == ticket.getIssuingStn());
+		return (ruleBook[1] == ticket.getIssuingStn());
 	case 4:
 		return (railpass.getName() == p.getName());
 	case 5: 
