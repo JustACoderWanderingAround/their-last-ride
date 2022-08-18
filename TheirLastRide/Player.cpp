@@ -3,7 +3,7 @@
 Player::Player() {
 	ruleBook[0] = "Noston Central, Noston East, Ewing Bridge";
 	ruleBook[1] = "Noston Central";
-	ruleBookDay = 0;
+	_ruleBookDay = 0;
 	_coords = { 700, 300 };
 }
 Player::~Player() {
@@ -24,7 +24,7 @@ bool Player::compareToBook(InteractablePerson p, int attribute)
 	case 1:
 		return (ruleBook[0].find(ticket.getDestination()));
 	case 2:
-		return (ruleBookDay == ticket.getIssueDate());
+		return (getDay() == ticket.getIssueDate());
 	case 3:
 		return (ruleBook[2] == ticket.getIssuingStn());
 	case 4:
@@ -32,7 +32,7 @@ bool Player::compareToBook(InteractablePerson p, int attribute)
 	case 5: 
 		return (railpass.getPassType() == p.getPassType());
 	case 6: 
-		return (railpass.getExpiry() <= ruleBookDay);
+		return (railpass.getExpiry() <= getDay());
 	}
 }
 
@@ -64,9 +64,14 @@ void Player::playerMovement()
 	}
 }
 
-std::string Player::getPassType()
+bool Player::getPassType()
 {
-	return passType;
+	return _ruleBookPassType;
+}
+
+int Player::getDay()
+{
+	return _ruleBookDay;
 }
 
 

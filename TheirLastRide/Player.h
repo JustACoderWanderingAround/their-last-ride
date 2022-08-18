@@ -7,8 +7,8 @@
 class Player {
 	SDL_Point _coords;
 	std::string ruleBook[2];
-	int ruleBookDay;
-	bool ruleBookPassType;
+	int _ruleBookDay;
+	bool _ruleBookPassType;
 public: 
 	Player();
 	~Player();
@@ -17,5 +17,6 @@ public:
 	bool giveVerdict(std::string chosenVerdict);
 	void playerMovement();
 	bool getPassType();
+	int getDay();
 };
 	
