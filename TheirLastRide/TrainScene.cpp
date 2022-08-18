@@ -45,6 +45,7 @@ void TrainScene::Exit()
 
 void TrainScene::Update(double dt)
 {
+    HandleKeyPress();
     if (_textQueue.size() > 0) {
         iterator += dt * 25;
         if ((_displayText.length() - 1) == _textQueue.front().length()) {
@@ -58,6 +59,7 @@ void TrainScene::Update(double dt)
         }
     }
     _objList[OBJECT_TEXT]->updateText(_displayText, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+   
 }
 
 void TrainScene::Render()
@@ -71,8 +73,10 @@ void TrainScene::Render()
     SDL_RenderPresent(Application::GetInstance()->getRenderer());
 }
 
+void TrainScene::HandleKeyPress()
+{
 
-
+}
 void TrainScene::WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos)
 {
     iterator = 0;

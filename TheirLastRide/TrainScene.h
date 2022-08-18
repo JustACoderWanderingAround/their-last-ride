@@ -32,6 +32,7 @@ public:
 	void Exit();
 	void Update(double dt);
 	void Render();
-	void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
+	void HandleKeyPress();
+    void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
 };
 
