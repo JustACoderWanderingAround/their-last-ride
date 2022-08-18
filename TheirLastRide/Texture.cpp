@@ -55,8 +55,7 @@ bool Texture::loadImage(std::string path)
 
 bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor)
 {
-    const int maxWidth = 600; //to be determined, and put in TextManager class probably.
-    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, message.c_str(), textcolor, maxWidth);
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, message.c_str(), textcolor, TextManager::GetInstance()->maxWidth);
     if (textSurface != NULL)
     {
         //Create texture from surface pixels
@@ -81,6 +80,32 @@ bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color tex
     }
 }
 
+bool Texture::loadText(const Text& text)
+{
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(text.font, text.msg.c_str(), text.textcolor, TextManager::GetInstance()->maxWidth);
+    if (textSurface != NULL)
+    {
+        //Create texture from surface pixels
+        _texture = SDL_CreateTextureFromSurface(Application::GetInstance()->getRenderer(), textSurface);
+        if (_texture == NULL)
+        {
+            SDL_Log("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+        }
+        else
+        {
+            _width = textSurface->w;
+            _height = textSurface->h;
+        }
+
+        SDL_FreeSurface(textSurface);
+        return true;
+    }
+    else
+    {
+        std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;
+        return false;
+    }
+}
 void Texture::setColor(unsigned int r, unsigned int g, unsigned int b)
 {
     SDL_SetTextureColorMod(_texture, r, g, b);

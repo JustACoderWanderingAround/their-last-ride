@@ -11,10 +11,10 @@ Object* ObjectBuilder::CreateObject(const std::string& path, const SDL_Point& po
     return new Object(_temptxt, pos);
 }
 
-Object* ObjectBuilder::CreateTextObject(const std::string& message, SDL_Color textcolor, TTF_Font* font, const SDL_Point& pos, const SDL_BlendMode& bm)
+Object* ObjectBuilder::CreateTextObject(const Text& text, const SDL_Point& pos, const SDL_BlendMode& bm)
 {
     Texture _temptxt;
-    if (!_temptxt.loadText(message, font, textcolor)) {
+    if (!_temptxt.loadText(text)) {
         std::cout << "Failed to load text.\n";
         return nullptr;
     }

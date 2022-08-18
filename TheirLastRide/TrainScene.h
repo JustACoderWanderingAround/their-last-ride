@@ -8,6 +8,7 @@
 #include <array>
 #include "TextManager.h"
 #include "ObjectBuilder.h"
+#include "Text.h"
 
 enum OBJECT {
 	OBJECT_BACKGROUND1,
@@ -23,7 +24,7 @@ private:
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin> _cabins;
-	std::vector<std::string> _textQueue;
+	std::vector<Text> _textQueue;
 	std::string _displayText;
 public:
 	bool writingText;
@@ -35,6 +36,6 @@ public:
 	void HandleKeyPress();
 	int offSetX;
 	int offSetY;
-  void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
+	void WriteText(const Text& text, const SDL_Point& pos);
 };
 

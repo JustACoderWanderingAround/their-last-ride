@@ -161,6 +161,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Ticket.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="RailPass.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TextManager.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Ticket.h" />

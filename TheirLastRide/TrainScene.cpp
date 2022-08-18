@@ -6,6 +6,7 @@
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
+const float text_type_speed = 25;
 double iterator = 0;
 
 TrainScene::TrainScene()
@@ -21,7 +22,7 @@ void TrainScene::Init()
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
     _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//tmStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.1);
-    _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject(_displayText, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     /*_objList[OBJECT_CHAIR]->setToScale(0.35);*/
 
@@ -49,13 +50,13 @@ void TrainScene::Update(double dt)
 {
     HandleKeyPress();
     if (_textQueue.size() > 0) {
-        iterator += dt * 25;
-        if ((_displayText.length() - 1) == _textQueue.front().length()) {
+        iterator += dt * text_type_speed;
+        if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
             _textQueue.erase(_textQueue.begin());
         }  
         else {
             if (iterator > 1.0) {
-                _displayText += _textQueue.front()[_displayText.length() - 1];
+                _displayText += _textQueue.front().msg[_displayText.length() - 1];
                 iterator = 0;
             }
         }
@@ -101,10 +102,10 @@ void TrainScene::HandleKeyPress()
         std::cout << offSetX;
     }
 }
-void TrainScene::WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos)
+void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
 {
     iterator = 0;
     _displayText = " ";
-    _textQueue.push_back(msg);
+    _textQueue.push_back(text);
 }
 

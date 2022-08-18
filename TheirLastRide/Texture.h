@@ -3,6 +3,8 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <string>
+#include "TextManager.h"
+#include "Text.h"
 class Texture
 {
 private:
@@ -15,6 +17,7 @@ public:
 	Texture();
 	~Texture();
 	bool loadImage(std::string path);
+	bool loadText(const Text& text);
 	bool loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor);
 	void setColor(unsigned int r, unsigned int g, unsigned int b);
 	void setAlpha(unsigned int a);

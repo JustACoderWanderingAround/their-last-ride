@@ -5,6 +5,7 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Text.h"
 
 class Application : public Singleton<Application>
 {

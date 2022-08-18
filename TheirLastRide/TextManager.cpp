@@ -3,6 +3,7 @@
 #include <iostream>
 
 TextManager::TextManager()
+	: maxWidth(600)
 {
 	if (TTF_OpenFont("Fonts//REDENSEK.ttf", 24) == NULL) {
 		std::cout << "Cannot open font." << TTF_GetError();
