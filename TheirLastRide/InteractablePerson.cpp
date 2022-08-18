@@ -18,4 +18,8 @@ Ticket InteractablePerson::getTicket()
 {
 	return _Ticket;
 }
+RailPass InteractablePerson::getRailPass()
+{
+	return _RailPass;
+}
 
