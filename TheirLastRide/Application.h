@@ -14,6 +14,7 @@ private:
 	SDL_Surface* _winSurface;
 	SDL_Window* _window;
 	SDL_Renderer* _renderer;
+	SDL_Event _event;
 public:
 	Application();
 	void Init();

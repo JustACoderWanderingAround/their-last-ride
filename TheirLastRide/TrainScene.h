@@ -23,6 +23,7 @@ private:
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin> _cabins;
+	std::vector<std::string> _textQueue;
 	std::string _displayText;
 public:
 	bool writingText;

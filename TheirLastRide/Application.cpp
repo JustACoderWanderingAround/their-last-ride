@@ -6,6 +6,7 @@
 
 constexpr int SCR_WIDTH = 1280;
 constexpr int SCR_HEIGHT = 720;
+bool isWritingText = false;
 
 void Application::Init()
 {
@@ -42,8 +43,6 @@ void Application::Init()
     }
     else     
         _winSurface = SDL_GetWindowSurface(_window);
-        /*_winSurface = SDL_CreateRGBSurface(0, SCR_WIDTH, SCR_HEIGHT, 32, rmask, gmask, bmask, amask);*/
-    /*SDL_ConvertSurfaceFormat(_winSurface, SDL_PIXELFORMAT_RGBA8888, 0);*/
     SDL_SetSurfaceBlendMode(_winSurface, SDL_BLENDMODE_BLEND);
     // Make sure getting the surface succeeded
     if (!_winSurface) {
@@ -74,10 +73,14 @@ void Application::Run()
     mainScene->Init();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
-        if (IsKeyPressed(VK_DOWN)) {
-            //std::cout << "Input work.\n";
-            std::cout << static_cast<TrainScene*>(mainScene)->writingText << std::endl;
-            static_cast<TrainScene*>(mainScene)->WriteText("This works!", White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+        while (SDL_PollEvent(&_event)) {
+            switch (_event.type) {
+            case SDL_KEYDOWN:
+                switch (_event.key.keysym.sym) {
+                case SDLK_DOWN:
+                    static_cast<TrainScene*>(mainScene)->WriteText("I am so stupid", White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+                }
+            }
         }
         mainScene->Update(_timer.getElapsedTime());
         mainScene->Render();

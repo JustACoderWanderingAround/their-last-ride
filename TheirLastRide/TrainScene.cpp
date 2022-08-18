@@ -6,6 +6,7 @@
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
+double iterator = 0;
 
 TrainScene::TrainScene()
     : writingText(false), _displayText(" ")
@@ -44,7 +45,19 @@ void TrainScene::Exit()
 
 void TrainScene::Update(double dt)
 {
-    
+    if (_textQueue.size() > 0) {
+        iterator += dt * 25;
+        if ((_displayText.length() - 1) == _textQueue.front().length()) {
+            _textQueue.erase(_textQueue.begin());
+        }  
+        else {
+            if (iterator > 1.0) {
+                _displayText += _textQueue.front()[_displayText.length() - 1];
+                iterator = 0;
+            }
+        }
+    }
+    _objList[OBJECT_TEXT]->updateText(_displayText, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
 }
 
 void TrainScene::Render()
@@ -53,9 +66,6 @@ void TrainScene::Render()
     //rendering inside here
     for (auto i : _renderQueue) {
         i->getTexture().Render(i->getCoords().x, i->getCoords().y);
-        //if (i->getCoords().x == _objList[OBJECT_TEXT]->getCoords().x) {
-        //    std::cout << i->getTexture().getWidth() << std::endl;
-        //}
     }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer());
@@ -65,22 +75,8 @@ void TrainScene::Render()
 
 void TrainScene::WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos)
 {
-    if (!writingText) {
-        _displayText = " ";
-        writingText = true;
-    }
-    else {
-        Texture temp_text;
-        if (_displayText.length() - 1 == msg.length()) {
-            writingText = false;
-        }
-        else {
-            //std::cout << _displayText << std::endl;
-            _displayText += msg[_displayText.length() - 1];
-            _objList[OBJECT_TEXT]->updateText(_displayText, color, font, SDL_BLENDMODE_BLEND);
-        }
-        /*_objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject(_displayText, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);*/
-        /*_objList[OBJECT_TEXT].setTexture(temp_text);*/
-    }
+    iterator = 0;
+    _displayText = " ";
+    _textQueue.push_back(msg);
 }
 

@@ -118,7 +118,6 @@ bool Texture::importSurface(SDL_Surface* sf)
     }
     else
     {
-        /*optimizedSurface = SDL_ConvertSurface(loadedImage, Application::GetInstance()->getWindowSurface()->format, 0);*/
         optimizedSurface = SDL_ConvertSurfaceFormat(sf, SDL_PIXELFORMAT_ARGB8888, 0);
         if (optimizedSurface == NULL) {
             std::cout << "Failed to optimize.\n";
@@ -127,7 +126,6 @@ bool Texture::importSurface(SDL_Surface* sf)
         Uint32 colorkey = SDL_MapRGB(optimizedSurface->format, 0, 0, 0);
         SDL_SetColorKey(optimizedSurface, SDL_TRUE, colorkey);
         texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);
-        /*texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_GetWindowPixelFormat(Application::GetInstance()->getWindow()), SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);*/
         if (texture == NULL) {
             std::cout << "Texture could not be created.\n";
             return false;
