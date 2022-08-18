@@ -33,6 +33,8 @@ public:
 	void Update(double dt);
 	void Render();
 	void HandleKeyPress();
-    void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
+	int offSetX;
+	int offSetY;
+  void WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos);
 };
 

@@ -32,6 +32,8 @@ void TrainScene::Init()
     //createBottomRowChairs();
     _renderQueue.push_back(_objList[OBJECT_TEXT]);
 
+    offSetX = 0;
+    offSetY = 0;
 }
 
 void TrainScene::Exit()
@@ -75,7 +77,29 @@ void TrainScene::Render()
 
 void TrainScene::HandleKeyPress()
 {
+    if (Application::IsKeyPressed('W'))
+    {
+        offSetY--;
+        std::cout << offSetY;
+    }
 
+    if (Application::IsKeyPressed('A'))
+    {
+        offSetX--;
+        std::cout << offSetX;
+    }
+
+    if (Application::IsKeyPressed('S'))
+    {
+        offSetY++;
+        std::cout << offSetY;
+    }
+
+    if (Application::IsKeyPressed('D'))
+    {
+        offSetX++;
+        std::cout << offSetX;
+    }
 }
 void TrainScene::WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos)
 {
