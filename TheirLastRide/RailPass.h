@@ -7,6 +7,7 @@ public:
 	std::string getName();
 	std::string getPassType();
 	std::string getExpiry();
+	void test();
 
 protected:
 	std::string _Name;
