@@ -12,6 +12,7 @@ public:
     bool verdictChecker(bool _PlayerVerdict);
     Ticket getTicket();
     RailPass getRailPass();
+    std::string getName();
 protected:
 
     //data members
@@ -22,5 +23,6 @@ protected:
 private:
     Ticket _Ticket;
     RailPass _RailPass;
+    std::string _name;
 };
 

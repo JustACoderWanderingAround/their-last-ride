@@ -10,7 +10,7 @@ std::string Ticket::getDestination()
     return _Destination;
 }
 
-std::string Ticket::getIssueDate()
+int Ticket::getIssueDate()
 {
     return _IssueDate;
 }

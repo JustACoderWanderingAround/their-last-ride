@@ -10,7 +10,7 @@ std::string RailPass::getPassType()
 	return _PassType;
 }
 
-std::string RailPass::getExpiry()
+int RailPass::getExpiry()
 {
 	return _Expiry;
 }

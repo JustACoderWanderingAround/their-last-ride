@@ -23,3 +23,8 @@ RailPass InteractablePerson::getRailPass()
 	return _RailPass;
 }
 
+std::string InteractablePerson::getName() 
+{
+	return _name;
+}
+
