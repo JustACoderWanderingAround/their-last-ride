@@ -99,13 +99,11 @@ void TrainScene::HandleKeyPress()
     if (Application::IsKeyPressed('S'))
     {
         offSetY += speed;
-        std::cout << offSetY;
     }
 
     if (Application::IsKeyPressed('D'))
     {
         offSetX += speed;
-        std::cout << offSetX;
     }
 }
 void TrainScene::WriteText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_Point& pos)
