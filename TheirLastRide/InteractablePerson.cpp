@@ -22,4 +22,7 @@ RailPass InteractablePerson::getRailPass()
 {
 	return _RailPass;
 }
-
+int InteractablePerson::getPassType()
+{
+	return _PassType;
+}

@@ -12,11 +12,13 @@ public:
     bool verdictChecker(bool _PlayerVerdict);
     Ticket getTicket();
     RailPass getRailPass();
+    int getPassType();
 protected:
 
     //data members
     bool _PredeterminedPassType;
     bool _PredetermindedVerdict;
+    int _PassType;
     int _ScytheUse; //for unwilling passengers only 
 
 private:
