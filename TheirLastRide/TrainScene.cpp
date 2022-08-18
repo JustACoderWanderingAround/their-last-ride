@@ -77,6 +77,7 @@ void TrainScene::Update(double dt)
         iterator += dt * text_type_speed;
         if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
             _textQueue.erase(_textQueue.begin());
+            writingText = false;
         }  
         else {
             if (iterator > 1.0) {
@@ -182,6 +183,7 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     _displayText = " ";
     _textQueue.push_back(text);
     _objList[OBJECT_TEXT]->setCoords(pos);
+    writingText = true;
 }
 
 std::vector<TrainCabin*> TrainScene::getCabins()
