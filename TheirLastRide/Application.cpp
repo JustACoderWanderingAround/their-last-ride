@@ -83,7 +83,7 @@ void Application::Run()
             case SDL_KEYDOWN:
                 switch (_event.key.keysym.sym) {
                 case SDLK_DOWN:                  
-                    static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+                    static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { SCR_WIDTH / 2 -300, SCR_HEIGHT / 2 });
                     for (int i = 0; i < currentNode->results.size(); i++)
                     {
                         std::cout << nodes[currentNode->results[i]]->playerText << std::endl;

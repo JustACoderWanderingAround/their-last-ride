@@ -181,6 +181,7 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     iterator = 0;
     _displayText = " ";
     _textQueue.push_back(text);
+    _objList[OBJECT_TEXT]->setCoords(pos);
 }
 
 std::vector<TrainCabin*> TrainScene::getCabins()
