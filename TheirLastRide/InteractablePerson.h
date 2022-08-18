@@ -19,7 +19,7 @@ protected:
     //data members
     bool _PredeterminedPassType;
     bool _PredetermindedVerdict;
-    int _PassType;
+    bool _PassType;
     int _ScytheUse; //for unwilling passengers only 
 
 private:
