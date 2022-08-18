@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Node.h"
 class Player;
 class Person
 {
