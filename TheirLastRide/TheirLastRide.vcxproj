@@ -174,6 +174,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="InteractablePerson.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NonInteractivePerson.h" />

@@ -6,6 +6,7 @@
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
+const float player_speed = 1.0f;
 const float text_type_speed = 25;
 double iterator = 0;
 std::string _dT;
@@ -21,7 +22,7 @@ void TrainScene::Init()
 	_cabins.push_back(TrainCabin());
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
-    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//tmStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.1);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -66,7 +67,7 @@ void TrainScene::Update(double dt)
         _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     }
     
-   
+    _objList[OBJECT_PLAYER]->setCoords({ offSetX, offSetY });
 }
 
 void TrainScene::Render()
@@ -84,26 +85,22 @@ void TrainScene::HandleKeyPress()
 {
     if (Application::IsKeyPressed('W'))
     {
-        offSetY--;
-        std::cout << offSetY;
+        offSetY -= player_speed;
     }
 
     if (Application::IsKeyPressed('A'))
     {
-        offSetX--;
-        std::cout << offSetX;
+        offSetX -= player_speed;
     }
 
     if (Application::IsKeyPressed('S'))
     {
-        offSetY++;
-        std::cout << offSetY;
+        offSetY += player_speed;
     }
 
     if (Application::IsKeyPressed('D'))
     {
-        offSetX++;
-        std::cout << offSetX;
+        offSetX += player_speed;
     }
 }
 void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
