@@ -2,14 +2,22 @@
 #include "TrainScene.h"
 #include <WinUser.h>
 #include <iostream>
+#include <SDL_ttf.h>
 
 constexpr int SCR_WIDTH = 1280;
 constexpr int SCR_HEIGHT = 720;
+bool isWritingText = false;
 
 void Application::Init()
 {
     _targetFps = 60;
     // Initialize SDL. SDL_Init will return -1 if it fails.
+    if (TTF_Init() < 0) {
+        std::cout << "Error initializing TTF: " << TTF_GetError() << std::endl;
+        system("pause");
+        // End the program
+        exit(0);
+    }
     IMG_Init(IMG_INIT_PNG);
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
@@ -26,19 +34,6 @@ void Application::Init()
         exit(0);
     }
     int imgFlags = IMG_INIT_PNG;
-    Uint32 rmask, gmask, bmask, amask;
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    rmask = 0xff000000;
-    gmask = 0x00ff0000;
-    bmask = 0x0000ff00;
-    amask = 0x000000ff;
-#else
-    rmask = 0x000000ff;
-    gmask = 0x0000ff00;
-    bmask = 0x00ff0000;
-    amask = 0xff000000;
-#endif
-
     // Get the surface from the window
     if (!(IMG_Init(imgFlags) & imgFlags))
     {
@@ -48,8 +43,6 @@ void Application::Init()
     }
     else     
         _winSurface = SDL_GetWindowSurface(_window);
-        /*_winSurface = SDL_CreateRGBSurface(0, SCR_WIDTH, SCR_HEIGHT, 32, rmask, gmask, bmask, amask);*/
-    /*SDL_ConvertSurfaceFormat(_winSurface, SDL_PIXELFORMAT_RGBA8888, 0);*/
     SDL_SetSurfaceBlendMode(_winSurface, SDL_BLENDMODE_BLEND);
     // Make sure getting the surface succeeded
     if (!_winSurface) {
@@ -80,18 +73,34 @@ void Application::Run()
     mainScene->Init();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
+        while (SDL_PollEvent(&_event)) {
+            switch (_event.type) {
+            case SDL_KEYDOWN:
+                switch (_event.key.keysym.sym) {
+                case SDLK_DOWN:
+                    static_cast<TrainScene*>(mainScene)->WriteText("I am so stupid", White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+                }
+            }
+        }
         mainScene->Update(_timer.getElapsedTime());
         mainScene->Render();
+
         _timer.waitUntil(time_between_frames);
     }
     mainScene->Exit();
     delete mainScene;
 }
 
+
 void Application::Exit()
 {
     SDL_DestroyWindow(_window);
     SDL_Quit();
+}
+
+void Application::pause(long long time)
+{
+    _timer.waitUntil(time);
 }
 
 bool Application::IsKeyPressed(unsigned short key)
