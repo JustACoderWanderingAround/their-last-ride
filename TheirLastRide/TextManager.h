@@ -5,6 +5,7 @@
 #include <array>
 #include <string>
 #include "Texture.h"
+#include "Node.h"
 enum FONT
 {
 	FONT_REDENSEK,
@@ -17,6 +18,7 @@ class TextManager : public Singleton<TextManager>
 {
 private:
 	std::array<TTF_Font*, NUM_FONT> _fonts;
+	std::vector<Node*> _nodes;
 public:
 	int maxWidth;
 	TextManager();

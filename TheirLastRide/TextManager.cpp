@@ -12,6 +12,7 @@ TextManager::TextManager()
 		_fonts[FONT_REDENSEK] = TTF_OpenFont("Fonts//REDENSEK.ttf", 24);
 	}
 	std::cout << _fonts[FONT_REDENSEK];
+	
 }
 
 std::array<TTF_Font*, NUM_FONT> TextManager::getFonts() const
