@@ -1,0 +1,34 @@
+[   
+    {
+        "msg": "I love fortnite!",
+        "results": [
+            1, 2, 3
+        ]
+    },   
+    {
+        "msg": "a",
+        "results": [
+            4
+        ]
+    },
+    {
+        "msg": "b",
+        "results": [
+            4
+        ]
+    },    
+    {
+        "msg": "c",
+        "results": [
+            5
+        ]
+    },
+    {
+        "msg": "this is 4",
+        "results": []
+    },
+    {
+        "msg": "this is 5",
+        "results": []
+    }            
+]
