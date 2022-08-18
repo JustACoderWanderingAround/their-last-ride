@@ -29,7 +29,7 @@ std::string InteractablePerson::getName()
 	return _name;
 }
 
-int InteractablePerson::getPassType()
+bool InteractablePerson::getPassType()
 {
 	return _PassType;
 }
