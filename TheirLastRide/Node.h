@@ -7,7 +7,8 @@ using json = nlohmann::json;
 struct Node
 {
 	//data
-	std::string text;
+	std::string playerText;
+	std::string npcText;
 	std::vector<unsigned int> results;
 	Node* next;
 	Node();

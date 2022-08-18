@@ -3,10 +3,12 @@
 #include <WinUser.h>
 #include <iostream>
 #include <SDL_ttf.h>
+#include <typeinfo>
 
 constexpr int SCR_WIDTH = 1280;
 constexpr int SCR_HEIGHT = 720;
 bool isWritingText = false;
+unsigned int iterator = 0;
 
 void Application::Init()
 {
@@ -71,14 +73,25 @@ void Application::Run()
     float time_between_frames = 1 / _targetFps;
     Scene* mainScene = new TrainScene();
     mainScene->Init();
+    auto nodes = static_cast<TrainScene*>(mainScene)->getCabins().front()->getSeats()[0]->getNodes();
+    Node* currentNode = nodes.front();
+    //std::cout << nodes.size();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         while (SDL_PollEvent(&_event)) {
             switch (_event.type) {
             case SDL_KEYDOWN:
                 switch (_event.key.keysym.sym) {
-                case SDLK_DOWN:
-                    static_cast<TrainScene*>(mainScene)->WriteText({ "sussy among us its morbin time or something like directed by paul", TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+                case SDLK_DOWN:                  
+                    static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+                    for (int i = 0; i < currentNode->results.size(); i++)
+                    {
+                        std::cout << nodes[currentNode->results[i]]->playerText << std::endl;
+                    }
+                    if (currentNode->results.size() != 0) {
+                        currentNode = nodes[currentNode->results[0]];
+                    }
+                    break;
                 }
             }
         }
@@ -90,6 +103,8 @@ void Application::Run()
     mainScene->Exit();
     delete mainScene;
 }
+
+
 
 
 void Application::Exit()

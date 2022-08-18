@@ -6,21 +6,22 @@
 using json = nlohmann::json;
 
 void to_json(json& j, const Node& n) {
-	j = json{ {"msg", n.text}, {"results", n.results} };
+	j = json{ {"playerText", n.playerText}, {"npcText", n.npcText } ,{"results", n.results}};
 }
 
 void from_json(const json& j, Node& n) {
-	j.at("msg").get_to(n.text);
+	j.at("playerText").get_to(n.playerText);
+	j.at("npcText").get_to(n.npcText);
 	j.at("results").get_to(n.results);
 }
 
 InteractablePerson::InteractablePerson()
 {
-
+	//TODO: make this into a loadJson function
 	std::ifstream f("Data//people.json");
 	json j;
 	if (!f) {
-		std::cout << "File not loaded succesfully.";
+		std::cout << "File not loaded succesfully.\n";
 	}
 	else {
 		j = json::parse(f);
@@ -32,16 +33,16 @@ InteractablePerson::InteractablePerson()
 		_nodes.push_back(new Node());
 		*(_nodes.back()) = tempNodes2[i];
 	}
-	for (int i = 0; i < tempNodes2.size(); i++)
+	/*for (int i = 0; i < tempNodes2.size(); i++)
 	{
-		std::cout << _nodes[i]->text << std::endl;
-	}
+		std::cout << _nodes[i]->playerText << std::endl;
+	}*/
 }
 
 
 void InteractablePerson::interact(Player p)
 {
-	std::cout << "temp" << std::endl;
+	
 }
 
 bool InteractablePerson::verdictChecker(bool _PlayerVerdict)

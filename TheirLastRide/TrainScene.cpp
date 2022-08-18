@@ -20,7 +20,7 @@ TrainScene::TrainScene()
 
 void TrainScene::Init()
 {
-	_cabins.push_back(TrainCabin());
+	_cabins.push_back(new TrainCabin());
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
     _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
@@ -84,8 +84,10 @@ void TrainScene::Update(double dt)
                 iterator = 0;
             }
         }
+
         _dT = _displayText;
         _dT.erase(0, 1);
+        //std::cout << _dT << std::endl;
         _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     }
     frame_count += 1;
@@ -179,5 +181,10 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     iterator = 0;
     _displayText = " ";
     _textQueue.push_back(text);
+}
+
+std::vector<TrainCabin*> TrainScene::getCabins()
+{
+    return _cabins;
 }
 

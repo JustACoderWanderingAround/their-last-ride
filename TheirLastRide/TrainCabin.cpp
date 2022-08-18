@@ -44,6 +44,7 @@ void TrainCabin::fillSeats()
 	{
 		_seats[positions[rand() % no_of_positions]] = new InteractablePerson();
 	}
+	_seats[0] = new InteractablePerson();
 }
 
 std::array<Person*, number_of_seats> TrainCabin::getSeats()

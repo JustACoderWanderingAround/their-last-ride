@@ -1,12 +1,14 @@
 #pragma once
-#include "Scene.h"
 #include "timer.h"
 #include "Singleton.h"
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Text.h"
+#include "InteractablePerson.h"
+#include "Scene.h"
 
+class Scene;
 class Application : public Singleton<Application>
 {
 private:

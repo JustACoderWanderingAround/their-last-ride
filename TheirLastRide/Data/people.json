@@ -1,34 +1,40 @@
 [   
     {
-        "msg": "I love fortnite!",
+        "playerText": "Give me a good question",
+        "npcText": "Do you like pineapple on pizza",
         "results": [
             1, 2, 3
         ]
     },   
     {
-        "msg": "a",
+        "playerText": "Yes",
+        "npcText": "Disgusting",
         "results": [
             4
         ]
     },
     {
-        "msg": "b",
+        "playerText": "No",
+        "npcText": "Based",
         "results": [
-            4
+            5
         ]
     },    
     {
-        "msg": "c",
+        "playerText": "Maybe",
+        "npcText": "Fine",
         "results": [
             5
         ]
     },
     {
-        "msg": "this is 4",
+        "playerText": "It's good",
+        "npcText": "Idk what to say",
         "results": []
     },
     {
-        "msg": "this is 5",
+        "playerText": "Lets go",
+        "npcText": "Yeah",
         "results": []
     }            
 ]
