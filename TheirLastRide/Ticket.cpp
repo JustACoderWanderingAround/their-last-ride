@@ -14,3 +14,14 @@ int Ticket::getIssueDate()
 {
     return _IssueDate;
 }
+
+bool Ticket::getClippedState()
+{
+    return _clipped;
+}
+
+void Ticket::setClippedState(bool state)
+{
+    _clipped = state;
+}
+
