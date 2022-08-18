@@ -13,11 +13,13 @@ public:
     Ticket getTicket();
     RailPass getRailPass();
     std::string getName();
+    int getPassType();
 protected:
 
     //data members
     bool _PredeterminedPassType;
     bool _PredetermindedVerdict;
+    int _PassType;
     int _ScytheUse; //for unwilling passengers only 
 
 private:
