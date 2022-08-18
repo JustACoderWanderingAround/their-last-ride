@@ -8,6 +8,7 @@ const int y_level = 480;
 const int x_offset = 190;
 const float text_type_speed = 25;
 double iterator = 0;
+std::string _dT;
 
 TrainScene::TrainScene()
     : writingText(false), _displayText(" ")
@@ -60,8 +61,11 @@ void TrainScene::Update(double dt)
                 iterator = 0;
             }
         }
+        _dT = _displayText;
+        _dT.erase(0, 1);
+        _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     }
-    _objList[OBJECT_TEXT]->updateText(_displayText, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    
    
 }
 

@@ -78,7 +78,7 @@ void Application::Run()
             case SDL_KEYDOWN:
                 switch (_event.key.keysym.sym) {
                 case SDLK_DOWN:
-                    static_cast<TrainScene*>(mainScene)->WriteText({ "I am so stupid", TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
+                    static_cast<TrainScene*>(mainScene)->WriteText({ "sussy among us its morbin time or something like directed by paul", TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { SCR_WIDTH / 2, SCR_HEIGHT / 2 });
                 }
             }
         }
