@@ -10,7 +10,18 @@ std::string Ticket::getDestination()
     return _Destination;
 }
 
-std::string Ticket::getIssueDate()
+int Ticket::getIssueDate()
 {
     return _IssueDate;
 }
+
+bool Ticket::getClippedState()
+{
+    return _clipped;
+}
+
+void Ticket::setClippedState(bool state)
+{
+    _clipped = state;
+}
+

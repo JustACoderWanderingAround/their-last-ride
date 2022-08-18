@@ -75,7 +75,7 @@ bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color tex
     }
     else
     {
-        std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;
+        /*std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;*/
         return false;
     }
 }
@@ -102,7 +102,7 @@ bool Texture::loadText(const Text& text)
     }
     else
     {
-        std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;
+        /*std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;*/
         return false;
     }
 }

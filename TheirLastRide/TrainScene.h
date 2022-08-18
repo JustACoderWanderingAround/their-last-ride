@@ -45,13 +45,14 @@ enum TM_ANIM {
 	NUM_TM_ANIM
 };
 
+class Scene;
 class TrainScene : public Scene
 {
 private:
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
-	std::vector<TrainCabin> _cabins;
+	std::vector<TrainCabin*> _cabins;
 	std::vector<Text> _textQueue;
 	std::string _displayText;
 public:
@@ -65,5 +66,6 @@ public:
 	int offSetX;
 	int offSetY;
 	void WriteText(const Text& text, const SDL_Point& pos);
+	std::vector<TrainCabin*> getCabins();
 };
 
