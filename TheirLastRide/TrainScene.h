@@ -18,5 +18,7 @@ public:
 	void Render();
 	void HandleKeyPress();
 	bool createImage(std::string path, Texture& _txt);
+	int offSetX;
+	int offSetY;
 };
 

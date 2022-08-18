@@ -46,7 +46,8 @@ void TrainScene::Init()
         chair_object.setCoords({ chair_object.getCoords().x + x_offset, y_level });
     }
 
-    
+    offSetX = 0;
+    offSetY = 0;
    
 }
 
@@ -73,7 +74,29 @@ void TrainScene::Render()
 
 void TrainScene::HandleKeyPress()
 {
+    if (Application::IsKeyPressed('W'))
+    {
+        offSetY--;
+        std::cout << offSetY;
+    }
 
+    if (Application::IsKeyPressed('A'))
+    {
+        offSetX--;
+        std::cout << offSetX;
+    }
+
+    if (Application::IsKeyPressed('S'))
+    {
+        offSetY++;
+        std::cout << offSetY;
+    }
+
+    if (Application::IsKeyPressed('D'))
+    {
+        offSetX++;
+        std::cout << offSetX;
+    }
 }
 
 bool TrainScene::createImage(std::string path, Texture& _txt)
