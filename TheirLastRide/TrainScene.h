@@ -5,18 +5,61 @@
 #include "TrainCabin.h"
 #include <vector>
 #include <string>
+#include <array>
+#include "TextManager.h"
+#include "ObjectBuilder.h"
+#include "Text.h"
+
+enum OBJECT {
+	OBJECT_BACKGROUND1,
+	OBJECT_PLAYER,
+	OBJECT_CHAIR_ROW,
+	OBJECT_TEXT,
+	OBJECT_GEORGE,
+	OBJECT_SASHA,
+	OBJECT_TICKET,
+	OBJECT_RAILPASS,
+	OBJECT_STAMP_MARK,
+	OBJECT_STAMP,
+	OBJECT_PUNCH,
+	OBJECT_NOTEBOOK_CLOSED,
+	OBJECT_NOTEBOOK_OPEN,
+	OBJECT_NOTEBOOK_PAGE,
+	NUM_OBJECT
+};
+
+enum TM_ANIM {
+
+	TM_ANIM_STAND_L,
+	TM_ANIM_STAND_R,
+	TM_ANIM_WALK_L_1,
+	TM_ANIM_WALK_L_2,
+	TM_ANIM_WALK_R_1,
+	TM_ANIM_WALK_R_2,
+	TM_ANIM_FRONT,
+	TM_ANIM_BACK,
+	NUM_TM_ANIM
+};
+
 class TrainScene : public Scene
 {
 private:
-	std::vector<Object> _objs; //maybe change to deque/priority queue?
+	std::array<Object*, NUM_OBJECT> _objList;
+	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
+	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin> _cabins;
+	std::vector<Text> _textQueue;
+	std::string _displayText;
 public:
+	bool writingText;
 	TrainScene();
 	void Init();
 	void Exit();
 	void Update(double dt);
 	void Render();
 	void HandleKeyPress();
-	bool createImage(std::string path, Texture& _txt);
+	int offSetX;
+	int offSetY;
+	void WriteText(const Text& text, const SDL_Point& pos);
 };
 

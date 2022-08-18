@@ -53,6 +53,59 @@ bool Texture::loadImage(std::string path)
     }
 }
 
+bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor)
+{
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, message.c_str(), textcolor, TextManager::GetInstance()->maxWidth);
+    if (textSurface != NULL)
+    {
+        //Create texture from surface pixels
+        _texture = SDL_CreateTextureFromSurface(Application::GetInstance()->getRenderer(), textSurface);
+        if (_texture == NULL)
+        {
+            SDL_Log("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+        }
+        else
+        {
+            _width = textSurface->w;
+            _height = textSurface->h;
+        }
+
+        SDL_FreeSurface(textSurface);
+        return true;
+    }
+    else
+    {
+        std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;
+        return false;
+    }
+}
+
+bool Texture::loadText(const Text& text)
+{
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(text.font, text.msg.c_str(), text.textcolor, TextManager::GetInstance()->maxWidth);
+    if (textSurface != NULL)
+    {
+        //Create texture from surface pixels
+        _texture = SDL_CreateTextureFromSurface(Application::GetInstance()->getRenderer(), textSurface);
+        if (_texture == NULL)
+        {
+            SDL_Log("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+        }
+        else
+        {
+            _width = textSurface->w;
+            _height = textSurface->h;
+        }
+
+        SDL_FreeSurface(textSurface);
+        return true;
+    }
+    else
+    {
+        std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;
+        return false;
+    }
+}
 void Texture::setColor(unsigned int r, unsigned int g, unsigned int b)
 {
     SDL_SetTextureColorMod(_texture, r, g, b);
@@ -78,6 +131,42 @@ void Texture::setScale(float scalar)
 {
     _width *= scalar;
     _height *= scalar;
+}
+
+bool Texture::importSurface(SDL_Surface* sf)
+{
+    SDL_Surface* optimizedSurface = NULL;
+    SDL_Texture* texture;
+    if (sf == NULL) {
+        std::cout << "Surface is null.\n";
+        return false;
+    }
+    else
+    {
+        optimizedSurface = SDL_ConvertSurfaceFormat(sf, SDL_PIXELFORMAT_ARGB8888, 0);
+        if (optimizedSurface == NULL) {
+            std::cout << "Failed to optimize.\n";
+            return false;
+        }
+        Uint32 colorkey = SDL_MapRGB(optimizedSurface->format, 0, 0, 0);
+        SDL_SetColorKey(optimizedSurface, SDL_TRUE, colorkey);
+        texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);
+        if (texture == NULL) {
+            std::cout << "Texture could not be created.\n";
+            return false;
+        }
+        else {
+            SDL_LockTexture(texture, NULL, &_pixels, &_pitch);
+            memcpy(_pixels, optimizedSurface->pixels, optimizedSurface->pitch * optimizedSurface->h);
+            SDL_UnlockTexture(texture);
+            _pixels = NULL;
+            _width = optimizedSurface->w;
+            _height = optimizedSurface->h;
+        }
+        SDL_FreeSurface(optimizedSurface);
+        _texture = texture;
+        return true;
+    }
 }
 
 void Texture::free()
@@ -115,6 +204,16 @@ int Texture::getHeight()
 int Texture::getPitch()
 {
     return _pitch;
+}
+
+void Texture::setWidth(int w)
+{
+    _width = w;
+}
+
+void Texture::setHeight(int h)
+{
+    _height = h;
 }
 
 void* Texture::getPixels()
