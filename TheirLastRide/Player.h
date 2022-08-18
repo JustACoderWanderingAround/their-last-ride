@@ -8,6 +8,7 @@ class Player {
 	SDL_Point _coords;
 	std::string ruleBook[2];
 	int ruleBookDay;
+	bool ruleBookPassType;
 public: 
 	Player();
 	~Player();
@@ -15,5 +16,6 @@ public:
 	bool compareToBook(InteractablePerson p, int attribute);
 	bool giveVerdict(std::string chosenVerdict);
 	void playerMovement();
+	bool getPassType();
 };
 	

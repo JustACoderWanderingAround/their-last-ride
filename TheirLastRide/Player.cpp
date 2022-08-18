@@ -64,4 +64,9 @@ void Player::playerMovement()
 	}
 }
 
+std::string Player::getPassType()
+{
+	return passType;
+}
+
 

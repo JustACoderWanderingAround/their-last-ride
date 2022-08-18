@@ -5,7 +5,7 @@ std::string RailPass::getName()
 	return _Name;
 }
 
-std::string RailPass::getPassType()
+bool RailPass::getPassType()
 {
 	return _PassType;
 }

@@ -13,7 +13,7 @@ public:
     Ticket getTicket();
     RailPass getRailPass();
     std::string getName();
-    int getPassType();
+    bool getPassType();
 protected:
 
     //data members

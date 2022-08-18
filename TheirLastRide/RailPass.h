@@ -5,12 +5,12 @@ class RailPass
 {
 public:
 	std::string getName();
-	std::string getPassType();
+	bool getPassType();
 	int getExpiry();
 
 protected:
 	std::string _Name;
-	std::string _PassType;
+	bool _PassType;
 	int _Expiry;
 };
 
