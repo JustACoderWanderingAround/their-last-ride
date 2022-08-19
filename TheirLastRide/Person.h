@@ -1,8 +1,11 @@
 #pragma once
 #include <vector>
 #include "Node.h"
+#include "Object.h"
+
+class Object;
 class Player;
-class Person
+class Person : public Object
 {
 protected:
 	bool _isInteracting;

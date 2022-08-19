@@ -11,6 +11,7 @@ unsigned int iterator = 0;
 
 void Application::Init()
 {
+    _mouse_coords = { 0, 0 };
     _targetFps = 60;
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (TTF_Init() < 0) {
@@ -80,6 +81,9 @@ void Application::Run()
         _acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
         while (SDL_PollEvent(&_event)) {
             switch (_event.type) {
+            case SDL_MOUSEMOTION:
+                SDL_GetGlobalMouseState(&_mouse_coords.x, &_mouse_coords.y);
+                break;
             case SDL_KEYDOWN:
                 switch (_event.key.keysym.sym) {
                 case SDLK_DOWN:
@@ -120,6 +124,8 @@ void Application::pause(long long time)
     _timer.waitUntil(time);
 }
 
+
+
 bool Application::IsKeyPressed(unsigned short key)
 {
     return ((GetAsyncKeyState(key) & 0x8001) != 0);
@@ -139,4 +145,9 @@ SDL_Surface* Application::getWindowSurface() const
 SDL_Renderer* Application::getRenderer() const
 {
     return _renderer;
+}
+
+SDL_Point Application::getMouseCoords() const
+{
+    return _mouse_coords;
 }

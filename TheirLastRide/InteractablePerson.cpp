@@ -3,6 +3,7 @@
 #include <iostream>
 #include "json.hpp"
 #include <fstream>
+#include "ObjectBuilder.h"
 using json = nlohmann::json;
 
 void to_json(json& j, const Node& n) {
@@ -78,11 +79,14 @@ InteractablePerson::InteractablePerson(std::string name, bool passType, bool ver
 
 }
 
-bool InteractablePerson::loadNodes()
+InteractablePerson::InteractablePerson(const std::string& name)
+	: _name(name)
 {
-	
-}
+	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
+	_txt.loadImage(filepath);
+	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
 
+}
 
 void InteractablePerson::interact(Player p)
 {

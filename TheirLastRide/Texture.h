@@ -16,6 +16,7 @@ private:
 public:
 	Texture();
 	~Texture();
+	bool operator!();
 	bool loadImage(std::string path);
 	bool loadText(const Text& text);
 	bool loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor);

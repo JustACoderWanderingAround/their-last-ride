@@ -11,6 +11,7 @@ public:
     InteractablePerson();
     bool loadNodes();
     InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass);
+    InteractablePerson(const std::string& name);
     void interact(Player p);
     bool verdictChecker(bool _PlayerVerdict);
     Ticket getTicket();

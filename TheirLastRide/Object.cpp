@@ -24,6 +24,11 @@ SDL_Point Object::getCoords() const
     return _coords;
 }
 
+BoxCollider& Object::getCollider()
+{
+    return _collider;
+}
+
 void Object::setCoords(const SDL_Point& coords)
 {
     _coords = coords;
