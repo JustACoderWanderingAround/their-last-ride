@@ -7,7 +7,7 @@ public:
 	BoxCollider();
 	BoxCollider(const SDL_Rect& box);
 	BoxCollider(const SDL_Point& topleft, const SDL_Point& bottomright);
-	bool isColliding(BoxCollider& victim);
+	bool isColliding(BoxCollider* victim);
 	void moveCollider(const SDL_Point& pos);
 };
 

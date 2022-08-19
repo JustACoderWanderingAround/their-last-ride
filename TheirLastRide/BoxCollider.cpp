@@ -19,22 +19,38 @@ BoxCollider::BoxCollider(const SDL_Point& topleft, const SDL_Point& bottomright)
 	hitbox = { centrex, centrey, width, height };
 }
 
-bool BoxCollider::isColliding(BoxCollider& victim)
+bool BoxCollider::isColliding(BoxCollider* victim)
 {
 	int leftA = hitbox.x;
 	int rightA = hitbox.x + hitbox.w;
 	int topA = hitbox.y;
 	int bottomA = hitbox.y + hitbox.h;
 
-	int leftB = victim.hitbox.x;
-	int rightB = victim.hitbox.x + victim.hitbox.w;
-	int topB = victim.hitbox.y;
-	int bottomB = victim.hitbox.y + victim.hitbox.h;
+	int leftB = victim->hitbox.x;
+	int rightB = victim->hitbox.x + victim->hitbox.w;
+	int topB = victim->hitbox.y;
+	int bottomB = victim->hitbox.y + victim->hitbox.h;
 
-    if (bottomA <= topB || topA >= bottomB || rightA <= leftB || leftA >= rightB)
+    if (bottomA <= topB)
     {
         return false;
     }
+
+    if (topA >= bottomB)
+    {
+        return false;
+    }
+
+    if (rightA <= leftB)
+    {
+        return false;
+    }
+
+    if (leftA >= rightB)
+    {
+        return false;
+    }
+
     return true;
 }
 

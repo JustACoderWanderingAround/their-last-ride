@@ -81,8 +81,16 @@ void Application::Run()
         _acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
         while (SDL_PollEvent(&_event)) {
             switch (_event.type) {
+            case SDL_MOUSEBUTTONDOWN: {
+                std::cout << "Mouse down\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
+                
+                auto obj = static_cast<TrainScene*>(mainScene)->getPersonClick();
+                if (obj != nullptr)
+                    std::cout << "Person clicked";
+                break;
+            }
             case SDL_MOUSEMOTION:
-                SDL_GetGlobalMouseState(&_mouse_coords.x, &_mouse_coords.y);
+                SDL_GetMouseState(&_mouse_coords.x, &_mouse_coords.y);
                 break;
             case SDL_KEYDOWN:
                 switch (_event.key.keysym.sym) {
@@ -109,8 +117,6 @@ void Application::Run()
     mainScene->Exit();
     delete mainScene;
 }
-
-
 
 
 void Application::Exit()

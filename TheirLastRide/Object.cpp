@@ -1,11 +1,12 @@
 #include "Object.h"
 
 Object::Object()
+    : _collider(nullptr)
 {
 }
 
 Object::Object(const Texture& t, const SDL_Point& c)
-    :_txt(t), _coords(c)
+    :_txt(t), _coords(c), _collider(nullptr)
 {
 }
 
@@ -24,7 +25,7 @@ SDL_Point Object::getCoords() const
     return _coords;
 }
 
-BoxCollider& Object::getCollider()
+BoxCollider*& Object::getCollider()
 {
     return _collider;
 }

@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <SDL_ttf.h>
+#include "BoxCollider.h"
 
 const int x_level = 35;
 const int y_level = 480;
@@ -12,11 +13,27 @@ double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
 std::string _dT;
+SDL_Event mEvent;
 
 TrainScene::TrainScene()
-    : writingText(false), _displayText(" "), _mouseCollider({ Application::GetInstance()->getMouseCoords().x, Application::GetInstance()->getMouseCoords().y, 4, 4 }), _currentCabin(0)
+    : writingText(false), _displayText(" "), _currentCabin(0)
 {
     
+}
+
+Object* TrainScene::getPersonClick()
+{
+    auto seats = _cabins[_currentCabin]->getSeats();
+    for (int i = 0; i < seats.size(); i++)
+    {
+        if (seats[i] == nullptr) continue;
+        if (seats[i]->getCollider() == nullptr) continue;
+        if (seats[i]->getCollider()->isColliding(_mouseCollider)) {
+            std::cout << seats[i];
+            return seats[i];
+        }
+    }
+    return nullptr;
 }
 
 void TrainScene::renderCabins()
@@ -66,13 +83,20 @@ void TrainScene::renderCabins()
         {
             if (row < 3) {
                 if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
+                    //TODO: centre the box collider
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY });
+                    std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });
+                    /*seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });*/
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
             else {
                 if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
+                    //TODO: centre the box collider
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
+                    std::cout << "Collider:(" << (x_offset * row) + 100 + initialX << "," << (y_offset * column) + initialY << ")\n";
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX, (y_offset * column) + initialY, 50, 50 });
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
@@ -83,6 +107,7 @@ void TrainScene::renderCabins()
 
 void TrainScene::Init()
 {
+    _mouseCollider = new BoxCollider({ Application::GetInstance()->getMouseCoords().x, Application::GetInstance()->getMouseCoords().y, 4, 4 });
 	_cabins.push_back(new TrainCabin());
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
@@ -143,7 +168,7 @@ void TrainScene::Update(double dt)
 {
    
     HandleKeyPress();
-
+    _mouseCollider->moveCollider(Application::GetInstance()->getMouseCoords());
     if (_textQueue.size() > 0) {
         iterator += dt * text_type_speed;
         if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
@@ -178,6 +203,16 @@ void TrainScene::Render()
 
 void TrainScene::HandleKeyPress()
 {
+   /* while (SDL_PollEvent(&mEvent)) {
+        switch (mEvent.type) {
+        case SDL_MOUSEBUTTONDOWN:
+            std::cout << "Work";
+            auto obj = getPersonClick();
+            if (obj != nullptr)
+            std::cout << "Fortnite";
+            break;
+        }
+    }*/
     if (Application::IsKeyPressed('W'))
     {
         if (frame_count % 3 == 0)

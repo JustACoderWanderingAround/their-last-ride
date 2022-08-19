@@ -7,14 +7,14 @@ class Object
 protected:
 	Texture _txt;
 	SDL_Point _coords;
-	BoxCollider _collider;
+	BoxCollider* _collider;
 public:
 	Object();
 	Object(const Texture& t, const SDL_Point& c);
 	virtual ~Object();
 	Texture getTexture() const;
 	SDL_Point getCoords() const;
-	BoxCollider& getCollider();
+	BoxCollider*& getCollider();
 	void setCoords(const SDL_Point& coords);
 	void setTexture(const Texture& txt);
 	void setToScale(float scalar);
