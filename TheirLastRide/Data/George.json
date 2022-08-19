@@ -1,0 +1,26 @@
+[
+		{
+				"playerText": "Why are you travelling today?",
+				"npcText": "I'm not sure",
+				"results": [
+						1,
+						2,
+						3
+				]
+		},   
+		{
+				"playerText": "a",
+				"npcText": "b",
+				"results": []
+		},
+		{
+				"playerText": "c",
+				"npcText": "d",
+				"results": []
+		},    
+		{
+				"playerText": "e",
+				"npcText": "f",
+				"results": []
+		}
+]

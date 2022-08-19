@@ -1,0 +1,33 @@
+[
+    {
+        "playerText": "n",
+        "npcText": "d",
+        "results": [
+            1,
+            2,
+            3
+        ]
+    },
+    {
+        "playerText": "e",
+        "npcText": "f",
+        "results": [
+            4
+        ]
+    },
+    {
+        "playerText": "b",
+        "npcText": "c",
+        "results": []
+    },
+    {
+        "playerText": "d",
+        "npcText": "g",
+        "results": []
+    },
+    {
+        "playerText": "b",
+        "npcText": "x",
+        "results": []
+    }
+]

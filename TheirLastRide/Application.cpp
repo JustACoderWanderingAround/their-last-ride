@@ -75,7 +75,7 @@ void Application::Run()
     mainScene->Init();
     auto nodes = static_cast<TrainScene*>(mainScene)->getCabins().front()->getSeats()[0]->getNodes();
     Node* currentNode = nodes.front();
-    //std::cout << nodes.size();
+    std::cout << nodes.size();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         _acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
