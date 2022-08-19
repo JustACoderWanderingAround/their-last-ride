@@ -2,6 +2,9 @@
 #include <vector>
 #include <iostream>
 
+/// <summary>
+/// Initialize the cabin.
+/// </summary>
 TrainCabin::TrainCabin()
 {
 	srand(time(0));
@@ -18,9 +21,12 @@ TrainCabin::~TrainCabin()
 	}*/
 }
 
+/// <summary>
+/// Fill the seats randomly.
+/// </summary>
 void TrainCabin::fillSeats()
 {
-	std::vector<std::string> names = { "George", "Sasha" };
+	std::vector<std::string> names = { "George", "Sasha" }; // to be changed
 	unsigned short amountOfNonInteractablePeople = rand() % 5 + 1;
 	unsigned short amountOfInteractablePeople = 5; // to be changed according to level.
 	std::vector<int> positions;
@@ -57,11 +63,21 @@ std::array<Person*, number_of_seats> TrainCabin::getSeats()
 	return _seats;
 }
 
+/// <summary>
+/// Convert the position on the 4x6 array to an SDL_Point (intvector2)
+/// </summary>
+/// <param name="position">Position on the array</param>
+/// <returns>(x, y)</returns>
 SDL_Point TrainCabin::ConvertToPoint(const int& position)
 {
 	return { position % 4, (position - (position % 4)) / 6 };
 }
 
+/// <summary>
+/// Convert an SDL_Point (intvector2) to a position on the 4x6 array.
+/// </summary>
+/// <param name="vec">The IntVector2</param>
+/// <returns>Position on the array</returns>
 int TrainCabin::ConvertToPosition(const SDL_Point& vec)
 {
 	return (vec.x +( vec.y * 4));

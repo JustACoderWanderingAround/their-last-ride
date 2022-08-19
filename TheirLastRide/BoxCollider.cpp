@@ -5,11 +5,20 @@ BoxCollider::BoxCollider()
 
 }
 
+/// <summary>
+/// Initialise the box collider with the rect as its collider. (Remember that the SDL_Rect's x and y is at the top left of the collider)
+/// </summary>
+/// <param name="box">{x coordinate, y coordinate, width, height}</param>
 BoxCollider::BoxCollider(const SDL_Rect& box)
 	: hitbox(box)
 {
 }
 
+/// <summary>
+/// Initialise the box collider with two coordinates.
+/// </summary>
+/// <param name="topleft">Top left coordinate of the box</param>
+/// <param name="bottomright">Bottom right coordinate of the box</param>
 BoxCollider::BoxCollider(const SDL_Point& topleft, const SDL_Point& bottomright)
 {
 	int width = abs(topleft.x - bottomright.x);
@@ -19,6 +28,11 @@ BoxCollider::BoxCollider(const SDL_Point& topleft, const SDL_Point& bottomright)
 	hitbox = { centrex, centrey, width, height };
 }
 
+/// <summary>
+/// Check if this collider is colliding with another specific collider.
+/// </summary>
+/// <param name="victim">That specific collider.</param>
+/// <returns>True if colliding, else false.</returns>
 bool BoxCollider::isColliding(BoxCollider* victim)
 {
 	int leftA = hitbox.x;
@@ -54,6 +68,10 @@ bool BoxCollider::isColliding(BoxCollider* victim)
     return true;
 }
 
+/// <summary>
+/// Move the collider to another position.
+/// </summary>
+/// <param name="pos">SDL_Point</param>
 void BoxCollider::moveCollider(const SDL_Point& pos)
 {
 	hitbox.x = pos.x;
