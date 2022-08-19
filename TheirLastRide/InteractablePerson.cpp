@@ -79,12 +79,14 @@ InteractablePerson::InteractablePerson(std::string name, bool passType, bool ver
 
 }
 
+
 InteractablePerson::InteractablePerson(const std::string& name)
 	: _name(name)
 {
 	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
 	_txt.loadImage(filepath);
 	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
+
 
 }
 
