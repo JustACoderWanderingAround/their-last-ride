@@ -53,7 +53,7 @@ class TrainScene : public Scene
 {
 private:
 	unsigned int _currentCabin;
-	BoxCollider _mouseCollider;
+	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
@@ -63,6 +63,7 @@ private:
 public:
 	bool writingText;
 	TrainScene();
+	Object* getPersonClick();
 	void renderCabins();
 	void Init();
 	void Exit();
