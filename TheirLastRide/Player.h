@@ -11,6 +11,7 @@ class Player {
 	bool _ruleBookPassType;
 public: 
 	Player();
+	Player(std::vector<std::string> stops);
 	~Player();
 	SDL_Point getCoords();
 	bool compareToBook(InteractablePerson p, int attribute);
@@ -18,5 +19,6 @@ public:
 	void playerMovement();
 	bool getPassType();
 	int getDay();
+	void setDay(int day);
 };
 	

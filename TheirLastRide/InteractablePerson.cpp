@@ -67,6 +67,22 @@ bool InteractablePerson::loadNodes()
 	}*/
 }
 
+InteractablePerson::InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass)
+	: _name (name), _PassType (passType), _PredetermindedVerdict (verdict), _Ticket (*ticket), _RailPass (*railpass)
+{
+	_name = name;
+	_PassType = passType;
+	_PredetermindedVerdict = verdict;
+	_Ticket = *ticket;
+	_RailPass = *railpass;
+
+}
+
+bool InteractablePerson::loadNodes()
+{
+	
+}
+
 
 void InteractablePerson::interact(Player p)
 {

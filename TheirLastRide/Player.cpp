@@ -1,7 +1,19 @@
 #include "Player.h"
 
 Player::Player() {
-	ruleBook[0] = "Noston Central, Noston East, Ewing Bridge";
+	ruleBook[0] = "Noston Central";
+	ruleBook[1] = "Noston Central";
+	_ruleBookDay = 0;
+	_coords = { 700, 300 };
+}
+
+Player::Player(std::vector<std::string> stops){
+	ruleBook[0] = "Noston Central";
+	for (auto stop : stops) {
+		ruleBook[0] += ", ";
+		ruleBook[0] += stop;
+	}
+	
 	ruleBook[1] = "Noston Central";
 	_ruleBookDay = 0;
 	_coords = { 700, 300 };
@@ -32,7 +44,9 @@ bool Player::compareToBook(InteractablePerson p, int attribute)
 	case 5: 
 		return (railpass.getPassType() == p.getPassType());
 	case 6: 
-		return (railpass.getExpiry() <= getDay());
+		return (railpass.getExpiry() >= getDay());
+	default:
+		return false;
 	}
 }
 
@@ -72,6 +86,11 @@ bool Player::getPassType()
 int Player::getDay()
 {
 	return _ruleBookDay;
+}
+
+void Player::setDay(int day)
+{
+	_ruleBookDay = day;
 }
 
 

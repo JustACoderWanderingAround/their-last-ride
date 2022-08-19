@@ -10,6 +10,7 @@ class InteractablePerson :
 public:
     InteractablePerson();
     bool loadNodes();
+    InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass);
     void interact(Player p);
     bool verdictChecker(bool _PlayerVerdict);
     Ticket getTicket();

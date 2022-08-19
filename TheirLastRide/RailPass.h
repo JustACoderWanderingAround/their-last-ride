@@ -4,6 +4,9 @@
 class RailPass
 {
 public:
+	RailPass();
+	RailPass(std::string n, bool pt, int e);
+	~RailPass();
 	std::string getName();
 	bool getPassType();
 	int getExpiry();
