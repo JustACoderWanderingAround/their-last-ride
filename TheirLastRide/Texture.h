@@ -30,7 +30,6 @@ public:
 	void setBlendMode(SDL_BlendMode bm);
 	void setScale(float x, float y);
 	void setScale(float scalar);
-	bool importSurface(SDL_Surface* sf);
 	void free();
 	void Render(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* centre = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 	void* getPixels();
