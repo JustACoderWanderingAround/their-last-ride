@@ -11,12 +11,20 @@ Texture::~Texture()
 {
 
 }
-
+/// <summary>
+/// Check if the texture exists
+/// </summary>
+/// <returns>True if texture exists, else false.</returns>
 bool Texture::operator!()
 {
     return (_texture == NULL);
 }
 
+/// <summary>
+/// Loads an image(PNG) into this texture object.
+/// </summary>
+/// <param name="path">The filepath to the image.</param>
+/// <returns>True if successful, false if not.</returns>
 bool Texture::loadImage(std::string path)
 {
     SDL_Texture* texture;
@@ -29,7 +37,6 @@ bool Texture::loadImage(std::string path)
     }
     else
     {
-        /*optimizedSurface = SDL_ConvertSurface(loadedImage, Application::GetInstance()->getWindowSurface()->format, 0);*/
         optimizedSurface = SDL_ConvertSurfaceFormat(loadedImage, SDL_PIXELFORMAT_ARGB8888, 0);
         if (optimizedSurface == NULL) {
             std::cout << "Unable to optimize image %s! SDL Error" << path.c_str() << SDL_GetError() << std::endl;
@@ -38,7 +45,6 @@ bool Texture::loadImage(std::string path)
         Uint32 colorkey = SDL_MapRGB(optimizedSurface->format, 0, 0, 0);
         SDL_SetColorKey(optimizedSurface, SDL_TRUE, colorkey);
         texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);
-        /*texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_GetWindowPixelFormat(Application::GetInstance()->getWindow()), SDL_TEXTUREACCESS_STREAMING, optimizedSurface->w, optimizedSurface->h);*/
         if (texture == NULL) {
             std::cout << "Unable to texturize image! SDL Error" << path.c_str() << SDL_GetError() << std::endl;
             return false;
@@ -58,6 +64,13 @@ bool Texture::loadImage(std::string path)
     }
 }
 
+/// <summary>
+/// Creates the text texture with the input, and loads it into this texture.
+/// </summary>
+/// <param name="message">The actual string for the text. (Data)</param>
+/// <param name="font">The font for the text.(TTF_Font)</param>
+/// <param name="textcolor">The colour of the text. (SDL_Color, RGB)</param>
+/// <returns>True if successful, false if not.</returns>
 bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor)
 {
     SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, message.c_str(), textcolor, TextManager::GetInstance()->maxWidth);
@@ -85,6 +98,33 @@ bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color tex
     }
 }
 
+/// <summary>
+/// Creates a blank texture and loads into this texture.
+/// </summary>
+/// <param name="width">Width of the blank texture.</param>
+/// <param name="height">Height of the blank texture.</param>
+/// <param name="access">Texture access pattern (Don't input unless you know what you're doing)</param>
+/// <returns>True if successful, false if not.</returns>
+bool Texture::createBlank(int width, int height, SDL_TextureAccess access)
+{
+    _texture = SDL_CreateTexture(Application::GetInstance()->getRenderer(), SDL_PIXELFORMAT_RGBA8888, access, width, height);
+    if (_texture == NULL)
+    {
+        std::cout << "Unable to create blank texture! SDL Error: " << SDL_GetError() << "\n";
+    }
+    else
+    {
+        _width = width;
+        _height = height;
+    }
+
+    return (_texture != NULL);
+}
+/// <summary>
+/// Creates the text texture with the input, and loads it into this texture.
+/// </summary>
+/// <param name="text">The text to be written (Text is a struct containing the string, font and colour of the text)</param>
+/// <returns>True if successful, false if not.</returns>
 bool Texture::loadText(const Text& text)
 {
     SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(text.font, text.msg.c_str(), text.textcolor, TextManager::GetInstance()->maxWidth);

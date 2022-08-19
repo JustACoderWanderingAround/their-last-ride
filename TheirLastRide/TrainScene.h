@@ -63,7 +63,7 @@ private:
 public:
 	bool writingText;
 	TrainScene();
-	Object* getPersonClick();
+	Person* getPersonClick();
 	void renderCabins();
 	void Init();
 	void Exit();

@@ -5,6 +5,10 @@
 #include <string>
 #include "TextManager.h"
 #include "Text.h"
+
+/// <summary>
+/// SDL_Texture wrapper class.
+/// </summary>
 class Texture
 {
 private:
@@ -20,6 +24,7 @@ public:
 	bool loadImage(std::string path);
 	bool loadText(const Text& text);
 	bool loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor);
+	bool createBlank(int width, int height, SDL_TextureAccess access = SDL_TEXTUREACCESS_STREAMING);
 	void setColor(unsigned int r, unsigned int g, unsigned int b);
 	void setAlpha(unsigned int a);
 	void setBlendMode(SDL_BlendMode bm);

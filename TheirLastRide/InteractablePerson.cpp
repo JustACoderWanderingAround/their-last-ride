@@ -98,9 +98,9 @@ InteractablePerson::InteractablePerson(const std::string& name)
 
 }
 
-void InteractablePerson::interact(Player p)
+void InteractablePerson::interact()
 {
-	
+	std::cout << _nodes.front()->playerText << std::endl;
 }
 
 bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
