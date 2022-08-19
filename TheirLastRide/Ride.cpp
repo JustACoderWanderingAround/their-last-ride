@@ -55,7 +55,7 @@ bool Ride::loadAttributes()
 	else {
 		j = json::parse(f);
 	}
-	//std::vector<Ride> testRide = j.get<std::vector<Ride>>();
+	std::vector<Ride> testRide = j.get<std::vector<Ride>>();
 	//std::cout << _nodes[0];
 	return true;
 	/*for (int i = 0; i < tempNodes2.size(); i++)

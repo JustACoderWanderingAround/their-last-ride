@@ -8,9 +8,11 @@
 
 int main(void)
 {
-	Application* app = Application::GetInstance();
-	app ->Init();
-	app ->Run();
-	app ->Exit();
+	//Application* app = Application::GetInstance();
+	//app ->Init();
+	//app ->Run();
+	//app ->Exit();
+	Ride* ride1 = new Ride;
+	std::cout << ride1->start;
 	return 0;
 }
