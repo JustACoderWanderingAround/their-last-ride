@@ -15,12 +15,10 @@ void from_json(const json& j, Node& n) {
 	j.at("results").get_to(n.results);
 }
 
-int bruh;
 InteractablePerson::InteractablePerson()
 	: _name("people")
 {
 	loadNodes();
-	std::cin >> bruh;
 	////TODO: make this into a loadJson function
 	//std::ifstream f(Data\\people.json);
 	//json j;
