@@ -14,9 +14,71 @@ int last_dir = 0;
 std::string _dT;
 
 TrainScene::TrainScene()
-    : writingText(false), _displayText(" ")
+    : writingText(false), _displayText(" "), _mouseCollider({ Application::GetInstance()->getMouseCoords().x, Application::GetInstance()->getMouseCoords().y, 4, 4 }), _currentCabin(0)
 {
+    
+}
 
+void TrainScene::renderCabins()
+{
+    /*for (int i = 0; i < _cabins.size(); i++)
+    {
+       
+    }*/
+    int x_offset, y_offset;
+    int initialX = 0, initialY = 45;
+    x_offset = 190;
+    y_offset = 180;
+    auto seats = _cabins[_currentCabin]->getSeats();
+    for (int column = 1; column < 3; column++)
+    {
+        //for (int column = 0; column < 2; column++)
+        //{
+        //    if (row < 2) {
+        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
+        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + initialX, y_offset * column + initialY});
+        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
+        //        }
+        //    }
+        //    else {
+        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
+        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + 175 + initialX, y_offset * column + initialY });
+        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
+        //        }
+        //    }
+        //    //seats[TrainCabin::ConvertToPosition({ column, row })]->getTexture().Render(x_offset * row, y_offset * column);
+        //}
+        //for (int column = 2; column < 4; column++)
+        //{
+        //    if (row < 2) {
+        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
+        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + initialX, y_offset * column + 200 + initialY});
+        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
+        //        }
+        //    }
+        //    else {
+        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
+        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + 175 + initialX, y_offset * column + 200 + initialY});
+        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
+        //        }
+        //    }
+        for (int row = 0; row < 6; row++)
+        {
+            if (row < 3) {
+                if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY });
+                    _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
+                }
+            }
+            else {
+                if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
+                    _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
+                }
+            }
+        }
+        
+    }
 }
 
 void TrainScene::Init()
@@ -28,7 +90,11 @@ void TrainScene::Init()
     _objList[OBJECT_PLAYER]->setToScale(1.3);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
-    /*_objList[OBJECT_CHAIR]->setToScale(0.35);*/
+    //_objList[OBJECT_GEORGE]
+    //_objList[OBJECT_SASHA]
+  /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_SASHA] = ObjectBuilder::CreateObject("Sprites//Passengers//Sasha.png", { 0, 0 }, SDL_BLENDMODE_BLEND);*/
+    
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
@@ -57,6 +123,7 @@ void TrainScene::Init()
     _renderQueue.push_back(_objList[OBJECT_CHAIR_ROW]);
     //createBottomRowChairs();
     _renderQueue.push_back(_objList[OBJECT_TEXT]);
+    renderCabins();
 
 
     offSetX = 700;
@@ -92,7 +159,6 @@ void TrainScene::Update(double dt)
 
         _dT = _displayText;
         _dT.erase(0, 1);
-        //std::cout << _dT << std::endl;
         _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     }
     frame_count += 1;

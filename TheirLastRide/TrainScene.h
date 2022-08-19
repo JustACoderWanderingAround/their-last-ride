@@ -8,6 +8,7 @@
 #include <array>
 #include "TextManager.h"
 #include "ObjectBuilder.h"
+#include "BoxCollider.h"
 #include "Text.h"
 
 enum OBJECT {
@@ -49,6 +50,8 @@ class Scene;
 class TrainScene : public Scene
 {
 private:
+	unsigned int _currentCabin;
+	BoxCollider _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
@@ -58,6 +61,7 @@ private:
 public:
 	bool writingText;
 	TrainScene();
+	void renderCabins();
 	void Init();
 	void Exit();
 	void Update(double dt);

@@ -12,6 +12,11 @@ Texture::~Texture()
 
 }
 
+bool Texture::operator!()
+{
+    return (_texture == NULL);
+}
+
 bool Texture::loadImage(std::string path)
 {
     SDL_Texture* texture;

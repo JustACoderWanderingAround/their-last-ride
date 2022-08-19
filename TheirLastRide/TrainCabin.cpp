@@ -11,15 +11,16 @@ TrainCabin::TrainCabin()
 
 TrainCabin::~TrainCabin()
 {
-	for (auto seat : _seats) {
+	/*for (auto seat : _seats) {
 		if (seat != nullptr) {
 			delete seat;
 		}
-	}
+	}*/
 }
 
 void TrainCabin::fillSeats()
 {
+	std::vector<std::string> names = { "George", "Sasha" };
 	unsigned short amountOfNonInteractablePeople = rand() % 5 + 1;
 	unsigned short amountOfInteractablePeople = 5; // to be changed according to level.
 	std::vector<int> positions;
@@ -42,8 +43,12 @@ void TrainCabin::fillSeats()
 	no_of_positions = positions.size();
 	for (int i = 0; i < amountOfInteractablePeople; i++)
 	{
-		_seats[positions[rand() % no_of_positions]] = new InteractablePerson();
+		_seats[positions[rand() % no_of_positions]] = new InteractablePerson(names[rand() % 2]);
 	}
+	/*for (int i = 0; i < no_of_positions; i++)
+	{
+		_seats[positions[i]] = new InteractablePerson(names[rand() % 2]);
+	}*/
 	_seats[0] = new InteractablePerson();
 }
 
@@ -59,7 +64,7 @@ SDL_Point TrainCabin::ConvertToPoint(const int& position)
 
 int TrainCabin::ConvertToPosition(const SDL_Point& vec)
 {
-	return (vec.x +( vec.y * 6));
+	return (vec.x +( vec.y * 4));
 }
 
 

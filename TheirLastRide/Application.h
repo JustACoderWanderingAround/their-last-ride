@@ -12,6 +12,7 @@ class Scene;
 class Application : public Singleton<Application>
 {
 private:
+	SDL_Point _mouse_coords;
 	float _targetFps;
 	Timer _timer;
 	SDL_Surface* _winSurface;
@@ -28,6 +29,7 @@ public:
 	SDL_Window* getWindow() const;
 	SDL_Surface* getWindowSurface() const;
 	SDL_Renderer* getRenderer() const;
+	SDL_Point getMouseCoords() const;
 	static bool IsKeyPressed(unsigned short key);
 };
 
