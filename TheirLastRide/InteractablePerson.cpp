@@ -15,13 +15,42 @@ void from_json(const json& j, Node& n) {
 	j.at("results").get_to(n.results);
 }
 
+int bruh;
 InteractablePerson::InteractablePerson()
+	: _name("people")
+{
+	loadNodes();
+	std::cin >> bruh;
+	////TODO: make this into a loadJson function
+	//std::ifstream f(Data\\people.json);
+	//json j;
+	//if (!f) {
+	//	std::cout << "File not loaded succesfully.\n";
+	//}
+	//else {
+	//	j = json::parse(f);
+	//}
+	//std::vector<Node> tempNodes2 = j.get<std::vector<Node>>();
+	////std::cout << _nodes[0];
+	//for (int i = 0; i < tempNodes2.size(); i++)
+	//{
+	//	_nodes.push_back(new Node());
+	//	*(_nodes.back()) = tempNodes2[i];
+	//}
+	///*for (int i = 0; i < tempNodes2.size(); i++)
+	//{
+	//	std::cout << _nodes[i]->playerText << std::endl;
+	//}*/
+}
+
+bool InteractablePerson::loadNodes()
 {
 	//TODO: make this into a loadJson function
-	std::ifstream f("Data//people.json");
+	std::ifstream f("Data\\" + _name + ".json");
 	json j;
 	if (!f) {
 		std::cout << "File not loaded succesfully.\n";
+		return false;
 	}
 	else {
 		j = json::parse(f);
@@ -33,15 +62,11 @@ InteractablePerson::InteractablePerson()
 		_nodes.push_back(new Node());
 		*(_nodes.back()) = tempNodes2[i];
 	}
+	return true;
 	/*for (int i = 0; i < tempNodes2.size(); i++)
 	{
 		std::cout << _nodes[i]->playerText << std::endl;
 	}*/
-}
-
-bool InteractablePerson::loadNodes()
-{
-	
 }
 
 

@@ -1,30 +1,32 @@
-[   
+[
+  {
+    "playerText": "Why are you travelling today ?",
+    "npcText": "I'm not sure i just woke up here after my nap with these in my pocket",
+    "results": [
+      1,
+      2,
+      3
+    ]
+  },   
     {
-        "playerText": "Give me a good question",
-        "npcText": "Do you like pineapple on pizza",
+        "playerText": "You woke up here after a nap ?",
+        "npcText": "I sat down to take a nap... and I woke up here",
         "results": [
-            1, 2, 3
-        ]
-    },   
-    {
-        "playerText": "Yes",
-        "npcText": "Disgusting",
-        "results": [
-            4
+            
         ]
     },
     {
-        "playerText": "No",
-        "npcText": "Based",
+        "playerText": "Are you sure you weren't doing anything else ?",
+        "npcText": "Yes. I took a nap and here I am",
         "results": [
-            5
+            
         ]
     },    
     {
-        "playerText": "Maybe",
-        "npcText": "Fine",
+        "playerText": "How are you feeling now ?",
+        "npcText": "A little cold to be honest...",
         "results": [
-            5
+            
         ]
     },
     {
