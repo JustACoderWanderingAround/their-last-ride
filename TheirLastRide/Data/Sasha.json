@@ -1,42 +1,33 @@
 [
-  {
-    "playerText": "Why are you travelling today ?",
-    "npcText": "I'm not sure i just woke up here after my nap with these in my pocket",
-    "results": [
-      1,
-      2,
-      3
-    ]
-  },   
     {
-        "playerText": "You woke up here after a nap ?",
-        "npcText": "I sat down to take a nap... and I woke up here",
+        "playerText": "n",
+        "npcText": "d",
         "results": [
-            
+            1,
+            2,
+            3
         ]
     },
     {
-        "playerText": "Are you sure you weren't doing anything else ?",
-        "npcText": "Yes. I took a nap and here I am",
+        "playerText": "e",
+        "npcText": "f",
         "results": [
-            
-        ]
-    },    
-    {
-        "playerText": "How are you feeling now ?",
-        "npcText": "A little cold to be honest...",
-        "results": [
-            
+            4
         ]
     },
     {
-        "playerText": "It's good",
-        "npcText": "Idk what to say",
+        "playerText": "b",
+        "npcText": "c",
         "results": []
     },
     {
-        "playerText": "Lets go",
-        "npcText": "Yeah",
+        "playerText": "d",
+        "npcText": "g",
         "results": []
-    }            
+    },
+    {
+        "playerText": "b",
+        "npcText": "x",
+        "results": []
+    }
 ]

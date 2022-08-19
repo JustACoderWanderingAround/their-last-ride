@@ -19,7 +19,7 @@ void from_json(const json& j, Node& n) {
 InteractablePerson::InteractablePerson()
 	: _name("people")
 {
-	loadNodes();
+	//loadNodes();
 	////TODO: make this into a loadJson function
 	//std::ifstream f(Data\\people.json);
 	//json j;
@@ -42,17 +42,25 @@ InteractablePerson::InteractablePerson()
 	//}*/
 }
 
-bool InteractablePerson::loadNodes()
+bool InteractablePerson::loadNodes()	
 {
 	//TODO: make this into a loadJson function
-	std::ifstream f("Data\\" + _name + ".json");
+	std::string fp = "Data\\" + _name + ".json";
+	std::ifstream f(fp);
 	json j;
 	if (!f) {
 		std::cout << "File not loaded succesfully.\n";
 		return false;
 	}
 	else {
-		j = json::parse(f);
+		try
+		{
+			j = json::parse(f);
+		}
+		catch (json::parse_error& ex)
+		{
+			std::cerr << "parse error at byte " << ex.id << std::endl;
+		}
 	}
 	std::vector<Node> tempNodes2 = j.get<std::vector<Node>>();
 	//std::cout << _nodes[0];
@@ -86,6 +94,7 @@ InteractablePerson::InteractablePerson(const std::string& name)
 	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
 	_txt.loadImage(filepath);
 	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
+	loadNodes();
 
 
 }
