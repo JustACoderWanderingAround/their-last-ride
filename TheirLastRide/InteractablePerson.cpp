@@ -16,6 +16,7 @@ void from_json(const json& j, Node& n) {
 }
 
 InteractablePerson::InteractablePerson()
+	
 {
 	//TODO: make this into a loadJson function
 	std::ifstream f("Data//people.json");
@@ -37,6 +38,17 @@ InteractablePerson::InteractablePerson()
 	{
 		std::cout << _nodes[i]->playerText << std::endl;
 	}*/
+}
+
+InteractablePerson::InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass)
+	: _name (name), _PassType (passType), _PredetermindedVerdict (verdict), _Ticket (*ticket), _RailPass (*railpass)
+{
+	_name = name;
+	_PassType = passType;
+	_PredetermindedVerdict = verdict;
+	_Ticket = *ticket;
+	_RailPass = *railpass;
+
 }
 
 
