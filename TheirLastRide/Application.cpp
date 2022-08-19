@@ -3,7 +3,6 @@
 #include <WinUser.h>
 #include <iostream>
 #include <SDL_ttf.h>
-#include <typeinfo>
 
 constexpr int SCR_WIDTH = 1280;
 constexpr int SCR_HEIGHT = 720;

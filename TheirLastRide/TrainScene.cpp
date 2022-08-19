@@ -10,6 +10,7 @@ const float player_speed = 1.0f;
 const float text_type_speed = 25;
 double iterator = 0;
 int frame_count = 0;
+int last_dir = 0;
 std::string _dT;
 
 TrainScene::TrainScene()
@@ -23,7 +24,7 @@ void TrainScene::Init()
 	_cabins.push_back(new TrainCabin());
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
-    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.3);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -41,7 +42,10 @@ void TrainScene::Init()
     _tmAnimList[TM_ANIM_WALK_R_2]->loadImage("Sprites//TicketMaster//tmRightWalk2.png");
     _tmAnimList[TM_ANIM_FRONT]->loadImage("Sprites//TicketMaster//tmFront.png");
     _tmAnimList[TM_ANIM_BACK]->loadImage("Sprites//TicketMaster//tmBack.png");
-
+    _tmAnimList[TM_ANIM_FRONT_WALK_1]->loadImage("Sprites//TicketMaster//tmFrontWalk1.png");
+    _tmAnimList[TM_ANIM_FRONT_WALK_2]->loadImage("Sprites//TicketMaster//tmFrontWalk2.png");
+    _tmAnimList[TM_ANIM_BACK_WALK_1]->loadImage("Sprites//TicketMaster//tmBackWalk1.png");
+    _tmAnimList[TM_ANIM_BACK_WALK_2]->loadImage("Sprites//TicketMaster//tmBackWalk2.png");
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
         _tmAnimList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
@@ -115,7 +119,22 @@ void TrainScene::HandleKeyPress()
             offSetY -= player_speed;
         }
        
-        _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK]));
+        if (frame_count < 180);
+        {
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK_WALK_1]));
+        }
+
+        if (frame_count >= 180)
+        {
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK_WALK_2]));
+
+            if (frame_count >= 360)
+            {
+                frame_count = 0;
+            }
+        }
+
+        last_dir = 1; 
 
     }
 
@@ -142,6 +161,7 @@ void TrainScene::HandleKeyPress()
             }
         }
 
+        last_dir = 2; 
     }
 
     if (Application::IsKeyPressed('S'))
@@ -151,7 +171,22 @@ void TrainScene::HandleKeyPress()
             offSetY += player_speed;
         }
 
-        _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT]));
+        if (frame_count < 180);
+        {
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT_WALK_1]));
+        }
+
+        if (frame_count >= 180)
+        {
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT_WALK_2]));
+
+            if (frame_count >= 360)
+            {
+                frame_count = 0;
+            }
+        }
+
+        last_dir = 3;
     }
 
     if (Application::IsKeyPressed('D'))
@@ -175,7 +210,31 @@ void TrainScene::HandleKeyPress()
                 frame_count = 0;
             }
         }
+            last_dir = 4;
     }
+
+    if (Application::IsKeyPressed('W') == false && Application::IsKeyPressed('A') == false && Application::IsKeyPressed('S') == false && Application::IsKeyPressed('D') == false)
+    {
+        switch (last_dir)
+        {
+        case 1:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK]));
+            break;
+
+        case 2:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_STAND_L]));
+            break;
+
+        case 3:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT]));
+            break;
+
+        case 4:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_STAND_R]));
+            break;
+        }
+    }
+   
 }
 void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
 {

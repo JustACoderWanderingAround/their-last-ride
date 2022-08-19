@@ -51,6 +51,11 @@ InteractablePerson::InteractablePerson(std::string name, bool passType, bool ver
 
 }
 
+bool InteractablePerson::loadNodes()
+{
+	
+}
+
 
 void InteractablePerson::interact(Player p)
 {
