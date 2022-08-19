@@ -14,9 +14,7 @@ void from_json(const json& j,Ride& n) {
 }
 
 Ride::Ride()
-
 {
-	loadAttributes();
 }
 
 Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)
@@ -25,6 +23,14 @@ Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)
     stops = stp;
     _interactableNumber = iN;
     _nonInteractableNumber = nN;
+}
+Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN, int cN)
+{
+	start = str;
+	stops = stp;
+	_interactableNumber = iN;
+	_nonInteractableNumber = nN;
+	_carriageNum = cN;
 }
 
 Ride::~Ride()
@@ -55,7 +61,9 @@ bool Ride::loadAttributes()
 	else {
 		j = json::parse(f);
 	}
-	//std::vector<Ride> testRide = j.get<std::vector<Ride>>();
+	std::vector<Ride> testRide = j.get<std::vector<Ride>>();
+	start = testRide[0].start;
+	stops = testRide[0].stops;
 	//std::cout << _nodes[0];
 	return true;
 	/*for (int i = 0; i < tempNodes2.size(); i++)

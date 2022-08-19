@@ -24,6 +24,10 @@ int main(void)
 	std::cout << playerOne->compareToBook(*pass1, 4) << std::endl;
 	std::cout << playerOne->compareToBook(*pass1, 5) << std::endl;
 	std::cout << playerOne->compareToBook(*pass1, 6) << std::endl;*/
-
+	/*Ride* ride1 = new Ride();
+	ride1->loadAttributes();
+	std::cout << ride1->start;
+	std::cout << ride1->stops[0];
+	std::cout << ride1->stops[1];*/
 	return 0;
 }
