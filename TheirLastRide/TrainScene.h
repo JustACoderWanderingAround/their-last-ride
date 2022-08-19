@@ -26,6 +26,8 @@ enum OBJECT {
 	OBJECT_NOTEBOOK_CLOSED,
 	OBJECT_NOTEBOOK_OPEN,
 	OBJECT_NOTEBOOK_PAGE,
+	OBJECT_TEXTBOX,
+	OBJECT_CHOICE,
 	NUM_OBJECT
 };
 
@@ -72,5 +74,6 @@ public:
 	int offSetY;
 	void WriteText(const Text& text, const SDL_Point& pos);
 	std::vector<TrainCabin*> getCabins();
+	bool renderTextBox;
 };
 

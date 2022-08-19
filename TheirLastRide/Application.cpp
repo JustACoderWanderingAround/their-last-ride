@@ -96,7 +96,22 @@ void Application::Run()
                 switch (_event.key.keysym.sym) {
                 case SDLK_DOWN:
                     if (_acceptInput) {
-                        static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { SCR_WIDTH / 2 - 300, SCR_HEIGHT / 2 });
+                        static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { 480 , 500 });
+
+                        for (int i = 0; i < currentNode->results.size(); i++)
+                        {
+                            std::cout << nodes[currentNode->results[i]]->playerText << std::endl;
+                        }
+                        if (currentNode->results.size() != 0) {
+                            currentNode = nodes[currentNode->results[0]];
+                        }
+                    }
+                    break;
+
+                case SDLK_UP:
+                    if (_acceptInput) {
+                        static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { 480 , 500 });
+
                         for (int i = 0; i < currentNode->results.size(); i++)
                         {
                             std::cout << nodes[currentNode->results[i]]->playerText << std::endl;
@@ -108,6 +123,7 @@ void Application::Run()
                     break;
                 }
             }
+
         }
         mainScene->Update(_timer.getElapsedTime());
         mainScene->Render();

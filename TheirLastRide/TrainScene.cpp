@@ -115,6 +115,8 @@ void TrainScene::Init()
     _objList[OBJECT_PLAYER]->setToScale(1.3);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TEXTBOX] = ObjectBuilder::CreateObject("Sprites//UI//dialogueBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_CHOICE] = ObjectBuilder::CreateObject("Sprites//UI//optionBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_GEORGE]
     //_objList[OBJECT_SASHA]
   /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -146,9 +148,13 @@ void TrainScene::Init()
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     _renderQueue.push_back(_objList[OBJECT_PLAYER]);
     _renderQueue.push_back(_objList[OBJECT_CHAIR_ROW]);
+    renderCabins();
+    _renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
+    _renderQueue.push_back(_objList[OBJECT_CHOICE]);
+    
     //createBottomRowChairs();
     _renderQueue.push_back(_objList[OBJECT_TEXT]);
-    renderCabins();
+   
 
 
     offSetX = 700;
@@ -334,6 +340,9 @@ void TrainScene::HandleKeyPress()
             _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_STAND_R]));
             break;
         }
+    }
+    if (Application::IsKeyPressed) {
+        renderTextBox = true;
     }
    
 }
