@@ -5,11 +5,11 @@
 TextManager::TextManager()
 	: maxWidth(600) // To change
 {
-	if (TTF_OpenFont("Fonts//REDENSEK.ttf", 24) == NULL) {
+	if (TTF_OpenFont("Fonts//REDENSEK.ttf", 32) == NULL) {
 		std::cout << "Cannot open font." << TTF_GetError();
 	}
 	else {
-		_fonts[FONT_REDENSEK] = TTF_OpenFont("Fonts//REDENSEK.ttf", 24);
+		_fonts[FONT_REDENSEK] = TTF_OpenFont("Fonts//REDENSEK.ttf", 32);
 	}	
 }
 
