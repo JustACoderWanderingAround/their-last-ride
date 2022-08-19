@@ -39,6 +39,11 @@ InteractablePerson::InteractablePerson()
 	}*/
 }
 
+bool InteractablePerson::loadNodes()
+{
+	
+}
+
 
 void InteractablePerson::interact(Player p)
 {

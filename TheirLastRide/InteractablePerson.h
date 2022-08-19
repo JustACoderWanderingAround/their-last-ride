@@ -9,6 +9,7 @@ class InteractablePerson :
 
 public:
     InteractablePerson();
+    bool loadNodes();
     void interact(Player p);
     bool verdictChecker(bool _PlayerVerdict);
     Ticket getTicket();
