@@ -2,6 +2,15 @@
   {
     "start": "Noston Central",
     "stops": ["Noston East", "Ewing Bridge"]
+  },
+  {
+    "start": "Noston Central",
+    "stops": ["Ewing Bridge",  "Fort Night", "Hatfield Hill"]
+  },
+  {
+    "start": "Noston Central",
+    "stops": ["Ewing Bridge",  "Ewing Town", "Harbourside"]
   }
 ]
+
 

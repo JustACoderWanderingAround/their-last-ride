@@ -1,5 +1,5 @@
 #include "Ride.h"
-#include <iostream>ad
+#include <iostream>
 #include <fstream>
 #include "json.hpp"
 using json = nlohmann::json;
@@ -50,7 +50,7 @@ int Ride::getNonInteractable()
     return _nonInteractableNumber;
 }
 
-bool Ride::loadAttributes()
+bool Ride::loadAttributes(int rideNumber)
 {
 	//TODO: make this into a loadJson function
 	std::ifstream f("Data\\Ride.json");
@@ -63,8 +63,8 @@ bool Ride::loadAttributes()
 		j = json::parse(f);
 	}
 	std::vector<Ride> testRide = j.get<std::vector<Ride>>();
-	start = testRide[0].start;
-	stops = testRide[0].stops;
+	start = testRide[rideNumber].start;
+	stops = testRide[rideNumber].stops;
 	//std::cout << _nodes[0];
 	return true;
 	/*for (int i = 0; i < tempNodes2.size(); i++)

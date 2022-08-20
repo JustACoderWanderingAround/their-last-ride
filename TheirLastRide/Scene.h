@@ -6,12 +6,14 @@
 /// <summary>
 /// Scenes are to be derived classes of this abstract class.
 /// </summary>
+class Player;
 class Scene
 {
-//Player* mainPlayer;
+Player* mainPlayer;
 Ride* mainRide;
 public:
 	Scene();
+	Scene(int rideNum);
 	virtual void Init() = 0;
 	virtual void Update(double dt) = 0;
 	virtual void Render() = 0;
