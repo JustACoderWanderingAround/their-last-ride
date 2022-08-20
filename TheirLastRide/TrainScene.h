@@ -84,5 +84,6 @@ public:
 	void WriteText(const Text& text, const SDL_Point& pos);
 	std::vector<TrainCabin*> getCabins();
 	bool renderTextBox;
+	int date;
 };
 

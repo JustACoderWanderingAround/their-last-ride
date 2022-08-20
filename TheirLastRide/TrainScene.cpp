@@ -140,9 +140,9 @@ void TrainScene::Init()
     //_renderQueue.push_back(_objList[OBJECT_CHOICE]);
     
     //createBottomRowChairs();
-   
-
-
+    Player* testPlayer = new Player(mainRide->stops);
+    setPlayer(testPlayer);
+    date = mainPlayer->getDay();
     offSetX = 700;
     offSetY = 300;
 }
