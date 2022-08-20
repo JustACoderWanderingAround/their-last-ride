@@ -1,4 +1,5 @@
 #pragma once
+#include "Button.h"
 #include "Texture.h"
 #include "Object.h"
 #include "Scene.h"
@@ -48,6 +49,7 @@ enum TM_ANIM {
 	NUM_TM_ANIM
 };
 
+class Person;
 class Scene;
 class TrainScene : public Scene
 {
@@ -56,10 +58,14 @@ private:
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
+	std::vector<Button*> _buttons;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin*> _cabins;
 	std::vector<Text> _textQueue;
 	std::string _displayText;
+	SDL_Point _mouse_coords;
+	SDL_Event _event;
+	Person* _interactingPerson;
 public:
 	bool writingText;
 	TrainScene();
@@ -69,9 +75,11 @@ public:
 	void Exit();
 	void Update(double dt);
 	void Render();
-	void HandleKeyPress();
+	void HandleInput();
+	void playerInteraction(int option = NULL);
 	int offSetX;
 	int offSetY;
+	std::vector<Button*>* getButtons();
 	void WriteText(const Text& text, const SDL_Point& pos);
 	std::vector<TrainCabin*> getCabins();
 	bool renderTextBox;

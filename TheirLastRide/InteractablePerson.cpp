@@ -4,6 +4,8 @@
 #include "json.hpp"
 #include <fstream>
 #include "ObjectBuilder.h"
+#include "Application.h"
+#include "TextManager.h";
 using json = nlohmann::json;
 
 void to_json(json& j, const Node& n) {
@@ -17,37 +19,15 @@ void from_json(const json& j, Node& n) {
 }
 
 InteractablePerson::InteractablePerson()
-	: _name("people")
 {
-	//loadNodes();
-	////TODO: make this into a loadJson function
-	//std::ifstream f(Data\\people.json);
-	//json j;
-	//if (!f) {
-	//	std::cout << "File not loaded succesfully.\n";
-	//}
-	//else {
-	//	j = json::parse(f);
-	//}
-	//std::vector<Node> tempNodes2 = j.get<std::vector<Node>>();
-	////std::cout << _nodes[0];
-	//for (int i = 0; i < tempNodes2.size(); i++)
-	//{
-	//	_nodes.push_back(new Node());
-	//	*(_nodes.back()) = tempNodes2[i];
-	//}
-	///*for (int i = 0; i < tempNodes2.size(); i++)
-	//{
-	//	std::cout << _nodes[i]->playerText << std::endl;
-	//}*/
+
 }
 
 bool InteractablePerson::loadNodes()	
 {
-	//TODO: make this into a loadJson function
-	std::string fp = "Data\\" + _name + ".json";
-	std::ifstream f(fp);
-	json j;
+	std::string fp = "Data\\" + _name + ".json"; //file path
+	std::ifstream f(fp); // file
+	json j; //json object
 	if (!f) {
 		std::cout << "File not loaded succesfully.\n";
 		return false;
@@ -55,41 +35,36 @@ bool InteractablePerson::loadNodes()
 	else {
 		try
 		{
-			j = json::parse(f);
+			j = json::parse(f); //load the file contents into the json object
 		}
 		catch (json::parse_error& ex)
 		{
-			std::cerr << "parse error at byte " << ex.id << std::endl;
+			std::cout << "parse error " << ex.id << std::endl;
 		}
 	}
-	std::vector<Node> tempNodes2 = j.get<std::vector<Node>>();
-	//std::cout << _nodes[0];
-	for (int i = 0; i < tempNodes2.size(); i++)
+	std::vector<Node> tempNodes = j.get<std::vector<Node>>(); //convert the json object into vector of nodes
+	for (int i = 0; i < tempNodes.size(); i++)
 	{
-		_nodes.push_back(new Node());
-		*(_nodes.back()) = tempNodes2[i];
+		_nodes.push_back(new Node()); // assign a default empty node on the heap to a pointer in the vector
+		*(_nodes.back()) = tempNodes[i]; // place the nodes with the file content data into those nodes
 	}
 	return true;
-	/*for (int i = 0; i < tempNodes2.size(); i++)
-	{
-		std::cout << _nodes[i]->playerText << std::endl;
-	}*/
 }
 
 InteractablePerson::InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass)
-	: _name (name), _PassType (passType), _PredetermindedVerdict (verdict), _Ticket (*ticket), _RailPass (*railpass)
+	: _name (name),
+	_PassType (passType),
+	_PredetermindedVerdict (verdict),
+	_Ticket (*ticket),
+	_RailPass (*railpass),
+	_currentNode(nullptr)
 {
-	_name = name;
-	_PassType = passType;
-	_PredetermindedVerdict = verdict;
-	_Ticket = *ticket;
-	_RailPass = *railpass;
 
 }
 
 
 InteractablePerson::InteractablePerson(const std::string& name)
-	: _name(name)
+	: _name(name), _currentNode(nullptr)
 {
 	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
 	_txt.loadImage(filepath);
@@ -100,7 +75,35 @@ InteractablePerson::InteractablePerson(const std::string& name)
 
 void InteractablePerson::interact()
 {
-	std::cout << _nodes.front()->playerText << std::endl;
+	//TrainScene* mainScene = static_cast<TrainScene*>(scene);
+	//mainScene->getButtons()->clear();
+	//if (option != NULL) {
+	//	_currentNode = _nodes[_currentNode->results[option]];
+	//}
+	//const int y_offset = -50;
+	//// Before or after a conversation, _currentNode should be nullptr.
+	//if (_nodes.size() == 0) {
+	//	std::cout << "No nodes to interact" << std::endl;
+	//	return;
+	//}
+	//if (_currentNode == nullptr)
+	//	_currentNode = _nodes.front();
+	//if (_currentNode == _nodes.front()) {
+	//	//write player text
+	//	mainScene->WriteText({ _currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+	//	_currentNode = _nodes[_currentNode->results.front()];
+	//}
+	//else {
+	//	//write npc 
+	//	mainScene->WriteText({ _currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+	//	for (int i = 0; i < _currentNode->results.size(); i++)
+	//	{
+	//		mainScene->getButtons()->push_back(new Button());
+	//		mainScene->getButtons()->back()->setCoords({ mainScene->getButtons()->back()->getCoords().x, y_offset * i });
+	//	}
+	//	//render options
+	//	//_currentNode = _nodes[_currentNode->results[option]];
+	//}
 }
 
 bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
@@ -127,4 +130,9 @@ std::string InteractablePerson::getName()
 bool InteractablePerson::getPassType()
 {
 	return _PassType;
+}
+
+Node*& InteractablePerson::getCurrentNode()
+{
+	return _currentNode;
 }
