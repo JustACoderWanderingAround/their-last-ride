@@ -100,7 +100,6 @@ InteractablePerson::InteractablePerson(const std::string& name)
 
 void InteractablePerson::interact(Player p)
 {
-	
 }
 
 bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
