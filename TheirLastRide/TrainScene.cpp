@@ -15,13 +15,21 @@ int last_dir = 0;
 std::string _dT;
 SDL_Event mEvent;
 
+/// <summary>
+/// Constructor, used to initialize values.
+/// </summary>
 TrainScene::TrainScene()
     : writingText(false), _displayText(" "), _currentCabin(0)
 {
     
 }
 
-Object* TrainScene::getPersonClick()
+/// <summary>
+/// Checks if there is person that was clicked (checked by using the mouse's collider and checking through all the
+/// seats for collision)
+/// </summary>
+/// <returns>The pointer to the person if found, if not, returns nullptr</returns>
+Person* TrainScene::getPersonClick()
 {
     auto seats = _cabins[_currentCabin]->getSeats();
     for (int i = 0; i < seats.size(); i++)
@@ -29,19 +37,19 @@ Object* TrainScene::getPersonClick()
         if (seats[i] == nullptr) continue;
         if (seats[i]->getCollider() == nullptr) continue;
         if (seats[i]->getCollider()->isColliding(_mouseCollider)) {
-            std::cout << seats[i];
+            //std::cout << seats[i];
             return seats[i];
         }
     }
     return nullptr;
 }
 
+/// <summary>
+/// Create the interactive people objects and adds them to the render queue.
+/// WARNING: The top row and bottom row are added to queue in sequence. Make sure that the player is rendered in between.
+/// </summary>
 void TrainScene::renderCabins()
 {
-    /*for (int i = 0; i < _cabins.size(); i++)
-    {
-       
-    }*/
     int x_offset, y_offset;
     int initialX = 0, initialY = 45;
     x_offset = 190;
@@ -49,36 +57,6 @@ void TrainScene::renderCabins()
     auto seats = _cabins[_currentCabin]->getSeats();
     for (int column = 1; column < 3; column++)
     {
-        //for (int column = 0; column < 2; column++)
-        //{
-        //    if (row < 2) {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + initialX, y_offset * column + initialY});
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
-        //    else {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + 175 + initialX, y_offset * column + initialY });
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
-        //    //seats[TrainCabin::ConvertToPosition({ column, row })]->getTexture().Render(x_offset * row, y_offset * column);
-        //}
-        //for (int column = 2; column < 4; column++)
-        //{
-        //    if (row < 2) {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + initialX, y_offset * column + 200 + initialY});
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
-        //    else {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + 175 + initialX, y_offset * column + 200 + initialY});
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
         for (int row = 0; row < 6; row++)
         {
             if (row < 3) {
@@ -105,6 +83,10 @@ void TrainScene::renderCabins()
     }
 }
 
+/// <summary>
+/// Initialise everything needed for the scene:
+/// textures, objects, colliders.
+/// </summary>
 void TrainScene::Init()
 {
     _mouseCollider = new BoxCollider({ Application::GetInstance()->getMouseCoords().x, Application::GetInstance()->getMouseCoords().y, 4, 4 });
@@ -161,6 +143,9 @@ void TrainScene::Init()
     offSetY = 300;
 }
 
+/// <summary>
+/// Called on scene exit. Used to prevent memory leaks.
+/// </summary>
 void TrainScene::Exit()
 {
     for (auto i : _renderQueue) {
@@ -170,6 +155,10 @@ void TrainScene::Exit()
     }
 }
 
+/// <summary>
+/// Called every frame. Use this for polling (checking for key input and processing)
+/// </summary>
+/// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
    
@@ -196,17 +185,23 @@ void TrainScene::Update(double dt)
     _objList[OBJECT_PLAYER]->setCoords({ offSetX, offSetY });
 }
 
+/// <summary>
+/// Function to render everything out into the surface on the window.
+/// </summary>
 void TrainScene::Render()
 {
-    SDL_RenderClear(Application::GetInstance()->getRenderer());
+    SDL_RenderClear(Application::GetInstance()->getRenderer()); // Clear the screen.
     //rendering inside here
     for (auto i : _renderQueue) {
         i->getTexture().Render(i->getCoords().x, i->getCoords().y);
     }
 
-    SDL_RenderPresent(Application::GetInstance()->getRenderer());
+    SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
 }
 
+/// <summary>
+/// Handle key input inside this function. Logic is to be in this function.
+/// </summary>
 void TrainScene::HandleKeyPress()
 {
    /* while (SDL_PollEvent(&mEvent)) {
@@ -346,6 +341,13 @@ void TrainScene::HandleKeyPress()
     }
    
 }
+
+/// <summary>
+/// Adds text to the text queue for rendering. This function is to be called once to write the message once.
+/// (Don't call this every frame)
+/// </summary>
+/// <param name="text">The text to be written (Text is a struct containing the string, font and colour of the text)</param>
+/// <param name="pos">The position of the text on the surface (SDL_Point, a integer Vector2)</param>
 void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
 {
     iterator = 0;
@@ -355,6 +357,10 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     writingText = true;
 }
 
+/// <summary>
+/// Get the list of train cabins(logic)
+/// </summary>
+/// <returns>Vector of TrainCabin pointers</returns>
 std::vector<TrainCabin*> TrainScene::getCabins()
 {
     return _cabins;

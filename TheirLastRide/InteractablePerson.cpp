@@ -93,13 +93,14 @@ InteractablePerson::InteractablePerson(const std::string& name)
 {
 	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
 	_txt.loadImage(filepath);
-	_txt.setBlendMode(SDL_BLENDMODE_NONE);
+	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
 	loadNodes();
 
 }
 
-void InteractablePerson::interact(Player p)
+void InteractablePerson::interact()
 {
+	std::cout << _nodes.front()->playerText << std::endl;
 }
 
 bool InteractablePerson::verdictChecker(bool _PlayerVerdict)

@@ -4,15 +4,25 @@
 #include <iostream>
 #include <SDL_ttf.h>
 
+/// <summary>
+/// The window screen width.
+/// </summary>
 constexpr int SCR_WIDTH = 1280;
+/// <summary>
+/// The window screen height.
+/// </summary>
 constexpr int SCR_HEIGHT = 720;
+/// <summary>
+/// Will be true if the scene is rendering text currently, else false.
+/// </summary>
 bool isWritingText = false;
-unsigned int iterator = 0;
 
+/// <summary>
+/// Initialise the application.
+/// </summary>
 void Application::Init()
 {
     _mouse_coords = { 0, 0 };
-    _targetFps = 60;
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (TTF_Init() < 0) {
         std::cout << "Error initializing TTF: " << TTF_GetError() << std::endl;
@@ -63,11 +73,17 @@ void Application::Init()
     }
 }
 
+/// <summary>
+/// Constructor to initialise values. Initalise the pointers as NULL, and set the target FPS in here.
+/// </summary>
 Application::Application()
     :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60)
 {
 }
 
+/// <summary>
+/// Run the application. Should be called after initialisation.
+/// </summary>
 void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
@@ -84,9 +100,9 @@ void Application::Run()
             case SDL_MOUSEBUTTONDOWN: {
                 std::cout << "Mouse down\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
                 
-                auto obj = static_cast<TrainScene*>(mainScene)->getPersonClick();
+                Person* obj = static_cast<TrainScene*>(mainScene)->getPersonClick();
                 if (obj != nullptr)
-                    std::cout << "Person clicked";
+                    obj->interact();
                 break;
             }
             case SDL_MOUSEMOTION:
@@ -134,41 +150,57 @@ void Application::Run()
     delete mainScene;
 }
 
-
+/// <summary>
+/// Exit the application, used for deleting the SDL processes before the destructor is called.
+/// </summary>
 void Application::Exit()
 {
     SDL_DestroyWindow(_window);
     SDL_Quit();
 }
 
-void Application::pause(long long time)
-{
-    _timer.waitUntil(time);
-}
 
-
-
+/// <summary>
+/// Check if the user is holding down a key, check for this every frame.
+/// </summary>
+/// <param name="key">The key to check for.</param>
+/// <returns>Return true if pressed, else false.</returns>
 bool Application::IsKeyPressed(unsigned short key)
 {
     return ((GetAsyncKeyState(key) & 0x8001) != 0);
 }
 
+/// <summary>
+/// Get the SDL Window. SDL_Window is the window process for SDL. Used for rendering and back-end stuff.
+/// </summary>
+/// <returns>A pointer to the SDL Window.</returns>
 SDL_Window* Application::getWindow() const
 {
     return _window;
 }
 
-
+/// <summary>
+/// Get the SDL window surface. SDL_Surface is the 'surface' on the window. It is different from a texture. Used for rendering.
+/// </summary>
+/// <returns>A pointer to the SDL surface.</returns>
 SDL_Surface* Application::getWindowSurface() const
 {
     return _winSurface;
 }
 
+/// <summary>
+/// Get the SDL renderer. The renderer is used for displaying SDL_Textures on the surface of the window. Used for rendering functions.
+/// </summary>
+/// <returns>A pointer to the SDL renderer.</returns>
 SDL_Renderer* Application::getRenderer() const
 {
     return _renderer;
 }
 
+/// <summary>
+/// Get the mouse coordinates. Usually updated after the mouse moves.
+/// </summary>
+/// <returns>An SDL_Point(Vector2 containing integers) of the mouse coordinates(x, y)</returns>
 SDL_Point Application::getMouseCoords() const
 {
     return _mouse_coords;

@@ -5,5 +5,5 @@ class NonInteractivePerson :
 {
 private:
     int _NonInteractiveReply;
-    void interact(Player p);
+    void interact();
 };
