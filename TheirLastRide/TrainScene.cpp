@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "BoxCollider.h"
+#include "Texture.h"
 
 const int x_level = 35;
 const int y_level = 480;
@@ -49,44 +50,14 @@ void TrainScene::renderCabins()
     auto seats = _cabins[_currentCabin]->getSeats();
     for (int column = 1; column < 3; column++)
     {
-        //for (int column = 0; column < 2; column++)
-        //{
-        //    if (row < 2) {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + initialX, y_offset * column + initialY});
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
-        //    else {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + 175 + initialX, y_offset * column + initialY });
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
-        //    //seats[TrainCabin::ConvertToPosition({ column, row })]->getTexture().Render(x_offset * row, y_offset * column);
-        //}
-        //for (int column = 2; column < 4; column++)
-        //{
-        //    if (row < 2) {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + initialX, y_offset * column + 200 + initialY});
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
-        //    else {
-        //        if (seats[TrainCabin::ConvertToPosition({ row, column })] != NULL) {
-        //            seats[TrainCabin::ConvertToPosition({ row, column })]->setCoords({ x_offset * row + 175 + initialX, y_offset * column + 200 + initialY});
-        //            _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ row, column })]);
-        //        }
-        //    }
         for (int row = 0; row < 6; row++)
         {
             if (row < 3) {
                 if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
                     //TODO: centre the box collider
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY });
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY});
                     std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100});
                     /*seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });*/
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
@@ -96,7 +67,7 @@ void TrainScene::renderCabins()
                     //TODO: centre the box collider
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
                     std::cout << "Collider:(" << (x_offset * row) + 100 + initialX << "," << (y_offset * column) + initialY << ")\n";
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX, (y_offset * column) + initialY, 50, 50 });
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
