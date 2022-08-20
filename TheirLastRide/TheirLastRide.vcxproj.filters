@@ -31,6 +31,15 @@
     <Filter Include="Source Files\Logic">
       <UniqueIdentifier>{a56dbacc-f162-4bae-8717-964e3ba4aa5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Data">
+      <UniqueIdentifier>{ab3642f4-e14a-4200-8383-9cd528b12035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Data\Interactable People">
+      <UniqueIdentifier>{d1add664-fc01-4a48-968f-766acf7bbb3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Assets">
+      <UniqueIdentifier>{004ee563-9cb1-4c82-baa3-89ee82c01d6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -95,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,10 +173,24 @@
     <ClInclude Include="BoxCollider.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\Ride.json">
+      <Filter>Resource Files\Data</Filter>
+    </None>
+    <None Include="Data\George.json">
+      <Filter>Resource Files\Data\Interactable People</Filter>
+    </None>
+    <None Include="Data\Sasha.json">
+      <Filter>Resource Files\Data\Interactable People</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sprites\chair.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Assets</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -9,11 +9,11 @@ const int y_level = 480;
 const int x_offset = 190;
 const float player_speed = 1.0f;
 const float text_type_speed = 25;
+bool isInteracting = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
 std::string _dT;
-SDL_Event mEvent;
 
 /// <summary>
 /// Constructor, used to initialize values.
@@ -89,7 +89,7 @@ void TrainScene::renderCabins()
 /// </summary>
 void TrainScene::Init()
 {
-    _mouseCollider = new BoxCollider({ Application::GetInstance()->getMouseCoords().x, Application::GetInstance()->getMouseCoords().y, 4, 4 });
+    _mouseCollider = new BoxCollider({ _mouse_coords.x, _mouse_coords.y, 4, 4 });
 	_cabins.push_back(new TrainCabin());
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
@@ -97,7 +97,7 @@ void TrainScene::Init()
     _objList[OBJECT_PLAYER]->setToScale(1.3);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
-    //_objList[OBJECT_TEXTBOX] = ObjectBuilder::CreateObject("Sprites//UI//dialogueBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TEXTBOX] = ObjectBuilder::CreateObject("Sprites//UI//dialogueBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_CHOICE] = ObjectBuilder::CreateObject("Sprites//UI//optionBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_GEORGE]
     //_objList[OBJECT_SASHA]
@@ -135,7 +135,6 @@ void TrainScene::Init()
     //_renderQueue.push_back(_objList[OBJECT_CHOICE]);
     
     //createBottomRowChairs();
-    _renderQueue.push_back(_objList[OBJECT_TEXT]);
    
 
 
@@ -161,9 +160,8 @@ void TrainScene::Exit()
 /// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
-   
-    HandleKeyPress();
-    _mouseCollider->moveCollider(Application::GetInstance()->getMouseCoords());
+    HandleInput();
+    _mouseCollider->moveCollider(_mouse_coords);
     if (_textQueue.size() > 0) {
         iterator += dt * text_type_speed;
         if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
@@ -202,18 +200,43 @@ void TrainScene::Render()
 /// <summary>
 /// Handle key input inside this function. Logic is to be in this function.
 /// </summary>
-void TrainScene::HandleKeyPress()
+void TrainScene::HandleInput()
 {
-   /* while (SDL_PollEvent(&mEvent)) {
-        switch (mEvent.type) {
-        case SDL_MOUSEBUTTONDOWN:
-            std::cout << "Work";
-            auto obj = getPersonClick();
-            if (obj != nullptr)
-            std::cout << "Fortnite";
+    // SDL_KEYDOWN is used for key presses.
+    // IsKeyPressed is used for key holds.
+    _mouse_coords = Application::GetInstance()->getMouseCoords();
+    //_event = *Application::GetInstance()->getEvent();
+    auto& events = Application::GetInstance()->GetFrameEvents();
+    for (auto& event : events) {
+        switch (event.type) {
+        case SDL_MOUSEBUTTONDOWN: {
+            std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
+            if (!isInteracting && !writingText) {
+                auto temp = getPersonClick();
+                if (temp != nullptr) {
+                    _interactingPerson = temp;
+                    isInteracting = true;
+                    playerInteraction();
+                }
+            }
+            else {
+                if (!writingText) {
+                    playerInteraction();
+                }
+            }
             break;
         }
-    }*/
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym) {
+            case SDLK_DOWN:
+                break;
+
+            case SDLK_UP:
+                break;
+            }
+        }
+    }
+    
     if (Application::IsKeyPressed('W'))
     {
         if (frame_count % 3 == 0)
@@ -343,6 +366,51 @@ void TrainScene::HandleKeyPress()
 }
 
 /// <summary>
+/// Called after player input.
+/// </summary>
+void TrainScene::playerInteraction(int option)
+{
+    _buttons.clear();
+    InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
+    std::vector<Node*> nodes = person->getNodes();
+    Node* currentNode = person->getCurrentNode();
+    if (option != NULL) {
+    	currentNode = nodes[currentNode->results[option]];
+    }
+    const int y_offset = -50;
+    // Before or after a conversation, _currentNode should be nullptr.
+    if (nodes.size() == 0) {
+    	std::cout << "No nodes to interact" << std::endl;
+    	return;
+    }
+    if (currentNode == nullptr)
+        currentNode = nodes.front();
+    if (currentNode == nodes.front()) {
+    	//write player text
+        _renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
+    	WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+        _renderQueue.push_back(_objList[OBJECT_TEXT]);
+        person->getCurrentNode() = nodes[currentNode->results.front()];
+    }
+    else {
+    	//write npc 
+    	WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+    	for (int i = 0; i < currentNode->results.size(); i++)
+    	{
+    		_buttons.push_back(new Button());
+    		_buttons.back()->setCoords({ _buttons.back()->getCoords().x, y_offset * i });
+            _renderQueue.push_back(_buttons.back());
+            //create the text on the button
+            _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, _buttons[i]->getCoords(), SDL_BLENDMODE_BLEND));
+    	}
+    	//render options
+    	//_currentNode = _nodes[_currentNode->results[option]];
+    }
+    return;
+
+}
+
+/// <summary>
 /// Adds text to the text queue for rendering. This function is to be called once to write the message once.
 /// (Don't call this every frame)
 /// </summary>
@@ -357,6 +425,11 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     writingText = true;
 }
 
+std::vector<Button*>* TrainScene::getButtons()
+{
+    return &_buttons;
+}
+
 /// <summary>
 /// Get the list of train cabins(logic)
 /// </summary>
@@ -365,4 +438,5 @@ std::vector<TrainCabin*> TrainScene::getCabins()
 {
     return _cabins;
 }
+
 

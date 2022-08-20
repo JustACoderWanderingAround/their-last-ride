@@ -2,6 +2,7 @@
 #include "Person.h"
 #include "Ticket.h"
 #include "RailPass.h"
+class Person;
 class Ticket;
 class InteractablePerson :
     public Person
@@ -18,6 +19,7 @@ public:
     RailPass getRailPass();
     std::string getName();
     bool getPassType();
+    Node*& getCurrentNode();
 protected:
 
     //data members
@@ -27,6 +29,7 @@ protected:
     int _ScytheUse; //for unwilling passengers only 
 
 private:
+    Node* _currentNode;
     Ticket _Ticket;
     RailPass _RailPass;
     std::string _name;

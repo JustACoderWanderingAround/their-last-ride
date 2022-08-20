@@ -22,7 +22,6 @@ bool isWritingText = false;
 /// </summary>
 void Application::Init()
 {
-    _mouse_coords = { 0, 0 };
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (TTF_Init() < 0) {
         std::cout << "Error initializing TTF: " << TTF_GetError() << std::endl;
@@ -89,62 +88,22 @@ void Application::Run()
     float time_between_frames = 1 / _targetFps;
     Scene* mainScene = new TrainScene();
     mainScene->Init();
-    auto nodes = static_cast<TrainScene*>(mainScene)->getCabins().front()->getSeats()[0]->getNodes();
-    Node* currentNode = nodes.front();
-    std::cout << nodes.size();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
-        _acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
-        while (SDL_PollEvent(&_event)) {
-            switch (_event.type) {
-            case SDL_MOUSEBUTTONDOWN: {
-                std::cout << "Mouse down\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
-                
-                Person* obj = static_cast<TrainScene*>(mainScene)->getPersonClick();
-                if (obj != nullptr)
-                    obj->interact();
-                break;
-            }
-            case SDL_MOUSEMOTION:
+        while (SDL_PollEvent(&_event) != 0)
+        {
+            GetFrameEvents().push_back(_event);
+            if (_event.type == SDL_MOUSEMOTION) {
                 SDL_GetMouseState(&_mouse_coords.x, &_mouse_coords.y);
-                break;
-            case SDL_KEYDOWN:
-                switch (_event.key.keysym.sym) {
-                case SDLK_DOWN:
-                    if (_acceptInput) {
-                        static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { 480 , 500 });
-
-                        for (int i = 0; i < currentNode->results.size(); i++)
-                        {
-                            std::cout << nodes[currentNode->results[i]]->playerText << std::endl;
-                        }
-                        if (currentNode->results.size() != 0) {
-                            currentNode = nodes[currentNode->results[0]];
-                        }
-                    }
-                    break;
-
-                case SDLK_UP:
-                    if (_acceptInput) {
-                        static_cast<TrainScene*>(mainScene)->WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK],  White }, { 480 , 500 });
-
-                        for (int i = 0; i < currentNode->results.size(); i++)
-                        {
-                            std::cout << nodes[currentNode->results[i]]->playerText << std::endl;
-                        }
-                        if (currentNode->results.size() != 0) {
-                            currentNode = nodes[currentNode->results[0]];
-                        }
-                    }
-                    break;
-                }
             }
-
         }
+        
+        //_acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
         mainScene->Update(_timer.getElapsedTime());
         mainScene->Render();
 
         _timer.waitUntil(time_between_frames);
+        GetFrameEvents().clear();
     }
     mainScene->Exit();
     delete mainScene;
@@ -204,4 +163,19 @@ SDL_Renderer* Application::getRenderer() const
 SDL_Point Application::getMouseCoords() const
 {
     return _mouse_coords;
+}
+
+SDL_Event* Application::getEvent()
+{
+    return &_event;
+}
+
+/// <summary>
+/// Get a list of events(SDL_Event) that happened during that frame
+/// </summary>
+/// <returns>Vector of SDL_Event</returns>
+std::vector<SDL_Event>& Application::GetFrameEvents()
+{
+    static std::vector<SDL_Event> frame_events;
+    return frame_events;
 }

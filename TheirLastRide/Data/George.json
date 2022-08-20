@@ -1,26 +1,38 @@
 [
 		{
 				"playerText": "Why are you travelling today?",
-				"npcText": "I'm not sure",
+				"npcText": "",
 				"results": [
-						1,
-						2,
-						3
+						1
 				]
 		},   
 		{
-				"playerText": "a",
-				"npcText": "b",
-				"results": []
+				"playerText": "",
+				"npcText": "I'm not sure",
+				"results": [
+					2, 3, 4
+				]
 		},
 		{
-				"playerText": "c",
-				"npcText": "d",
-				"results": []
-		},    
+				"playerText": "Option 1",
+				"npcText": "You have chosen option 1",
+				"results": [
+					5
+				]
+		},
 		{
-				"playerText": "e",
-				"npcText": "f",
-				"results": []
+			"playerText": "Option 2",
+			"npcText": "You have chosen option 2",
+			"results": [5]
+		},
+		{
+			"playerText": "Option 3",
+			"npcText": "You have chosen option 3",
+			"results": [5]
+		},
+		{
+			"playerText": "Done",
+			"npcText": "It is done.",
+			"results": []
 		}
 ]
