@@ -214,26 +214,6 @@ void TrainScene::HandleKeyPress()
             break;
         }
     }*/
-
-    switch (last_dir)
-    {
-    case 1:
-        _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK]));
-        break;
-
-    case 2:
-        _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_STAND_L]));
-        break;
-
-    case 3:
-        _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT]));
-        break;
-
-    case 4:
-        _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_STAND_R]));
-        break;
-    }
-
     if (Application::IsKeyPressed('W'))
     {
         if (frame_count % 3 == 0)
@@ -333,6 +313,31 @@ void TrainScene::HandleKeyPress()
             }
         }
             last_dir = 4;
+    }
+
+    if (Application::IsKeyPressed('W') == false && Application::IsKeyPressed('A') == false && Application::IsKeyPressed('S') == false && Application::IsKeyPressed('D') == false)
+    {
+        switch (last_dir)
+        {
+        case 1:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK]));
+            break;
+
+        case 2:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_STAND_L]));
+            break;
+
+        case 3:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT]));
+            break;
+
+        case 4:
+            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_STAND_R]));
+            break;
+        }
+    }
+    if (Application::IsKeyPressed) {
+        renderTextBox = true;
     }
    
 }
