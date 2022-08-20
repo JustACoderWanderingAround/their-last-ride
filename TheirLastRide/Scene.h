@@ -2,14 +2,13 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include "Application.h"
-#include "Player.h"
 #include "Ride.h"
 /// <summary>
 /// Scenes are to be derived classes of this abstract class.
 /// </summary>
 class Scene
 {
-Player* mainPlayer;
+//Player* mainPlayer;
 Ride* mainRide;
 public:
 	Scene();

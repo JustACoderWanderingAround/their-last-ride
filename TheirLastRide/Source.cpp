@@ -8,10 +8,10 @@
 
 int main(void)
 {
-	Application* app = Application::GetInstance();
+	/*Application* app = Application::GetInstance();
 	app ->Init();
 	app ->Run();
-	app ->Exit();
+	app ->Exit();*/
 	/*Ticket* ticket1 = new Ticket("Stop A", "Stop B", 1);
 	RailPass* railpass1 = new RailPass("name", false, 1);
 	Player* playerOne = new Player({ "Stop A", "Stop B" });
@@ -24,10 +24,10 @@ int main(void)
 	std::cout << playerOne->compareToBook(*pass1, 4) << std::endl;
 	std::cout << playerOne->compareToBook(*pass1, 5) << std::endl;
 	std::cout << playerOne->compareToBook(*pass1, 6) << std::endl;*/
-	/*Ride* ride1 = new Ride();
+	Ride* ride1 = new Ride();
 	ride1->loadAttributes();
 	std::cout << ride1->start;
 	std::cout << ride1->stops[0];
-	std::cout << ride1->stops[1];*/
+	std::cout << ride1->stops[1];
 	return 0;
 }
