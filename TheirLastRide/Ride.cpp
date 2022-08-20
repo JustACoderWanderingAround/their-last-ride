@@ -24,13 +24,14 @@ Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)
     _interactableNumber = iN;
     _nonInteractableNumber = nN;
 }
-Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN, int cN)
+Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN, int cN, int d)
 {
 	start = str;
 	stops = stp;
 	_interactableNumber = iN;
 	_nonInteractableNumber = nN;
 	_carriageNum = cN;
+	_date = d;
 }
 
 Ride::~Ride()
