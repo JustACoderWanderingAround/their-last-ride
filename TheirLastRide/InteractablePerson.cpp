@@ -68,7 +68,7 @@ InteractablePerson::InteractablePerson(const std::string& name)
 {
 	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
 	_txt.loadImage(filepath);
-	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
+	_txt.setBlendMode(SDL_BLENDMODE_NONE);
 	loadNodes();
 
 }

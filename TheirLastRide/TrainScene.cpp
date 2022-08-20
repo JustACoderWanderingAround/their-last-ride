@@ -207,7 +207,16 @@ void TrainScene::HandleInput()
     _mouse_coords = Application::GetInstance()->getMouseCoords();
     //_event = *Application::GetInstance()->getEvent();
     auto& events = Application::GetInstance()->GetFrameEvents();
+    int option = NULL;
     for (auto& event : events) {
+        for (auto button : _buttons)
+        {
+            int temp = button->handleEvent(&event);
+            if (temp != 0) {
+                option = temp;
+                break;
+            }
+        }
         switch (event.type) {
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
@@ -220,8 +229,13 @@ void TrainScene::HandleInput()
                 }
             }
             else {
-                if (!writingText) {
-                    playerInteraction();
+                if (!writingText) {         
+                    if (option != 0) {
+                        playerInteraction(option);
+                    }
+                    else {
+                        playerInteraction();
+                    }
                 }
             }
             break;
@@ -370,14 +384,27 @@ void TrainScene::HandleInput()
 /// </summary>
 void TrainScene::playerInteraction(int option)
 {
-    _buttons.clear();
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
-    std::vector<Node*> nodes = person->getNodes();
-    Node* currentNode = person->getCurrentNode();
-    if (option != NULL) {
-    	currentNode = nodes[currentNode->results[option]];
+    if (_buttons.size() != 0) {
+        for (int i = 0; i < person->getCurrentNode()->results.size() * 2; i++)
+        {
+            if (_renderQueue.back() != nullptr)
+                delete _renderQueue.back();
+            _renderQueue.pop_back();
+        }
     }
-    const int y_offset = -50;
+    _buttons.clear();
+    std::vector<Node*> nodes = person->getNodes();
+    Node* currentNode;
+    if (option != NULL) {
+        person->getCurrentNode() = nodes[person->getCurrentNode()->results[option - 1]];
+    }
+    currentNode = person->getCurrentNode();
+    const int button_x = 300;
+    const int button_y = 115;
+    const int y_offset = -65;
+    const int button_text_offset_x = 625;
+    const int button_text_offset_y = 270;
     // Before or after a conversation, _currentNode should be nullptr.
     if (nodes.size() == 0) {
     	std::cout << "No nodes to interact" << std::endl;
@@ -385,6 +412,7 @@ void TrainScene::playerInteraction(int option)
     }
     if (currentNode == nullptr)
         currentNode = nodes.front();
+
     if (currentNode == nodes.front()) {
     	//write player text
         _renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
@@ -397,11 +425,12 @@ void TrainScene::playerInteraction(int option)
     	WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
     	for (int i = 0; i < currentNode->results.size(); i++)
     	{
-    		_buttons.push_back(new Button());
-    		_buttons.back()->setCoords({ _buttons.back()->getCoords().x, y_offset * i });
+    		_buttons.push_back(new Button(i + 1));
+    		_buttons.back()->setCoords({ button_x, button_y + y_offset * i });
+            _buttons.back()->getCollider() = new BoxCollider({ button_x + 600, button_y + y_offset * i + 250, 300, 60 });
             _renderQueue.push_back(_buttons.back());
             //create the text on the button
-            _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, _buttons[i]->getCoords(), SDL_BLENDMODE_BLEND));
+            _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { _buttons[i]->getCoords().x + button_text_offset_x, _buttons[i]->getCoords().y + button_text_offset_y }, SDL_BLENDMODE_BLEND));
     	}
     	//render options
     	//_currentNode = _nodes[_currentNode->results[option]];
