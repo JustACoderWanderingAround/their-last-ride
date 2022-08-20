@@ -54,6 +54,7 @@ class Scene;
 class TrainScene : public Scene
 {
 private:
+	int level;
 	unsigned int _currentCabin;
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;

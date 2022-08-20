@@ -24,11 +24,11 @@ int main(void)
 	std::cout << playerOne->compareToBook(*pass1, 4) << std::endl;
 	std::cout << playerOne->compareToBook(*pass1, 5) << std::endl;
 	std::cout << playerOne->compareToBook(*pass1, 6) << std::endl;*/
-	Ride* ride1 = new Ride();
-	ride1->loadAttributes(2);
-	std::cout << ride1->start;
-	std::cout << ride1->stops[0];
-	std::cout << ride1->stops[1];
-	std::cout << ride1->stops[2];
+	//Ride* ride1 = new Ride();
+	//ride1->loadAttributes(2);
+	//std::cout << ride1->start;
+	//std::cout << ride1->stops[0];
+	//std::cout << ride1->stops[1];
+	//std::cout << ride1->stops[2];
 	return 0;
 }

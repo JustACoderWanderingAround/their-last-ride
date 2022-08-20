@@ -1,5 +1,5 @@
 #include "Scene.h"
-
+#include "Player.h"
 Scene::Scene()
 
 {
@@ -11,4 +11,9 @@ Scene::Scene(int rideNum)
 {
 	mainRide = new Ride();
 	mainRide->loadAttributes(rideNum);
+}
+
+void Scene::setPlayer(Player* p)
+{
+	mainPlayer = p;
 }

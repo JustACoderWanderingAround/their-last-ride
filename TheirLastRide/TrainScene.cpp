@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "BoxCollider.h"
+#include "Player.h"
 
 const int x_level = 35;
 const int y_level = 480;
@@ -19,9 +20,13 @@ std::string _dT;
 /// Constructor, used to initialize values.
 /// </summary>
 TrainScene::TrainScene()
-    : writingText(false), _displayText(" "), _currentCabin(0)
+    : writingText(false), _displayText(" "), _currentCabin(0), level(1)
 {
-    
+    mainRide->loadAttributes(level);
+    for (auto stopLst : mainRide->stops)
+    {
+        std::cout << stopLst << std::endl;
+    }
 }
 
 /// <summary>
@@ -388,7 +393,7 @@ void TrainScene::playerInteraction(int option)
     if (currentNode == nodes.front()) {
     	//write player text
         _renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
-    	WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+    	WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK]}, {480, 500});
         _renderQueue.push_back(_objList[OBJECT_TEXT]);
         person->getCurrentNode() = nodes[currentNode->results.front()];
     }
