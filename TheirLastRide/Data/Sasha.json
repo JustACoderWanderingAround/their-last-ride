@@ -1,33 +1,48 @@
 [
     {
-        "playerText": "n",
-        "npcText": "d",
+        "playerText": "You: Tickets please.",
+        "npcText": "",
         "results": [
-            1,
-            2,
-            3
+            1
         ]
     },
     {
-        "playerText": "e",
-        "npcText": "f",
+        "playerText": "",
+        "npcText": "Here you go.",
         "results": [
+            2,
+            3,
             4
         ]
     },
     {
-        "playerText": "b",
-        "npcText": "c",
-        "results": []
+        "playerText": "How're you doing today?",
+        "npcText": "I feel swell! I'm going to Swegsville to Visit mother.",
+        "results": [5]
     },
     {
-        "playerText": "d",
-        "npcText": "g",
-        "results": []
+        "playerText": "That perfume smells nice. Did you buy it at the station gift shop?",
+        "npcText": "Indeed I did! I bought some for mother. She lives in Swegsville and I'm visiting her today.",
+        "results": [5]
     },
     {
-        "playerText": "b",
-        "npcText": "x",
+        "playerText": "Where are you travelling to?",
+        "npcText": "Swegsville. To visit mother.",
+        "results": [5]
+    },
+    {
+        "playerText": "We don't serve Swegsville.",
+        "npcText": "Do you not?",
+        "results": [6]
+    },
+    {
+        "playerText": "Swegsville is served by the Winson's Arch North - Kilburn East Railway.",
+        "npcText": "Oh no. Where can I find them then?",
+        "results": [7]
+    },
+    {
+        "playerText": "Platform 11.",
+        "npcText": "Thank you!",
         "results": []
     }
 ]
