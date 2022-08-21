@@ -193,6 +193,10 @@ void TrainScene::Render()
     for (auto i : _renderQueue) {
         i->getTexture().Render(i->getCoords().x, i->getCoords().y);
     }
+    if (isInteracting) {
+        _objList[OBJECT_TEXTBOX]->getTexture().Render(_objList[OBJECT_TEXTBOX]->getCoords().x, _objList[OBJECT_TEXTBOX]->getCoords().y);
+        _objList[OBJECT_TEXT]->getTexture().Render(_objList[OBJECT_TEXT]->getCoords().x, _objList[OBJECT_TEXT]->getCoords().y);
+    }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
 }
@@ -221,22 +225,15 @@ void TrainScene::HandleInput()
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (!isInteracting && !writingText) {
-                auto temp = getPersonClick();
-                if (temp != nullptr) {
-                    _interactingPerson = temp;
+                _interactingPerson = getPersonClick();
+                if (_interactingPerson != nullptr) {
                     isInteracting = true;
                     playerInteraction();
                 }
             }
             else {
-                if (!writingText) {         
-                    if (option != 0) {
-                        playerInteraction(option);
-                    }
-                    else {
-                        playerInteraction();
-                    }
-                }
+                if (!writingText)         
+                    playerInteraction(option);               
             }
             break;
         }
@@ -411,6 +408,15 @@ void TrainScene::playerInteraction(int option)
     }
     if (currentNode == nullptr)
         currentNode = nodes.front();
+    if (_dT == currentNode->npcText && currentNode->results.size() == 0) {
+        for (int i = 0; i < 2; i++)
+        {
+            _renderQueue.pop_back();
+        }
+        person->getCurrentNode() = nullptr;
+        _interactingPerson = nullptr;
+        isInteracting = false;
+    }
 
     if (currentNode == nodes.front()) {
     	//write player text
@@ -431,8 +437,6 @@ void TrainScene::playerInteraction(int option)
             //create the text on the button
             _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { _buttons[i]->getCoords().x + button_text_offset_x, _buttons[i]->getCoords().y + button_text_offset_y }, SDL_BLENDMODE_BLEND));
     	}
-    	//render options
-    	//_currentNode = _nodes[_currentNode->results[option]];
     }
     return;
 
