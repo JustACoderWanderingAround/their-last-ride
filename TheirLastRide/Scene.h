@@ -20,5 +20,6 @@ public:
 	virtual void Render() = 0;
 	virtual void Exit() = 0;
 	void setPlayer(Player* p);
+	void setRide(Ride* r);
 };
 

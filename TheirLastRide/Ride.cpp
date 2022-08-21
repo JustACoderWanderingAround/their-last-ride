@@ -15,6 +15,8 @@ void from_json(const json& j,Ride& n) {
 
 Ride::Ride()
 {
+	_interactableNumber = 1;
+	_nonInteractableNumber = 1;
 }
 
 Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)

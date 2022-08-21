@@ -17,3 +17,8 @@ void Scene::setPlayer(Player* p)
 {
 	mainPlayer = p;
 }
+
+void Scene::setRide(Ride* r)
+{
+	mainRide = r;
+}
