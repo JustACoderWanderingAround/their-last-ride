@@ -10,6 +10,7 @@ class ObjectBuilder
 public:
 	
 	static Object* CreateObject(const std::string& path, const SDL_Point& pos, const SDL_BlendMode& bm);
+	static Object* CreateObject(const std::string& path, const SDL_Point& pos, BoxCollider* bc, const SDL_BlendMode& bm);
 	static Object* CreateTextObject(const Text& text, const SDL_Point& pos, const SDL_BlendMode& bm);
 };
 

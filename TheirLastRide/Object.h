@@ -11,6 +11,7 @@ protected:
 public:
 	Object();
 	Object(const Texture& t, const SDL_Point& c);
+	Object(const Texture& t, const SDL_Point& c, BoxCollider* bc);
 	virtual ~Object();
 	Texture getTexture() const;
 	SDL_Point getCoords() const;
