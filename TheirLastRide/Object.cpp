@@ -10,6 +10,11 @@ Object::Object(const Texture& t, const SDL_Point& c)
 {
 }
 
+Object::Object(const Texture& t, const SDL_Point& c, BoxCollider* bc)
+    : _txt(t), _coords(c), _collider(bc)
+{
+}
+
 Object::~Object()
 {
 

@@ -18,6 +18,17 @@ Object* ObjectBuilder::CreateObject(const std::string& path, const SDL_Point& po
     return new Object(_temptxt, pos);
 }
 
+Object* ObjectBuilder::CreateObject(const std::string& path, const SDL_Point& pos, BoxCollider* bc, const SDL_BlendMode& bm)
+{
+    Texture _temptxt;
+    if (!_temptxt.loadImage(path)) {
+        std::cout << "Failed to load image.\n";
+        return nullptr;
+    }
+    _temptxt.setBlendMode(bm);
+    return new Object(_temptxt, pos);
+}
+
 /// <summary>
 /// Create the texture for the text and create an object with that texture with the provided position.
 /// </summary>
