@@ -66,6 +66,8 @@ private:
 	SDL_Point _mouse_coords;
 	SDL_Event _event;
 	Person* _interactingPerson;
+	int offSetX;
+	int offSetY;
 public:
 	bool writingText;
 	TrainScene();
@@ -77,11 +79,7 @@ public:
 	void Render();
 	void HandleInput();
 	void playerInteraction(int option = NULL);
-	int offSetX;
-	int offSetY;
-	std::vector<Button*>* getButtons();
 	void WriteText(const Text& text, const SDL_Point& pos);
 	std::vector<TrainCabin*> getCabins();
-	bool renderTextBox;
 };
 

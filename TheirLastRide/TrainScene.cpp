@@ -369,11 +369,6 @@ void TrainScene::HandleInput()
             last_dir = 4;
     }
    
-    
-    if (Application::IsKeyPressed) {
-        renderTextBox = true;
-    }
-   
 }
 
 /// <summary>
@@ -456,11 +451,6 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     _textQueue.push_back(text);
     _objList[OBJECT_TEXT]->setCoords(pos);
     writingText = true;
-}
-
-std::vector<Button*>* TrainScene::getButtons()
-{
-    return &_buttons;
 }
 
 /// <summary>
