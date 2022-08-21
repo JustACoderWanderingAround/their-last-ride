@@ -20,5 +20,6 @@ public:
 	void setToScale(float scalar);
 	void setToScale(float x, float y);
 	void updateText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_BlendMode& bm);
+	void updateText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_BlendMode& bm, int width);
 };
 

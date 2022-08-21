@@ -58,6 +58,10 @@ void TrainScene::renderCabins()
     auto seats = _cabins[_currentCabin]->getSeats();
     for (int column = 1; column < 3; column++)
     {
+        if (column == 2) {
+            _renderQueue.push_back(_objList[OBJECT_PLAYER]);
+            _renderQueue.push_back(_objList[OBJECT_CHAIR_ROW]);
+        }
         for (int row = 0; row < 6; row++)
         {
             if (row < 3) {
@@ -71,6 +75,7 @@ void TrainScene::renderCabins()
                 }
             }
             else {
+                
                 if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
                     //TODO: centre the box collider
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
@@ -78,10 +83,11 @@ void TrainScene::renderCabins()
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
+                
             }
         }
-        
     }
+    
 }
 
 /// <summary>
@@ -129,8 +135,6 @@ void TrainScene::Init()
     }
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
-    _renderQueue.push_back(_objList[OBJECT_PLAYER]);
-    _renderQueue.push_back(_objList[OBJECT_CHAIR_ROW]);
     renderCabins();
     //_renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
     //_renderQueue.push_back(_objList[OBJECT_CHOICE]);
@@ -275,7 +279,7 @@ void TrainScene::HandleInput()
             offSetY -= player_speed;
         }
        
-        if (frame_count < 180);
+        if (frame_count < 180)
         {
             _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK_WALK_1]));
         }
@@ -302,7 +306,7 @@ void TrainScene::HandleInput()
         }
        // offSetX -= player_speed;
 
-        if (frame_count < 180);
+        if (frame_count < 180)
         {
             _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_L_1]));
         }
@@ -327,7 +331,7 @@ void TrainScene::HandleInput()
             offSetY += player_speed;
         }
 
-        if (frame_count < 180);
+        if (frame_count < 180)
         {
             _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT_WALK_1]));
         }
@@ -352,7 +356,7 @@ void TrainScene::HandleInput()
             offSetX += player_speed;
         }
 
-        if (frame_count < 180);
+        if (frame_count < 180)
         {
             _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_R_1]));
         }
@@ -436,7 +440,7 @@ void TrainScene::playerInteraction(int option)
             _buttons.back()->getCollider() = new BoxCollider({ button_x + 600, button_y + y_offset * i + 250, 300, 60 });
             _renderQueue.push_back(_buttons.back());
             //create the text on the button
-            _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK_SMALL], White }, { _buttons[i]->getCoords().x + button_text_offset_x, _buttons[i]->getCoords().y + button_text_offset_y }, SDL_BLENDMODE_BLEND));
+            _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK_SMALL], White }, { _buttons[i]->getCoords().x + button_text_offset_x, _buttons[i]->getCoords().y + button_text_offset_y }, SDL_BLENDMODE_BLEND, 200));
     	}
     }
     return;
