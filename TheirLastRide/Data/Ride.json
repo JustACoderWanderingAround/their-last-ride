@@ -1,7 +1,19 @@
 [
   {
-    "start": "Noston Central",
-    "stops": ["Noston East", "Ewing Bridge"]
+    "start": "NOSTON CTRL",
+    "stops": ["NOSTON EAST", "EWING BRIDGE"],
+    "invalid": ["BENTON CTRL", "LLYN L LVL", "W ARCH"]
+  },
+  {
+    "start": "NOSTON CTRL",
+    "stops": [ "NOSTON EAST", "EWING BRIDGE", "FORT KNIGHT", "HATFIELD H." ],
+    "invalid": ["BENTON CTRL", "LLYN L LVL", "W ARCH", "KIRKEN VIC", "TORQUAY TOWN"]
+  },
+  {
+    "start": "NOSTON CTRL",
+    "stops": [ "NOSTON EAST", "EWING BRIDGE", "EWING TOWN", "HARBOURSIDE" ],
+    "invalid": ["BENTON CTRL", "BENTON SID ST", "LLYN L LVL", "LLYN BY SEA", "W ARCH", "KIRKEN VIC", "TORQUAY TOWN", "TORQUAY HAM RD", "HATFIELD H", "FORT KNIGHT", "HATFIELD H"]
   }
 ]
+
 

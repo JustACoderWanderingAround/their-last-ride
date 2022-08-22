@@ -20,6 +20,7 @@ public:
     std::string getName();
     bool getPassType();
     Node*& getCurrentNode();
+    void setTicket(Ticket* t);
 protected:
 
     //data members

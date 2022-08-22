@@ -2,16 +2,39 @@
 
 Ticket::Ticket()
 {
-    _IssuingStn = "Noston Central";
-    _Destination = "Noston East";
+    _IssuingStn = "NOSTON CTRL";
+    _Destination = "NOSTON EAST";
     _IssueDate = 1;
 }
 
-Ticket::Ticket(std::string iS, std::string dS, int iD)
+Ticket::Ticket(std::vector<std::string> dS, std::vector<std::string> randStops, int iD)
 {
-    _IssuingStn = iS;
-    _Destination = dS;
+    int i = rand() % dS.size();
+    int j = rand() % 10;
+    int k = 0;
+    int l = 0;
+    
+    _IssuingStn = "NOSTON CTRL";
+    _Destination = dS[i];
     _IssueDate = iD;
+
+    switch (j)
+    {
+    case 0:
+        k = rand() % dS.size();
+        _IssuingStn = dS[k];
+        break;
+    
+    case 1:
+        l = rand() % randStops.size();
+        _Destination = randStops[k];
+        break;
+
+    case 2:
+        _IssueDate = rand() % 31 + 1;
+        break;
+
+    }
 }
 
 Ticket::~Ticket()

@@ -1,20 +1,23 @@
 #include "Ride.h"
-#include <iostream>ad
+#include <iostream>
 #include <fstream>
 #include "json.hpp"
 using json = nlohmann::json;
 
 void to_json(json& j, const Ride& n) {
-	j = json{ {"start", n.start}, {"stops", n.stops }};
+	j = json{ {"start", n.start}, {"stops", n.stops }, {"invalid", n.invalidStops}};
 }
 
 void from_json(const json& j,Ride& n) {
 	j.at("start").get_to(n.start);
 	j.at("stops").get_to(n.stops);
+	j.at("invalid").get_to(n.invalidStops);
 }
 
 Ride::Ride()
 {
+	_interactableNumber = 1;
+	_nonInteractableNumber = 1;
 }
 
 Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)
@@ -50,7 +53,7 @@ int Ride::getNonInteractable()
     return _nonInteractableNumber;
 }
 
-bool Ride::loadAttributes()
+bool Ride::loadAttributes(int rideNumber)
 {
 	//TODO: make this into a loadJson function
 	std::ifstream f("Data\\Ride.json");
@@ -63,12 +66,17 @@ bool Ride::loadAttributes()
 		j = json::parse(f);
 	}
 	std::vector<Ride> testRide = j.get<std::vector<Ride>>();
-	start = testRide[0].start;
-	stops = testRide[0].stops;
+	start = testRide[rideNumber].start;
+	stops = testRide[rideNumber].stops;
+	invalidStops = testRide[rideNumber].invalidStops;
 	//std::cout << _nodes[0];
 	return true;
 	/*for (int i = 0; i < tempNodes2.size(); i++)
 	{
 		std::cout << _nodes[i]->playerText << std::endl;
 	}*/
+}
+int Ride::getDate()
+{
+	return _date;
 }

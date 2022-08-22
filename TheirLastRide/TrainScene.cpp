@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "BoxCollider.h"
+#include "Player.h"
 #include "Texture.h"
 #include <math.h>
 const int x_level = 35;
@@ -20,9 +21,13 @@ std::string _dT;
 /// Constructor, used to initialize values.
 /// </summary>
 TrainScene::TrainScene()
-    : writingText(false), _displayText(" "), _currentCabin(0)
+    : writingText(false), _displayText(" "), _currentCabin(0), level(1)
 {
-    
+    mainRide->loadAttributes(level);
+    for (auto stopLst : mainRide->stops)
+    {
+        std::cout << stopLst << std::endl;
+    }
 }
 
 /// <summary>
@@ -71,6 +76,7 @@ void TrainScene::renderCabins()
                     std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100});
                     /*seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });*/
+                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(mainRide->stops, mainRide->invalidStops, mainRide->getDate()));
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
@@ -140,9 +146,9 @@ void TrainScene::Init()
     //_renderQueue.push_back(_objList[OBJECT_CHOICE]);
     
     //createBottomRowChairs();
-   
-
-
+    Player* testPlayer = new Player(mainRide->stops);
+    setPlayer(testPlayer);
+    date = mainPlayer->getDay();
     offSetX = 700;
     offSetY = 300;
 }
@@ -421,7 +427,7 @@ void TrainScene::playerInteraction(int option)
     if (currentNode == nodes.front()) {
     	//write player text
         _renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
-    	WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+    	WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK]}, {480, 500});
         _renderQueue.push_back(_objList[OBJECT_TEXT]);
         person->getCurrentNode() = nodes[currentNode->results.front()];
     }
