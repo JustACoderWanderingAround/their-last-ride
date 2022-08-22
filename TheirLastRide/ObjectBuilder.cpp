@@ -26,7 +26,7 @@ Object* ObjectBuilder::CreateObject(const std::string& path, const SDL_Point& po
         return nullptr;
     }
     _temptxt.setBlendMode(bm);
-    return new Object(_temptxt, pos);
+    return new Object(_temptxt, pos, bc);
 }
 
 /// <summary>

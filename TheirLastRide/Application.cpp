@@ -3,6 +3,8 @@
 #include <WinUser.h>
 #include <iostream>
 #include <SDL_ttf.h>
+#include "Ride.h"
+#include "Player.h"
 
 /// <summary>
 /// The window screen width.
@@ -86,7 +88,12 @@ Application::Application()
 void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
+    Ride* trainRide1 = new Ride();
+    trainRide1->loadAttributes(0);
+    Player* player1 = new Player(trainRide1->stops);
     Scene* mainScene = new TrainScene();
+    mainScene->setRide(trainRide1);
+    mainScene->setPlayer(player1);
     mainScene->Init();
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
