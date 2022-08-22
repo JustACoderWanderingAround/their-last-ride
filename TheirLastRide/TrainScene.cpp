@@ -200,7 +200,7 @@ void TrainScene::Init()
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     renderCabins();
-    _renderQueue.push_back(_objList[OBJECT_NOTEBOOK]);
+    /*_renderQueue.push_back(_objList[OBJECT_NOTEBOOK]);*/
     //_renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
     //_renderQueue.push_back(_objList[OBJECT_CHOICE]);
     
@@ -288,6 +288,10 @@ void TrainScene::Render()
             _objList[OBJECT_TICKET_DOI]->getTexture().Render(_objList[OBJECT_TICKET_DOI]->getCoords().x, _objList[OBJECT_TICKET_DOI]->getCoords().y);
         }
     }
+    _objList[OBJECT_NOTEBOOK]->getTexture().Render(_objList[OBJECT_NOTEBOOK]->getCoords().x, _objList[OBJECT_NOTEBOOK]->getCoords().y);
+    if (notebookOpen) {
+        _objList[OBJECT_NOTEBOOK_PAGE]->getTexture().Render(_objList[OBJECT_NOTEBOOK_PAGE]->getCoords().x, _objList[OBJECT_NOTEBOOK_PAGE]->getCoords().y);
+    }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
 }
@@ -320,7 +324,7 @@ void TrainScene::HandleInput()
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                 {
                     ticketFront = true;
-
+                    break;
                 }
 
                 else
@@ -328,6 +332,7 @@ void TrainScene::HandleInput()
                     if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
                     {
                         ticketFront = false;
+                        break;
                     }
                 }
             }
@@ -335,7 +340,7 @@ void TrainScene::HandleInput()
             if (_objList[OBJECT_NOTEBOOK]->getCollider()->isColliding(_mouseCollider)) {
                 if (!notebookOpen) {
                     _objList[OBJECT_NOTEBOOK]->setTexture(*(_nbSprites[NOTEBOOK_O]));
-                    _renderQueue.push_back(_objList[OBJECT_NOTEBOOK_PAGE]);
+                    /*_renderQueue.push_back(_objList[OBJECT_NOTEBOOK_PAGE]);*/
                     _objList[OBJECT_NOTEBOOK]->setCoords({ 0, 200 });
                     _objList[OBJECT_NOTEBOOK]->getCollider()->moveCollider({ 0, 200 });
                     notebookOpen = true;
@@ -343,7 +348,7 @@ void TrainScene::HandleInput()
                 else
                 {
                     _objList[OBJECT_NOTEBOOK]->setTexture(*(_nbSprites[NOTEBOOK_C]));
-                    _renderQueue.pop_back();
+                   /* _renderQueue.pop_back();*/
                     _objList[OBJECT_NOTEBOOK]->setCoords({ 0, 600 });
                     _objList[OBJECT_NOTEBOOK]->getCollider()->moveCollider({ 0, 600 });
                     notebookOpen = false;
@@ -441,10 +446,10 @@ void TrainScene::HandleInput()
             }
         }
 
-        if (_cabins[_currentCabin + 1] != nullptr && offSetX < 180 )
+        /*if (_cabins[_currentCabin + 1] != nullptr && offSetX < 180 )
         {
             _cabins[_currentCabin + 1];
-        }
+        }*/
 
         last_dir = 2; 
     }
