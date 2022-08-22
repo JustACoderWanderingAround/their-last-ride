@@ -113,6 +113,7 @@ void Application::Run()
     _scenes[SCENE_TRAIN]->setPlayer(player1);
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
+        _mainScene = _scenes[0];
         while (SDL_PollEvent(&_event) != 0)
         {
             GetFrameEvents().push_back(_event);
