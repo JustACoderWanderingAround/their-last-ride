@@ -9,7 +9,7 @@ TrainCabin::TrainCabin()
 {
 	srand(time(0));
 	_seats.fill(nullptr);
-	fillSeats();
+	/*fillSeats();*/
 }
 
 TrainCabin::~TrainCabin()
@@ -58,7 +58,7 @@ void TrainCabin::fillSeats()
 	_seats[0] = new InteractablePerson(names[0]);
 }
 
-std::array<Person*, number_of_seats> TrainCabin::getSeats()
+std::array<Person*, number_of_seats>& TrainCabin::getSeats()
 {
 	return _seats;
 }

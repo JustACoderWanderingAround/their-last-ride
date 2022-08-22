@@ -34,6 +34,7 @@ enum OBJECT {
 	OBJECT_RAILPASS_NAME,
 	OBJECT_RAILPASS_EXPIRY,
 	OBJECT_STAMPER,
+	OBJECT_PUNCHER,
 	NUM_OBJECT
 };
 
@@ -109,6 +110,7 @@ public:
 	void WriteText(const Text& text, const SDL_Point& pos);
 	float getDistance(const SDL_Point& first, const SDL_Point& second);
 	std::vector<TrainCabin*> getCabins();
+	void fillCabins();
 	bool renderTextBox;
 	bool notebookOpen;
 	int date;

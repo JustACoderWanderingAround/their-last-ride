@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Texture.h"
 #include <math.h>
+#include <string>
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
@@ -36,7 +37,7 @@ bool inBoundsDown(int y)
 TrainScene::TrainScene()
     : writingText(false), _displayText(" "), _currentCabin(0), level(1)
 {
-    mainRide->loadAttributes(level);
+    /*mainRide->loadAttributes(level);*/
     for (auto stopLst : mainRide->stops)
     {
         std::cout << stopLst << std::endl;
@@ -116,9 +117,9 @@ void TrainScene::renderCabins()
 void TrainScene::Init()
 {
     _mouseCollider = new BoxCollider({ _mouse_coords.x, _mouse_coords.y, 4, 4 });
-    /*for (int i = 0; i < mainRide->getCarriageNum(); i++) {*/
+    for (int i = 0; i < mainRide->getCarriageNum(); i++) {
         _cabins.push_back(new TrainCabin());
-    /*}*/
+    }
 	
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
@@ -198,8 +199,11 @@ void TrainScene::Init()
         _passTextureList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
     }
     
-    _objList[OBJECT_STAMPER] = ObjectBuilder::CreateObject("Sprites//Items//deathStamp.png", { 700, 0 }, new BoxCollider({700, 0, 50, 100}), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_STAMPER] = ObjectBuilder::CreateObject("Sprites//Items//deathStamp.png", { 0, 0 }, new BoxCollider({0, 0, 50, 100}), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_STAMPER]->setToScale(0.5);
+    _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", { 700, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 100, 100 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PUNCHER]->setToScale(0.4);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     renderCabins();
@@ -214,6 +218,7 @@ void TrainScene::Init()
     playerX = 700;
     playerY = 300;
     notebookOpen = false;
+    fillCabins();
 }
 
 /// <summary>
@@ -235,6 +240,7 @@ void TrainScene::Exit()
 void TrainScene::Update(double dt)
 {
     HandleInput();
+    /*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
     _mouseCollider->moveCollider(_mouse_coords);
     if (_textQueue.size() > 0) {
         iterator += dt * text_type_speed;
@@ -292,6 +298,7 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
         }
         RenderAtCoords(_objList[OBJECT_STAMPER]);
+        RenderAtCoords(_objList[OBJECT_PUNCHER]);
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
@@ -326,6 +333,12 @@ void TrainScene::HandleInput()
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (isInteracting)
             {
+                if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
+                {
+                    static_cast<InteractablePerson*>(_interactingPerson)->getTicket().setClippedState(true);
+                    _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
+                    break;
+                }
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                 {
                     ticketFront = true;
@@ -340,6 +353,7 @@ void TrainScene::HandleInput()
                         break;
                     }
                 }
+
             }
             
             if (_objList[OBJECT_NOTEBOOK]->getCollider()->isColliding(_mouseCollider)) {
@@ -524,6 +538,11 @@ void TrainScene::HandleInput()
 void TrainScene::playerInteraction(int option)
 {
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
+    _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket().getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_TO]->updateText(person->getTicket().getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_FROM]->updateText(mainRide->start, Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass().getName(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass().getExpiry() + 1), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     if (_buttons.size() != 0) {
         for (int i = 0; i < person->getCurrentNode()->results.size() * 2; i++)
         {
@@ -562,6 +581,10 @@ void TrainScene::playerInteraction(int option)
     }
     Ticket comparisonTicket =person->getTicket();
     RailPass comparisonRailpass = person->getRailPass();
+    if (_mouseCollider->isColliding(person->getCollider()) && SDL_MOUSEBUTTONDOWN) {
+        std::find(mainRide->stops.begin(), mainRide->stops.end(), comparisonTicket.getDestination()) != mainRide->stops.end();
+    }
+
 
     if (currentNode == nodes.front()) {
     	//write player text
@@ -611,6 +634,49 @@ void TrainScene::RenderAtCoords(Object* obj)
 float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)
 {
     return sqrt(pow(second.x - first.x, 2) + pow(second.y - first.y, 2));
+}
+
+void TrainScene::fillCabins()
+{
+    std::vector<int> positions;
+    std::vector < std::string> names = mainRide->interactablePeople;
+    int newPosition;
+    TrainCabin* cabin;
+    for (int i = 0; i < number_of_seats; i++)
+    {
+        if (TrainCabin::ConvertToPoint(i).x == 0 || TrainCabin::ConvertToPoint(i).x == 3)
+            positions.push_back(i);
+    }
+    size_t no_of_positions = positions.size();
+    for (int i = 0; i < mainRide->getNonInteractable(); i++)
+    {
+        newPosition = positions[rand() % no_of_positions];
+        cabin = _cabins[rand() % _cabins.size()];
+        if (cabin->getSeats()[newPosition] == nullptr)
+            cabin->getSeats()[newPosition] = new NonInteractivePerson();
+        else
+            i--;
+    }
+    positions.clear();
+    for (int i = 0; i < number_of_seats; i++)
+    {
+        if (TrainCabin::ConvertToPoint(i).x == 1 || TrainCabin::ConvertToPoint(i).x == 2)
+            positions.push_back(i);
+    }
+    no_of_positions = positions.size();
+    int nameIndex;
+    for (int i = 0; i < mainRide->getInteractable(); i++)
+    {
+        newPosition = positions[rand() % no_of_positions];
+        cabin = _cabins[rand() % _cabins.size()];
+        nameIndex = rand() % names.size();
+        if (cabin->getSeats()[newPosition] == nullptr) {
+            cabin->getSeats()[newPosition] = new InteractablePerson(names[nameIndex]);
+            names.erase(names.begin() + nameIndex);
+        }
+        else
+            i--;
+    }
 }
 
 /// <summary>

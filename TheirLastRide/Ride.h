@@ -11,6 +11,7 @@ public:
 	std::string start;
 	std::vector<std::string> stops;
 	std::vector<std::string> invalidStops;
+	std::vector<std::string> interactablePeople;
 	Ride();
 	Ride(std::string str, std::vector<std::string> stp, int iN, int nN);
 	Ride(std::string str, std::vector<std::string> stp, int iN, int nN, int cN, int d);

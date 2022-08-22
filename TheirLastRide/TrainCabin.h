@@ -14,7 +14,7 @@ public:
 	TrainCabin();
 	~TrainCabin();
 	void fillSeats();
-	std::array<Person*, number_of_seats> getSeats();
+	std::array<Person*, number_of_seats>& getSeats();
 	static SDL_Point ConvertToPoint(const int& position);
 	static int ConvertToPosition(const SDL_Point& vec);
 };
