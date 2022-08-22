@@ -54,9 +54,7 @@ enum TM_ANIM {
 enum PASS_TXTR {
 	
 	CHILD_PASS,
-	CHILD_PASS_PUNCH,
 	ADULT_PASS,
-	ADULT_PASS_PUNCH,
 	TICKET,
 	TICKET_PUNCH,
 	NUM_PASS_TXTR
@@ -72,6 +70,7 @@ private:
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
+	std::array<Texture*, NUM_PASS_TXTR> _passTextureList;
 	std::vector<Button*> _buttons;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin*> _cabins;

@@ -117,8 +117,8 @@ void TrainScene::Init()
     //_objList[OBJECT_SASHA]
   /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_SASHA] = ObjectBuilder::CreateObject("Sprites//Passengers//Sasha.png", { 0, 0 }, SDL_BLENDMODE_BLEND);*/
-    _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//childPass.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//childPass.png", { 384, 0 }, SDL_BLENDMODE_BLEND);
     
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
@@ -141,6 +141,21 @@ void TrainScene::Init()
     {
         _tmAnimList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
         _tmAnimList[i]->setScale(1.3);
+    }
+
+    for (int i = 0; i < NUM_PASS_TXTR; i++)
+    {
+       _passTextureList[i] = new Texture();
+    }
+
+    _passTextureList[CHILD_PASS]->loadImage("Sprites//Items//childPass.png");
+    _passTextureList[ADULT_PASS]->loadImage("Sprites//Items//adultPass.png");
+    _passTextureList[TICKET]->loadImage("Sprites//Items//ticket.png");
+    _passTextureList[TICKET_PUNCH]->loadImage("Sprites//Items//ticketPunch.png");
+   
+    for (int i = 0; i < NUM_PASS_TXTR; i++)
+    {
+        _passTextureList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
     }
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
@@ -210,6 +225,7 @@ void TrainScene::Render()
     if (isInteracting) {
         _objList[OBJECT_TEXTBOX]->getTexture().Render(_objList[OBJECT_TEXTBOX]->getCoords().x, _objList[OBJECT_TEXTBOX]->getCoords().y);
         _objList[OBJECT_TEXT]->getTexture().Render(_objList[OBJECT_TEXT]->getCoords().x, _objList[OBJECT_TEXT]->getCoords().y);
+        _objList[OBJECT_TICKET]->getTexture().Render(_objList[OBJECT_TICKET]->getCoords().x, _objList[OBJECT_TICKET]->getCoords().y);
     }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
