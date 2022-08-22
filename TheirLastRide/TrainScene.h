@@ -28,8 +28,12 @@ enum OBJECT {
 	OBJECT_NOTEBOOK_PAGE,
 	OBJECT_TEXTBOX,
 	OBJECT_CHOICE,
-	OBJECT_TICKET_TEXT,
-	OBJECT_RAILPASS_TEXT,
+	OBJECT_TICKET_FROM,
+	OBJECT_TICKET_TO,
+	OBJECT_TICKET_DOI,
+	OBJECT_RAILPASS_NAME,
+	OBJECT_RAILPASS_EXPIRY,
+	OBJECT_STAMPER,
 	NUM_OBJECT
 };
 
@@ -95,6 +99,7 @@ public:
 	TrainScene();
 	Person* getPersonClick();
 	void renderCabins();
+	void RenderAtCoords(Object* obj);
 	void Init();
 	void Exit();
 	void Update(double dt);

@@ -84,9 +84,9 @@ void Application::Init()
 Application::Application()
     :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60)
 {
-    _scenes[SCENE_TRAIN] = new TrainScene; 
-    _scenes[SCENE_MAINMENU] = new MenuScene;
-    _scenes[SCENE_INTROSCENE] = new IntroScene;
+    _scenes[SCENE_TRAIN] = new TrainScene();
+    _scenes[SCENE_MAINMENU] = new MenuScene();
+    _scenes[SCENE_INTRO] = new IntroScene();
 }
 
 /// <summary>
@@ -105,12 +105,15 @@ void Application::Run()
     trainRide2->setCarriageNum(2);
     trainRide3->setCarriageNum(3);
     Player* player1 = new Player(trainRide1->stops);
+    _mainScene = new TrainScene();
     for (int i = 0; i < NUM_SCENE; i++)
     {
         _scenes[i]->Init();
     }
+    _mainScene->Init();
     _scenes[SCENE_TRAIN]->setRide(trainRide2);
     _scenes[SCENE_TRAIN]->setPlayer(player1);
+    _mainScene = _scenes[SCENE_MAINMENU];
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         _mainScene = _scenes[0];
@@ -119,6 +122,24 @@ void Application::Run()
             GetFrameEvents().push_back(_event);
             if (_event.type == SDL_MOUSEMOTION) {
                 SDL_GetMouseState(&_mouse_coords.x, &_mouse_coords.y);
+            }
+            if (_event.type == SDL_MOUSEBUTTONDOWN) {
+                if (_event.button.button == SDL_BUTTON_LEFT) {
+                    if (_mainScene != _scenes[SCENE_TRAIN]) {
+                        if (_mainScene == _scenes[SCENE_MAINMENU])
+                        {
+                            changeScene(_scenes[SCENE_INTRO]);
+                            GetFrameEvents().clear();
+                            break;
+                        }
+                        else {
+                            if (_mainScene == _scenes[SCENE_INTRO] && static_cast<IntroScene*>(_scenes[SCENE_INTRO])->sceneClicks > 1) {
+                                changeScene(_scenes[SCENE_TRAIN]);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
         
@@ -147,10 +168,6 @@ void Application::Exit()
     SDL_Quit();
 }
 
-void Application::changeScene(Scene* scene)
-{
-    _mainScene = _scenes[SCENE_INTROSCENE];
-}
 
 
 /// <summary>
@@ -212,4 +229,10 @@ std::vector<SDL_Event>& Application::GetFrameEvents()
 {
     static std::vector<SDL_Event> frame_events;
     return frame_events;
+}
+
+void Application::changeScene(Scene* scene)
+{
+    _mainScene->Exit();
+    _mainScene = scene;
 }

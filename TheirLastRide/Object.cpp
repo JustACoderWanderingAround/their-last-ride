@@ -17,7 +17,10 @@ Object::Object(const Texture& t, const SDL_Point& c, BoxCollider* bc)
 
 Object::~Object()
 {
-
+    if (_collider != nullptr) {
+        delete _collider;
+        _collider = nullptr;
+    }
 }
 
 Texture Object::getTexture() const
@@ -70,6 +73,11 @@ void Object::setToScale(float scalar)
 void Object::setToScale(float x, float y)
 {
     _txt.setScale(x, y);
+}
+
+void Object::setToAlpha(unsigned int alpha)
+{
+    _txt.setAlpha(alpha);
 }
 
 /// <summary>

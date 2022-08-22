@@ -13,8 +13,8 @@
 enum OBJECT2
 {
 	OBJECT_BACKGROUND2,
-	OBJECT_NORMAL_NOTE,
 	OBJECT_REAPER_NOTE,
+	OBJECT_NORMAL_NOTE,
 	NUM_OBJECT2
 };
 
@@ -22,13 +22,11 @@ class Scene;
 class IntroScene :public Scene
 {
 private:
-	unsigned int _currentCabin;
-	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT2> _objList;
 	std::vector<Object*> _renderQueue;
-	SDL_Event _event;
+	std::vector<Object*> _fadeQueue;
 public:
-	bool writingText;
+	int sceneClicks;
 	IntroScene();
 	void Init();
 	void Exit();
