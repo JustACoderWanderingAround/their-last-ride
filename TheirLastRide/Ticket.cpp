@@ -7,10 +7,10 @@ Ticket::Ticket()
     _IssueDate = 1;
 }
 
-Ticket::Ticket(std::string iS, std::string dS, int iD)
+Ticket::Ticket(std::string iS, std::vector<std::string> dS, int iD)
 {
     _IssuingStn = iS;
-    _Destination = dS;
+    _Destination = dS[0];
     _IssueDate = iD;
 }
 

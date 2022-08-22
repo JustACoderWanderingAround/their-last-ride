@@ -3,8 +3,7 @@
 #include "Ticket.h"
 #include <string>
 #include <SDL.h>
-
-class Player {
+class Player { 
 	SDL_Point _coords;
 	std::string ruleBook[2];
 	int _ruleBookDay;

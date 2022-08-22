@@ -4,7 +4,6 @@
 #include "Object.h"
 
 class Object;
-class Player;
 class Person : public Object
 {
 protected:

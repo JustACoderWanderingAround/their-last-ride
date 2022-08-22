@@ -54,6 +54,7 @@ class Scene;
 class TrainScene : public Scene
 {
 private:
+	int level;
 	unsigned int _currentCabin;
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
@@ -81,5 +82,7 @@ public:
 	void playerInteraction(int option = NULL);
 	void WriteText(const Text& text, const SDL_Point& pos);
 	std::vector<TrainCabin*> getCabins();
+	bool renderTextBox;
+	int date;
 };
 

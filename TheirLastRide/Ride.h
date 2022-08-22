@@ -16,7 +16,7 @@ public:
 	~Ride();
 	int getInteractable();
 	int getNonInteractable();
-	bool loadAttributes();
+	bool loadAttributes(int rideNumber);
 
 };
 

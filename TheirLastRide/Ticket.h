@@ -1,10 +1,11 @@
 #pragma once
+#include <vector>
 #include <string>
 class Ticket
 {
 public:
 	Ticket();
-	Ticket(std::string iS, std::string dS, int iD);
+	Ticket(std::string iS, std::vector<std::string> dS, int iD);
 	~Ticket();
 	std::string getIssuingStn();
 	std::string getDestination();
