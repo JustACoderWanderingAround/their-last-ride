@@ -1,15 +1,15 @@
 [
   {
-    "start": "Noston Central",
-    "stops": ["Noston East", "Ewing Bridge"]
+    "start": "NOSTON CTRL",
+    "stops": ["NOSTON EAST", "EWING BRIDGE"]
   },
   {
-    "start": "Noston Central",
-    "stops": ["Noston East", "Ewing Bridge",  "Fort Night", "Hatfield Hill"]
+    "start": "NOSTON CTRL",
+    "stops": [ "NOSTON EAST", "EWING BRIDGE", "FORT KNIGHT", "HATFIELD H." ]
   },
   {
-    "start": "Noston Central",
-    "stops": ["Ewing Bridge",  "Ewing Town", "Harbourside"]
+    "start": "NOSTON CTRL",
+    "stops": [ "NOSTON EAST", "EWING BRIDGE", "EWING TOWN", "HARBOURSIDE" ]
   }
 ]
 

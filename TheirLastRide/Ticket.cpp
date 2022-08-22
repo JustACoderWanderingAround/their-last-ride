@@ -11,6 +11,8 @@ Ticket::Ticket(std::vector<std::string> dS, std::vector<std::string> randStops, 
 {
     int i = rand() % dS.size();
     int j = rand() % 10;
+    int k = 0;
+    int l = 0;
     
     _IssuingStn = "NOSTON CTRL";
     _Destination = dS[i];
@@ -19,12 +21,12 @@ Ticket::Ticket(std::vector<std::string> dS, std::vector<std::string> randStops, 
     switch (j)
     {
     case 0:
-        int k = rand() % dS.size();
+        k = rand() % dS.size();
         _IssuingStn = dS[k];
         break;
     
     case 1:
-        int l = rand() % randStops.size();
+        l = rand() % randStops.size();
         _Destination = randStops[k];
         break;
 
