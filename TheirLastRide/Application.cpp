@@ -86,7 +86,7 @@ Application::Application()
 {
     _scenes[SCENE_TRAIN] = new TrainScene;
     _scenes[SCENE_MAINMENU] = new MenuScene;
-    _scenes[SCENE_INTROSCENE] = new IntroScene;
+    _scenes[SCENE_INTRO] = new IntroScene;
 }
 
 /// <summary>
@@ -105,10 +105,12 @@ void Application::Run()
     trainRide2->setCarriageNum(2);
     trainRide3->setCarriageNum(3);
     Player* player1 = new Player(trainRide1->stops);
+    _mainScene = new TrainScene();
     for (int i = 0; i < NUM_SCENE; i++)
     {
         _scenes[i]->Init();
     }
+    _mainScene->Init();
     _scenes[SCENE_TRAIN]->setRide(trainRide2);
     _scenes[SCENE_TRAIN]->setPlayer(player1);
     _timer.startTimer();
@@ -148,7 +150,7 @@ void Application::Exit()
 
 void Application::changeScene(Scene* scene)
 {
-    _mainScene = _scenes[SCENE_INTRO];
+   // _mainScene = _scenes[SCENE_INTRO];
 }
 
 
