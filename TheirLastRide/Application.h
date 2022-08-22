@@ -44,5 +44,6 @@ public:
 	SDL_Point getMouseCoords() const;
 	SDL_Event* getEvent();
 	std::vector<SDL_Event>& GetFrameEvents();
+	void changeScene(Scene* scene);
 };
 

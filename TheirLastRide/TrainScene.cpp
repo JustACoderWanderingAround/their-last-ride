@@ -197,6 +197,8 @@ void TrainScene::Init()
     {
         _passTextureList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
     }
+    
+    _objList[OBJECT_STAMPER] = ObjectBuilder::CreateObject("Sprites//Items//deathStamp.png", { 700, 0 }, new BoxCollider({700, 0, 50, 100}), SDL_BLENDMODE_BLEND);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     renderCabins();

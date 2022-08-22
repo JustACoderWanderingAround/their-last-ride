@@ -127,13 +127,14 @@ void Application::Run()
                     if (_mainScene != _scenes[SCENE_TRAIN]) {
                         if (_mainScene == _scenes[SCENE_MAINMENU])
                         {
-                            _mainScene = _scenes[SCENE_INTRO];
+                            changeScene(_scenes[SCENE_INTRO]);
                             GetFrameEvents().clear();
                             break;
                         }
                         else {
                             if (_mainScene == _scenes[SCENE_INTRO] && static_cast<IntroScene*>(_scenes[SCENE_INTRO])->sceneClicks > 1) {
-                                _mainScene = _scenes[SCENE_TRAIN];
+                                changeScene(_scenes[SCENE_TRAIN]);
+                                break;
                             }
                         }
                     }
@@ -227,4 +228,10 @@ std::vector<SDL_Event>& Application::GetFrameEvents()
 {
     static std::vector<SDL_Event> frame_events;
     return frame_events;
+}
+
+void Application::changeScene(Scene* scene)
+{
+    _mainScene->Exit();
+    _mainScene = scene;
 }
