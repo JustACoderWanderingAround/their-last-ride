@@ -95,6 +95,8 @@ private:
 	Person* _interactingPerson;
 	int playerX;
 	int playerY;
+	Player* _mainPlayer;
+	Ride* _mainRide;
 public:
 	bool writingText;
 	TrainScene();
@@ -113,6 +115,8 @@ public:
 	void fillCabins();
 	bool renderTextBox;
 	bool notebookOpen;
+	void setPlayer(Player* p);
+	void setRide(Ride* r);
 	int date;
 };
 

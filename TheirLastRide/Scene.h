@@ -9,9 +9,6 @@
 class Player;
 class Scene
 {
-protected:
-	Player* mainPlayer;
-	Ride* mainRide;
 public:
 	Scene();
 	Scene(int rideNum);
@@ -19,7 +16,5 @@ public:
 	virtual void Update(double dt) = 0;
 	virtual void Render() = 0;
 	virtual void Exit() = 0;
-	void setPlayer(Player* p);
-	void setRide(Ride* r);
 };
 
