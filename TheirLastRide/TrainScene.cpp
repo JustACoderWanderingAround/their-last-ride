@@ -287,7 +287,7 @@ void TrainScene::HandleInput()
                 option = temp;
                 break;
             }
-        }
+        } 
         switch (event.type) {
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
