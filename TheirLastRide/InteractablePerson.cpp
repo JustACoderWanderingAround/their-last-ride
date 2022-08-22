@@ -56,7 +56,7 @@ InteractablePerson::InteractablePerson(std::string name, bool passType, bool ver
 	_PassType (passType),
 	_PredetermindedVerdict (verdict),
 	_Ticket (*ticket),
-	_RailPass (*railpass),
+	_RailPass (railpass),
 	_currentNode(nullptr)
 {
 
@@ -64,13 +64,14 @@ InteractablePerson::InteractablePerson(std::string name, bool passType, bool ver
 
 
 InteractablePerson::InteractablePerson(const std::string& name)
-	: _name(name), _currentNode(nullptr)
+	: _name(name), _currentNode(nullptr), _RailPass(nullptr)
 {
 	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
 	_txt.loadImage(filepath);
 	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
 	_txt.setScale(1.1);
 	loadNodes();
+	_RailPass = new RailPass(name, true, 2);
 
 }
 
@@ -85,7 +86,7 @@ Ticket InteractablePerson::getTicket()
 {
 	return _Ticket;
 }
-RailPass InteractablePerson::getRailPass()
+RailPass* InteractablePerson::getRailPass()
 {
 	return _RailPass;
 }
