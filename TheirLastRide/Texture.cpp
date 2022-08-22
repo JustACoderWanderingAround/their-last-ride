@@ -99,6 +99,41 @@ bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color tex
 }
 
 /// <summary>
+/// Creates the text texture with the input, and loads it into this texture.
+/// </summary>
+/// <param name="message">The actual string for the text. (Data)</param>
+/// <param name="font">The font for the text.(TTF_Font)</param>
+/// <param name="textcolor">The colour of the text. (SDL_Color, RGB)</param>
+/// <param name="fontIndex">The index of the max width within the TextManager's wrap width array.</param>
+/// <returns>True if successful, false if not.</returns>
+bool Texture::loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor, int width)
+{
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, message.c_str(), textcolor, width);
+    if (textSurface != NULL)
+    {
+        //Create texture from surface pixels
+        _texture = SDL_CreateTextureFromSurface(Application::GetInstance()->getRenderer(), textSurface);
+        if (_texture == NULL)
+        {
+            SDL_Log("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+        }
+        else
+        {
+            _width = textSurface->w;
+            _height = textSurface->h;
+        }
+
+        SDL_FreeSurface(textSurface);
+        return true;
+    }
+    else
+    {
+        /*std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;*/
+        return false;
+    }
+}
+
+/// <summary>
 /// Creates a blank texture and loads into this texture.
 /// </summary>
 /// <param name="width">Width of the blank texture.</param>
@@ -128,6 +163,33 @@ bool Texture::createBlank(int width, int height, SDL_TextureAccess access)
 bool Texture::loadText(const Text& text)
 {
     SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(text.font, text.msg.c_str(), text.textcolor, TextManager::GetInstance()->maxWidth);
+    if (textSurface != NULL)
+    {
+        //Create texture from surface pixels
+        _texture = SDL_CreateTextureFromSurface(Application::GetInstance()->getRenderer(), textSurface);
+        if (_texture == NULL)
+        {
+            SDL_Log("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+        }
+        else
+        {
+            _width = textSurface->w;
+            _height = textSurface->h;
+        }
+
+        SDL_FreeSurface(textSurface);
+        return true;
+    }
+    else
+    {
+        /*std::cout << "Unable to render text surface! SDL_ttf Error:" << TTF_GetError() << std::endl;*/
+        return false;
+    }
+}
+
+bool Texture::loadText(const Text& text, int maxWidth)
+{
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(text.font, text.msg.c_str(), text.textcolor, maxWidth);
     if (textSurface != NULL)
     {
         //Create texture from surface pixels

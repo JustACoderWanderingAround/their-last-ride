@@ -11,9 +11,10 @@ class Button :
     public Object
 {
 private:
+    unsigned int ID;
     std::array<Texture*, NUM_BUTTON_ANIM> _buttonAnimList;
 public:
-    Button();
-    void handleEvent(SDL_Event* e);
+    Button(unsigned int id);
+    int handleEvent(SDL_Event* e);
 };
 

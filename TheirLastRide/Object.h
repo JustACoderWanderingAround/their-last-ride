@@ -11,6 +11,7 @@ protected:
 public:
 	Object();
 	Object(const Texture& t, const SDL_Point& c);
+	Object(const Texture& t, const SDL_Point& c, BoxCollider* bc);
 	virtual ~Object();
 	Texture getTexture() const;
 	SDL_Point getCoords() const;
@@ -20,5 +21,6 @@ public:
 	void setToScale(float scalar);
 	void setToScale(float x, float y);
 	void updateText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_BlendMode& bm);
+	void updateText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_BlendMode& bm, int width);
 };
 

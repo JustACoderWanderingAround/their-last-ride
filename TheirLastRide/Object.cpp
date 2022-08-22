@@ -10,6 +10,11 @@ Object::Object(const Texture& t, const SDL_Point& c)
 {
 }
 
+Object::Object(const Texture& t, const SDL_Point& c, BoxCollider* bc)
+    : _txt(t), _coords(c), _collider(bc)
+{
+}
+
 Object::~Object()
 {
 
@@ -74,9 +79,16 @@ void Object::setToScale(float x, float y)
 /// <param name="color">The colour of the text</param>
 /// <param name="font">The font of the text</param>
 /// <param name="bm">The blend mode of the new texture.</param>
+///  <param name="width">Max width before text wraps to a new line</param>
 void Object::updateText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_BlendMode& bm)
 {
     _txt.free();
     _txt.loadText(msg, font, color);
+    _txt.setBlendMode(bm);
+}
+void Object::updateText(const std::string& msg, const SDL_Color& color, TTF_Font* font, const SDL_BlendMode& bm, int width)
+{
+    _txt.free();
+    _txt.loadText(msg, font, color, width);
     _txt.setBlendMode(bm);
 }

@@ -23,7 +23,9 @@ public:
 	bool operator!();
 	bool loadImage(std::string path);
 	bool loadText(const Text& text);
+	bool loadText(const Text& text, int maxWidth);
 	bool loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor);
+	bool loadText(const std::string& message, TTF_Font* font, SDL_Color textcolor, int widthIndex);
 	bool createBlank(int width, int height, SDL_TextureAccess access = SDL_TEXTUREACCESS_STREAMING);
 	void setColor(unsigned int r, unsigned int g, unsigned int b);
 	void setAlpha(unsigned int a);
