@@ -37,7 +37,7 @@ bool inBoundsDown(int y)
 TrainScene::TrainScene()
     : writingText(false), _displayText(" "), _currentCabin(0), level(1)
 {
-    mainRide->loadAttributes(level);
+    /*mainRide->loadAttributes(level);*/
     for (auto stopLst : mainRide->stops)
     {
         std::cout << stopLst << std::endl;
@@ -117,9 +117,9 @@ void TrainScene::renderCabins()
 void TrainScene::Init()
 {
     _mouseCollider = new BoxCollider({ _mouse_coords.x, _mouse_coords.y, 4, 4 });
-    /*for (int i = 0; i < mainRide->getCarriageNum(); i++) {*/
+    for (int i = 0; i < mainRide->getCarriageNum(); i++) {
         _cabins.push_back(new TrainCabin());
-    /*}*/
+    }
 	
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
@@ -218,6 +218,7 @@ void TrainScene::Init()
     playerX = 700;
     playerY = 300;
     notebookOpen = false;
+    fillCabins();
 }
 
 /// <summary>
@@ -637,6 +638,45 @@ float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)
 
 void TrainScene::fillCabins()
 {
+    std::vector<int> positions;
+    std::vector < std::string> names = mainRide->interactablePeople;
+    int newPosition;
+    TrainCabin* cabin;
+    for (int i = 0; i < number_of_seats; i++)
+    {
+        if (TrainCabin::ConvertToPoint(i).x == 0 || TrainCabin::ConvertToPoint(i).x == 3)
+            positions.push_back(i);
+    }
+    size_t no_of_positions = positions.size();
+    for (int i = 0; i < mainRide->getNonInteractable(); i++)
+    {
+        newPosition = positions[rand() % no_of_positions];
+        cabin = _cabins[rand() % _cabins.size()];
+        if (cabin->getSeats()[newPosition] == nullptr)
+            cabin->getSeats()[newPosition] = new NonInteractivePerson();
+        else
+            i--;
+    }
+    positions.clear();
+    for (int i = 0; i < number_of_seats; i++)
+    {
+        if (TrainCabin::ConvertToPoint(i).x == 1 || TrainCabin::ConvertToPoint(i).x == 2)
+            positions.push_back(i);
+    }
+    no_of_positions = positions.size();
+    int nameIndex;
+    for (int i = 0; i < mainRide->getInteractable(); i++)
+    {
+        newPosition = positions[rand() % no_of_positions];
+        cabin = _cabins[rand() % _cabins.size()];
+        nameIndex = rand() % names.size();
+        if (cabin->getSeats()[newPosition] == nullptr) {
+            cabin->getSeats()[newPosition] = new InteractablePerson(names[nameIndex]);
+            names.erase(names.begin() + nameIndex);
+        }
+        else
+            i--;
+    }
 }
 
 /// <summary>

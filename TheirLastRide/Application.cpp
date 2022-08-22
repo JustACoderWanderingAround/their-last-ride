@@ -103,17 +103,17 @@ void Application::Run()
     trainRide3->loadAttributes(2);
     trainRide1->setCarriageNum(1);
     trainRide2->setCarriageNum(2);
-    trainRide3->setCarriageNum(3);
+    trainRide3->setCarriageNum(1);
+    trainRide3->setInteractableNumber(2);
+    trainRide3->setNonInterableNumber(5);
     Player* player1 = new Player(trainRide1->stops);
-    _mainScene = new TrainScene();
+    _mainScene = _scenes[SCENE_TRAIN];//CHANGE TRAIN TO MAINMENU
+    _scenes[SCENE_TRAIN]->setRide(trainRide3);
+    _scenes[SCENE_TRAIN]->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
     {
         _scenes[i]->Init();
     }
-    _mainScene->Init();
-    _scenes[SCENE_TRAIN]->setRide(trainRide3);
-    _scenes[SCENE_TRAIN]->setPlayer(player1);
-    _mainScene = _scenes[SCENE_TRAIN];//CHANGE TRAIN TO MAINMENU
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         while (SDL_PollEvent(&_event) != 0)
