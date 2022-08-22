@@ -17,6 +17,18 @@ int frame_count = 0;
 int last_dir = 0;
 std::string _dT;
 
+bool inBoundsUp(int y)
+{
+    if (y <= 220)
+    return false;
+}
+
+bool inBoundsDown(int y)
+{
+    if (y >= 320)
+    return false;
+}
+
 /// <summary>
 /// Constructor, used to initialize values.
 /// </summary>
@@ -282,7 +294,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('W'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBoundsUp(offSetY) != false)
         {
             offSetY -= player_speed;
         }
@@ -334,7 +346,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('S'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBoundsDown(offSetY) != false) 
         {
             offSetY += player_speed;
         }
@@ -478,5 +490,6 @@ std::vector<TrainCabin*> TrainScene::getCabins()
 {
     return _cabins;
 }
+
 
 
