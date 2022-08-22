@@ -73,38 +73,6 @@ InteractablePerson::InteractablePerson(const std::string& name)
 
 }
 
-void InteractablePerson::interact()
-{
-	//TrainScene* mainScene = static_cast<TrainScene*>(scene);
-	//mainScene->getButtons()->clear();
-	//if (option != NULL) {
-	//	_currentNode = _nodes[_currentNode->results[option]];
-	//}
-	//const int y_offset = -50;
-	//// Before or after a conversation, _currentNode should be nullptr.
-	//if (_nodes.size() == 0) {
-	//	std::cout << "No nodes to interact" << std::endl;
-	//	return;
-	//}
-	//if (_currentNode == nullptr)
-	//	_currentNode = _nodes.front();
-	//if (_currentNode == _nodes.front()) {
-	//	//write player text
-	//	mainScene->WriteText({ _currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
-	//	_currentNode = _nodes[_currentNode->results.front()];
-	//}
-	//else {
-	//	//write npc 
-	//	mainScene->WriteText({ _currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
-	//	for (int i = 0; i < _currentNode->results.size(); i++)
-	//	{
-	//		mainScene->getButtons()->push_back(new Button());
-	//		mainScene->getButtons()->back()->setCoords({ mainScene->getButtons()->back()->getCoords().x, y_offset * i });
-	//	}
-	//	//render options
-	//	//_currentNode = _nodes[_currentNode->results[option]];
-	//}
-}
 
 bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
 {
