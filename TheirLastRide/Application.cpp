@@ -111,9 +111,9 @@ void Application::Run()
         _scenes[i]->Init();
     }
     _mainScene->Init();
-    _scenes[SCENE_TRAIN]->setRide(trainRide2);
+    _scenes[SCENE_TRAIN]->setRide(trainRide3);
     _scenes[SCENE_TRAIN]->setPlayer(player1);
-    _mainScene = _scenes[SCENE_TRAIN];
+    _mainScene = _scenes[SCENE_TRAIN];//CHANGE TRAIN TO MAINMENU
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         while (SDL_PollEvent(&_event) != 0)
