@@ -5,8 +5,7 @@
 #include "BoxCollider.h"
 #include "Player.h"
 #include "Texture.h"
-
-
+#include <math.h>
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
@@ -17,6 +16,18 @@ double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
 std::string _dT;
+
+bool inBoundsUp(int y)
+{
+    if (y <= 220)
+    return false;
+}
+
+bool inBoundsDown(int y)
+{
+    if (y >= 320)
+    return false;
+}
 
 /// <summary>
 /// Constructor, used to initialize values.
@@ -107,7 +118,7 @@ void TrainScene::Init()
 	_cabins.push_back(new TrainCabin());
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
-    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (offSetX) + 700 / 3, (offSetY) + 300 / 4, 60, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.3);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -256,7 +267,7 @@ void TrainScene::HandleInput()
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (!isInteracting && !writingText) {
                 _interactingPerson = getPersonClick();
-                if (_interactingPerson != nullptr) {
+                if (_interactingPerson != nullptr && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y}) <= 150) {
                     isInteracting = true;
                     playerInteraction();
                 }
@@ -299,7 +310,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('W'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBoundsUp(offSetY) != false)
         {
             offSetY -= player_speed;
         }
@@ -351,7 +362,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('S'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBoundsDown(offSetY) != false) 
         {
             offSetY += player_speed;
         }
@@ -482,6 +493,11 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     writingText = true;
 }
 
+float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)
+{
+    return sqrt(pow(second.x - first.x, 2) + pow(second.y - first.y, 2));
+}
+
 /// <summary>
 /// Get the list of train cabins(logic)
 /// </summary>
@@ -490,5 +506,6 @@ std::vector<TrainCabin*> TrainScene::getCabins()
 {
     return _cabins;
 }
+
 
 
