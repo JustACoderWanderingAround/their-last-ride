@@ -105,10 +105,12 @@ void Application::Run()
     trainRide2->setCarriageNum(2);
     trainRide3->setCarriageNum(3);
     Player* player1 = new Player(trainRide1->stops);
-    Scene* mainScene = new TrainScene();
-    mainScene->setRide(trainRide2);
-    mainScene->setPlayer(player1);
-    mainScene->Init();
+    for (int i = 0; i < NUM_SCENE; i++)
+    {
+        _scenes[i]->Init();
+    }
+    _scenes[SCENE_TRAIN]->setRide(trainRide2);
+    _scenes[SCENE_TRAIN]->setPlayer(player1);
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         while (SDL_PollEvent(&_event) != 0)
@@ -120,14 +122,19 @@ void Application::Run()
         }
         
         //_acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
-        mainScene->Update(_timer.getElapsedTime());
-        mainScene->Render();
+        _mainScene->Update(_timer.getElapsedTime());
+        _mainScene->Render();
 
         _timer.waitUntil(time_between_frames);
         GetFrameEvents().clear();
     }
-    mainScene->Exit();
-    delete mainScene;
+    _mainScene->Exit();
+    for (int i = 0; i < NUM_SCENE; i++)
+    {
+        if (_scenes[i] != nullptr) {
+            delete _scenes[i];
+        }
+    }
 }
 
 /// <summary>
@@ -137,6 +144,11 @@ void Application::Exit()
 {
     SDL_DestroyWindow(_window);
     SDL_Quit();
+}
+
+void Application::changeScene(Scene* scene)
+{
+    _mainScene = _scenes[SCENE_INTRO];
 }
 
 

@@ -19,10 +19,14 @@ IntroScene::IntroScene()
 
 void IntroScene::Init()
 {
-    _objList[OBJECT_BACKGROUND2] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
+    _objList[OBJECT_BACKGROUND2] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
+    _objList[OBJECT_NORMAL_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionNormalNote.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_REAPER_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionReaperNote.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
 
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND2]);
+    _renderQueue.push_back(_objList[OBJECT_REAPER_NOTE]);
+    _renderQueue.push_back(_objList[OBJECT_NORMAL_NOTE]);
 }
 
 void IntroScene::Exit()
