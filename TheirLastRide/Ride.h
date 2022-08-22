@@ -10,11 +10,13 @@ class Ride
 public:
 	std::string start;
 	std::vector<std::string> stops;
+	std::vector<std::string> invalidStops;
 	Ride();
 	Ride(std::string str, std::vector<std::string> stp, int iN, int nN);
 	Ride(std::string str, std::vector<std::string> stp, int iN, int nN, int cN, int d);
 	~Ride();
 	int getInteractable();
+	int getDate();
 	int getNonInteractable();
 	bool loadAttributes(int rideNumber);
 

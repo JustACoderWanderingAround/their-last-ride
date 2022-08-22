@@ -5,12 +5,13 @@
 using json = nlohmann::json;
 
 void to_json(json& j, const Ride& n) {
-	j = json{ {"start", n.start}, {"stops", n.stops }};
+	j = json{ {"start", n.start}, {"stops", n.stops }, {"invalid", n.invalidStops}};
 }
 
 void from_json(const json& j,Ride& n) {
 	j.at("start").get_to(n.start);
 	j.at("stops").get_to(n.stops);
+	j.at("invalid").get_to(n.invalidStops);
 }
 
 Ride::Ride()
@@ -67,10 +68,15 @@ bool Ride::loadAttributes(int rideNumber)
 	std::vector<Ride> testRide = j.get<std::vector<Ride>>();
 	start = testRide[rideNumber].start;
 	stops = testRide[rideNumber].stops;
+	invalidStops = testRide[rideNumber].invalidStops;
 	//std::cout << _nodes[0];
 	return true;
 	/*for (int i = 0; i < tempNodes2.size(); i++)
 	{
 		std::cout << _nodes[i]->playerText << std::endl;
 	}*/
+}
+int Ride::getDate()
+{
+	return _date;
 }

@@ -136,3 +136,8 @@ Node*& InteractablePerson::getCurrentNode()
 {
 	return _currentNode;
 }
+
+void InteractablePerson::setTicket(Ticket* t)
+{
+	_Ticket = *t;
+}
