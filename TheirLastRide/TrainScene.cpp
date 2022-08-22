@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Texture.h"
 #include <math.h>
+#include <string>
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
@@ -519,6 +520,11 @@ void TrainScene::HandleInput()
 void TrainScene::playerInteraction(int option)
 {
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
+    _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket().getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_TO]->updateText(person->getTicket().getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_FROM]->updateText(mainRide->start, Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass().getName(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass().getExpiry() + 1), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     if (_buttons.size() != 0) {
         for (int i = 0; i < person->getCurrentNode()->results.size() * 2; i++)
         {
@@ -557,6 +563,10 @@ void TrainScene::playerInteraction(int option)
     }
     Ticket comparisonTicket =person->getTicket();
     RailPass comparisonRailpass = person->getRailPass();
+    if (_mouseCollider->isColliding(person->getCollider()) && SDL_MOUSEBUTTONDOWN) {
+        std::find(mainRide->stops.begin(), mainRide->stops.end(), comparisonTicket.getDestination()) != mainRide->stops.end();
+    }
+
 
     if (currentNode == nodes.front()) {
     	//write player text
