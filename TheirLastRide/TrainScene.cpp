@@ -198,8 +198,11 @@ void TrainScene::Init()
         _passTextureList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
     }
     
-    _objList[OBJECT_STAMPER] = ObjectBuilder::CreateObject("Sprites//Items//deathStamp.png", { 700, 0 }, new BoxCollider({700, 0, 50, 100}), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_STAMPER] = ObjectBuilder::CreateObject("Sprites//Items//deathStamp.png", { 0, 0 }, new BoxCollider({0, 0, 50, 100}), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_STAMPER]->setToScale(0.5);
+    _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", { 700, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 100, 100 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PUNCHER]->setToScale(0.4);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     renderCabins();
@@ -235,6 +238,7 @@ void TrainScene::Exit()
 void TrainScene::Update(double dt)
 {
     HandleInput();
+    /*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
     _mouseCollider->moveCollider(_mouse_coords);
     if (_textQueue.size() > 0) {
         iterator += dt * text_type_speed;
@@ -292,6 +296,7 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
         }
         RenderAtCoords(_objList[OBJECT_STAMPER]);
+        RenderAtCoords(_objList[OBJECT_PUNCHER]);
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
@@ -326,6 +331,12 @@ void TrainScene::HandleInput()
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (isInteracting)
             {
+                if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
+                {
+                    static_cast<InteractablePerson*>(_interactingPerson)->getTicket().setClippedState(true);
+                    _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
+                    break;
+                }
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                 {
                     ticketFront = true;
@@ -340,6 +351,7 @@ void TrainScene::HandleInput()
                         break;
                     }
                 }
+
             }
             
             if (_objList[OBJECT_NOTEBOOK]->getCollider()->isColliding(_mouseCollider)) {
@@ -603,6 +615,10 @@ void TrainScene::RenderAtCoords(Object* obj)
 float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)
 {
     return sqrt(pow(second.x - first.x, 2) + pow(second.y - first.y, 2));
+}
+
+void TrainScene::fillCabins()
+{
 }
 
 /// <summary>

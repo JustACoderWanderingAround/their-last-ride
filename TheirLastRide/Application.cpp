@@ -113,7 +113,7 @@ void Application::Run()
     _mainScene->Init();
     _scenes[SCENE_TRAIN]->setRide(trainRide2);
     _scenes[SCENE_TRAIN]->setPlayer(player1);
-    _mainScene = _scenes[SCENE_MAINMENU];
+    _mainScene = _scenes[SCENE_TRAIN];
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         while (SDL_PollEvent(&_event) != 0)
