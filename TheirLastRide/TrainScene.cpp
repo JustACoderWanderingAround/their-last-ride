@@ -169,9 +169,9 @@ void TrainScene::Init()
     }
     _nbSprites[NOTEBOOK_C]->loadImage("Sprites//Items//notebook//notebookClosed.png");
     _nbSprites[NOTEBOOK_O]->loadImage("Sprites//Items//notebook//notebookOpenBlank.png");
-    _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//Page1Txt.png");
-    _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//Page2.png");
-    _nbSprites[NOTEBOOK_P3]->loadImage("Sprites//Items//notebook//Page3.png");
+    _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//notebookPage1Txt.png");
+    _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//notebookPage2.png");
+    _nbSprites[NOTEBOOK_P3]->loadImage("Sprites//Items//notebook//notebookPage3Txt.png");
     for (int i = 0; i < NUM_NOTEBOOK; i++)
     {
         _nbSprites[i]->setBlendMode(SDL_BLENDMODE_BLEND);
