@@ -99,6 +99,7 @@ public:
 	TrainScene();
 	Person* getPersonClick();
 	void renderCabins();
+	void RenderAtCoords(Object* obj);
 	void Init();
 	void Exit();
 	void Update(double dt);

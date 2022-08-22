@@ -199,6 +199,7 @@ void TrainScene::Init()
     }
     
     _objList[OBJECT_STAMPER] = ObjectBuilder::CreateObject("Sprites//Items//deathStamp.png", { 700, 0 }, new BoxCollider({700, 0, 50, 100}), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_STAMPER]->setToScale(0.5);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     renderCabins();
@@ -262,37 +263,39 @@ void TrainScene::Update(double dt)
 void TrainScene::Render()
 {
     SDL_RenderClear(Application::GetInstance()->getRenderer()); // Clear the screen.
-    //rendering inside here
+    // Object rendering inside here
     for (auto i : _renderQueue) {
-        i->getTexture().Render(i->getCoords().x, i->getCoords().y);
+        RenderAtCoords(i);
     }
+    // UI Rendering
     if (isInteracting) {
-        _objList[OBJECT_TEXTBOX]->getTexture().Render(_objList[OBJECT_TEXTBOX]->getCoords().x, _objList[OBJECT_TEXTBOX]->getCoords().y);
-        _objList[OBJECT_TEXT]->getTexture().Render(_objList[OBJECT_TEXT]->getCoords().x, _objList[OBJECT_TEXT]->getCoords().y);
-        _objList[OBJECT_TICKET]->getTexture().Render(_objList[OBJECT_TICKET]->getCoords().x, _objList[OBJECT_TICKET]->getCoords().y);
-        _objList[OBJECT_TICKET_FROM]->getTexture().Render(_objList[OBJECT_TICKET_FROM]->getCoords().x, _objList[OBJECT_TICKET_FROM]->getCoords().y);
-        _objList[OBJECT_TICKET_TO]->getTexture().Render(_objList[OBJECT_TICKET_TO]->getCoords().x, _objList[OBJECT_TICKET_TO]->getCoords().y);
-        _objList[OBJECT_TICKET_DOI]->getTexture().Render(_objList[OBJECT_TICKET_DOI]->getCoords().x, _objList[OBJECT_TICKET_DOI]->getCoords().y);
+        RenderAtCoords(_objList[OBJECT_TEXTBOX]);
+        RenderAtCoords(_objList[OBJECT_TEXT]);
+        RenderAtCoords(_objList[OBJECT_TICKET]);
+        RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
+        RenderAtCoords(_objList[OBJECT_TICKET_TO]);
+        RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
 
         bool isRailpass = true; //attach to getRailpass
         if (isRailpass)
         {
-            _objList[OBJECT_RAILPASS]->getTexture().Render(_objList[OBJECT_RAILPASS]->getCoords().x, _objList[OBJECT_RAILPASS]->getCoords().y);
-            _objList[OBJECT_RAILPASS_NAME]->getTexture().Render(_objList[OBJECT_RAILPASS_NAME]->getCoords().x, _objList[OBJECT_RAILPASS_NAME]->getCoords().y);
-            _objList[OBJECT_RAILPASS_EXPIRY]->getTexture().Render(_objList[OBJECT_RAILPASS_EXPIRY]->getCoords().x, _objList[OBJECT_RAILPASS_EXPIRY]->getCoords().y);
+            RenderAtCoords(_objList[OBJECT_RAILPASS]);
+            RenderAtCoords(_objList[OBJECT_RAILPASS_NAME]);
+            RenderAtCoords(_objList[OBJECT_RAILPASS_EXPIRY]);
         }
 
         if (ticketFront && isRailpass)
         {
-            _objList[OBJECT_TICKET]->getTexture().Render(_objList[OBJECT_TICKET]->getCoords().x, _objList[OBJECT_TICKET]->getCoords().y);
-            _objList[OBJECT_TICKET_FROM]->getTexture().Render(_objList[OBJECT_TICKET_FROM]->getCoords().x, _objList[OBJECT_TICKET_FROM]->getCoords().y);
-            _objList[OBJECT_TICKET_TO]->getTexture().Render(_objList[OBJECT_TICKET_TO]->getCoords().x, _objList[OBJECT_TICKET_TO]->getCoords().y);
-            _objList[OBJECT_TICKET_DOI]->getTexture().Render(_objList[OBJECT_TICKET_DOI]->getCoords().x, _objList[OBJECT_TICKET_DOI]->getCoords().y);
+            RenderAtCoords(_objList[OBJECT_TICKET]);
+            RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
+            RenderAtCoords(_objList[OBJECT_TICKET_TO]);
+            RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
         }
+        RenderAtCoords(_objList[OBJECT_STAMPER]);
     }
-    _objList[OBJECT_NOTEBOOK]->getTexture().Render(_objList[OBJECT_NOTEBOOK]->getCoords().x, _objList[OBJECT_NOTEBOOK]->getCoords().y);
+    RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
-        _objList[OBJECT_NOTEBOOK_PAGE]->getTexture().Render(_objList[OBJECT_NOTEBOOK_PAGE]->getCoords().x, _objList[OBJECT_NOTEBOOK_PAGE]->getCoords().y);
+        RenderAtCoords(_objList[OBJECT_NOTEBOOK_PAGE]);
     }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
@@ -590,6 +593,11 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     _textQueue.push_back(text);
     _objList[OBJECT_TEXT]->setCoords(pos);
     writingText = true;
+}
+
+void TrainScene::RenderAtCoords(Object* obj)
+{
+    obj->getTexture().Render(obj->getCoords().x, obj->getCoords().y);
 }
 
 float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)

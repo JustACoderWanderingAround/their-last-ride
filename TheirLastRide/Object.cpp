@@ -17,7 +17,10 @@ Object::Object(const Texture& t, const SDL_Point& c, BoxCollider* bc)
 
 Object::~Object()
 {
-
+    if (_collider != nullptr) {
+        delete _collider;
+        _collider = nullptr;
+    }
 }
 
 Texture Object::getTexture() const

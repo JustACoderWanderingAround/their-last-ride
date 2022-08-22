@@ -51,15 +51,7 @@ void MenuScene::Exit()
 
 void MenuScene::HandleInput()
 {
-    // SDL_KEYDOWN is used for key presses.
-    // IsKeyPressed is used for key holds.
-    if (Application::IsKeyPressed(VK_SPACE))
-    {
-        Application* app = Application::GetInstance();
-        app->Init();
-        app->Run();
-        app->Exit();
-    }
+
 }
 
 void MenuScene::Update(double dt)
