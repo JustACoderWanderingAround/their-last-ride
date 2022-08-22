@@ -72,6 +72,11 @@ void Object::setToScale(float x, float y)
     _txt.setScale(x, y);
 }
 
+void Object::setToAlpha(unsigned int alpha)
+{
+    _txt.setAlpha(alpha);
+}
+
 /// <summary>
 /// Update the object's texture with a Texture of text.
 /// </summary>
