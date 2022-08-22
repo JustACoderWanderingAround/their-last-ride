@@ -115,7 +115,10 @@ void TrainScene::renderCabins()
 void TrainScene::Init()
 {
     _mouseCollider = new BoxCollider({ _mouse_coords.x, _mouse_coords.y, 4, 4 });
-	_cabins.push_back(new TrainCabin());
+    for (int i = 0; i < mainRide->getCarriageNum(); i++) {
+        _cabins.push_back(new TrainCabin());
+    }
+	
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
     _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (offSetX) + 700 / 3, (offSetY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
@@ -393,6 +396,11 @@ void TrainScene::HandleInput()
             {
                 frame_count = 0;
             }
+        }
+
+        if (_cabins[_currentCabin + 1] != nullptr && x_offset )
+        {
+            _cabins[_currentCabin + 1];
         }
 
         last_dir = 2; 

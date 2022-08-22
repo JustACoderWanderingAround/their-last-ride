@@ -89,10 +89,17 @@ void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
     Ride* trainRide1 = new Ride();
+    Ride* trainRide2 = new Ride();
+    Ride* trainRide3 = new Ride();
     trainRide1->loadAttributes(0);
+    trainRide2->loadAttributes(1);
+    trainRide3->loadAttributes(2);
+    trainRide1->setCarriageNum(1);
+    trainRide2->setCarriageNum(2);
+    trainRide3->setCarriageNum(3);
     Player* player1 = new Player(trainRide1->stops);
     Scene* mainScene = new TrainScene();
-    mainScene->setRide(trainRide1);
+    mainScene->setRide(trainRide2);
     mainScene->setPlayer(player1);
     mainScene->Init();
     _timer.startTimer();

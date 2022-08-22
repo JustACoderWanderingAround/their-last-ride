@@ -53,6 +53,11 @@ int Ride::getNonInteractable()
     return _nonInteractableNumber;
 }
 
+int Ride::getCarriageNum()
+{
+	return _carriageNum;
+}
+
 bool Ride::loadAttributes(int rideNumber)
 {
 	//TODO: make this into a loadJson function
@@ -75,6 +80,22 @@ bool Ride::loadAttributes(int rideNumber)
 	{
 		std::cout << _nodes[i]->playerText << std::endl;
 	}*/
+}
+void Ride::setDate(int d)
+{
+	_date = d;
+}
+void Ride::setInteractableNumber(int in)
+{
+	_interactableNumber = in;
+}
+void Ride::setNonInterableNumber(int nin)
+{
+	_nonInteractableNumber = nin;
+}
+void Ride::setCarriageNum(int cn)
+{
+	_carriageNum = cn;
 }
 int Ride::getDate()
 {

@@ -16,9 +16,14 @@ public:
 	Ride(std::string str, std::vector<std::string> stp, int iN, int nN, int cN, int d);
 	~Ride();
 	int getInteractable();
-	int getDate();
 	int getNonInteractable();
+	int getCarriageNum();
+	int getDate();
 	bool loadAttributes(int rideNumber);
+	void setDate(int d);
+	void setInteractableNumber(int in);
+	void setNonInterableNumber(int nin);
+	void setCarriageNum(int cn);
 
 };
 
