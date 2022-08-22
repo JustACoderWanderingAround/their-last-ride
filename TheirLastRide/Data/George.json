@@ -1,6 +1,6 @@
 [
 		{
-				"playerText": "TM: Tickets please",
+				"playerText": "TM: May I have your ticket please ?",
 				"npcText": "",
 				"results": [
 						1
@@ -8,41 +8,31 @@
 		},   
 		{
 				"playerText": "",
-				"npcText": "George: Wha-? Oh you mean this? Here",
+				"npcText": "sure !",
 				"results": [
-					2, 3, 4
+					2
 				]
 		},
 		{
-				"playerText": "Your eyes seem quite cloudy. Are you okay?",
-				"npcText": "George: My vision isn't quite what its used to be. I feel like I'm seeing things. That's an angel behind you, is it not? Oh, and I also feel quite stiff.",
+				"playerText": "Why are you travelling today ?",
+				"npcText": "I'm not too sure, I just woke up with these in my pocket.",
 				"results": [
 					3, 4, 5
 				]
 		},
 		{
-			"playerText": "Where were you before this?",
-			"npcText": "I was asleep in the park. Next thing I knew I woke up in the station, ticket in hand. The the train was in front of me, so I got on.",
-			"results": [2, 4, 5]
+				"playerText": "How are you feeling now ?",
+				"npcText": "I'm a little tired to be honest...",
+				"results": []
 		},
 		{
-			"playerText": "Where are you going?",
-			"npcText": "Not quite sure. My ticket says 'Llih Dleiftah' but I haven't a clue as to what that means. ",
-			"results": [2, 3, 5]
+				"playerText": "You woke up here after a nap ?",
+				"npcText": "I sat down to take a nap... and I woke up here.",
+				"results": []
 		},
 		{
-			"playerText": "I see. Thank you sir. Your ticket is valid. You're headed for Hatfield. ",
-			"npcText": "Alright then, thanks. I can't quite remember why I'm going there, I think its to see my wife again. She died many years ago, and she was buried in Hatfield.",
-			"results": [6]
-		},
-		{
-			"playerText": "Your ticket was bought by an 'Anna Smith' about 18 years ago. Does that name ring a bell? ",
-			"npcText": "Yes, yes that quite does. That's my wife. She told me about how the ticket would lead me back to her again. Maybe this is what she meant.",
-			"results": [7]
-		},
-		{
-			"playerText": "I hope you do see her again.",
-			"npcText": "I do too. I need to thank her for getting me a ticket for a train pulled by the last ever 6000 class locomotive. Its my favourite.",
-			"results": []
+				"playerText": "Are you sure you weren't doing anything else ?",
+				"npcText": "Yes. I took a nap and here I am.",
+				"results":  []
 		}
 ]
