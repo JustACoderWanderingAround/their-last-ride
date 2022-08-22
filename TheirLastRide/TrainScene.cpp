@@ -122,7 +122,7 @@ void TrainScene::Init()
 	
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
-    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (offSetX) + 700 / 3, (offSetY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (playerX) + 700 / 3, (playerY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.3);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -211,8 +211,8 @@ void TrainScene::Init()
     Player* testPlayer = new Player(mainRide->stops);
     setPlayer(testPlayer);
     date = mainPlayer->getDay();
-    offSetX = 700;
-    offSetY = 300;
+    playerX = 700;
+    playerY = 300;
     notebookOpen = false;
 }
 
@@ -254,7 +254,7 @@ void TrainScene::Update(double dt)
         _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     }
     frame_count += 1;
-    _objList[OBJECT_PLAYER]->setCoords({ offSetX, offSetY });
+    _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
 }
 
 /// <summary>
@@ -404,9 +404,9 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('W'))
     {
-        if (frame_count % 3 == 0 && inBoundsUp(offSetY) != false)
+        if (frame_count % 3 == 0 && inBoundsUp(playerY) != false)
         {
-            offSetY -= player_speed;
+            playerY -= player_speed;
         }
        
         if (frame_count < 180)
@@ -432,7 +432,7 @@ void TrainScene::HandleInput()
     {
         if (frame_count % 3 == 0)
         {
-            offSetX -= player_speed;
+            playerX -= player_speed;
         }
        // offSetX -= player_speed;
 
@@ -451,19 +451,20 @@ void TrainScene::HandleInput()
             }
         }
 
-        /*if (_cabins[_currentCabin + 1] != nullptr && offSetX < 180 )
+        if (_currentCabin - 1 > 0 && playerX <= -45)
         {
-            _cabins[_currentCabin + 1];
-        }*/
+            std::cout << "hehexd" << std::endl;
+            _currentCabin -= 1;
+        }
 
         last_dir = 2; 
     }
 
     if (Application::IsKeyPressed('S'))
     {
-        if (frame_count % 3 == 0 && inBoundsDown(offSetY) != false) 
+        if (frame_count % 3 == 0 && inBoundsDown(playerY) != false) 
         {
-            offSetY += player_speed;
+            playerY += player_speed;
         }
 
         if (frame_count < 180)
@@ -488,7 +489,7 @@ void TrainScene::HandleInput()
     {
         if (frame_count % 3 == 0)
         {
-            offSetX += player_speed;
+            playerX += player_speed;
         }
 
         if (frame_count < 180)
@@ -505,6 +506,13 @@ void TrainScene::HandleInput()
                 frame_count = 0;
             }
         }
+
+        if (_currentCabin + 1 >= _cabins.size() && playerX >= 1000)
+        {
+            _currentCabin += 1;
+            std::cout << "pogchamp ?!" << std::endl;
+        }
+
             last_dir = 4;
     }
    
