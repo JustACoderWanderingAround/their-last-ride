@@ -76,8 +76,12 @@ void TrainScene::renderCabins()
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY});
                     std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100});
-                    /*seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });*/
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });
                     static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(mainRide->stops, mainRide->invalidStops, mainRide->getDate()));
+                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getIssuingStn() << std::endl;
+                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getClippedState() << std::endl;
+                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getIssueDate() << std::endl;
+                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getDestination() << std::endl;
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
@@ -112,6 +116,10 @@ void TrainScene::Init()
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TEXTBOX] = ObjectBuilder::CreateObject("Sprites//UI//dialogueBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_NOTEBOOK_PAGE] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookPage2.png", { 0, 200 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_NOTEBOOK] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookClosed.png", { 0, 600 }, new BoxCollider({0, 600, 150, 150}), SDL_BLENDMODE_BLEND);
+
+    _objList[OBJECT_NOTEBOOK]->setToScale(0.5);
     //_objList[OBJECT_CHOICE] = ObjectBuilder::CreateObject("Sprites//UI//optionBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_GEORGE]
     //_objList[OBJECT_SASHA]
@@ -140,9 +148,25 @@ void TrainScene::Init()
         _tmAnimList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
         _tmAnimList[i]->setScale(1.3);
     }
+
+    for (int j = 0; j < NUM_NOTEBOOK; j++) {
+        _nbSprites[j] = new Texture();
+    }
+    _nbSprites[NOTEBOOK_C]->loadImage("Sprites//Items//notebook//notebookClosed.png");
+    _nbSprites[NOTEBOOK_O]->loadImage("Sprites//Items//notebook//notebookOpenBlank.png");
+    _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//Page2.png");
+    _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//Page3.png");
+    for (int i = 0; i < NUM_NOTEBOOK; i++)
+    {
+        _nbSprites[i]->setBlendMode(SDL_BLENDMODE_BLEND);
+        _nbSprites[i]->setScale(0.5);
+    }
+
+
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     renderCabins();
+    _renderQueue.push_back(_objList[OBJECT_NOTEBOOK]);
     //_renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
     //_renderQueue.push_back(_objList[OBJECT_CHOICE]);
     
@@ -152,6 +176,7 @@ void TrainScene::Init()
     date = mainPlayer->getDay();
     offSetX = 700;
     offSetY = 300;
+    notebookOpen = false;
 }
 
 /// <summary>
@@ -236,7 +261,24 @@ void TrainScene::HandleInput()
         switch (event.type) {
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
-            if (!isInteracting && !writingText) {
+            if (_objList[OBJECT_NOTEBOOK]->getCollider()->isColliding(_mouseCollider)) {
+                if (!notebookOpen) {
+                    _objList[OBJECT_NOTEBOOK]->setTexture(*(_nbSprites[NOTEBOOK_O]));
+                    _renderQueue.push_back(_objList[OBJECT_NOTEBOOK_PAGE]);
+                    _objList[OBJECT_NOTEBOOK]->setCoords({ 0, 200 });
+                    _objList[OBJECT_NOTEBOOK]->getCollider()->moveCollider({ 0, 200 });
+                    notebookOpen = true;
+                }
+                else
+                {
+                    _objList[OBJECT_NOTEBOOK]->setTexture(*(_nbSprites[NOTEBOOK_C]));
+                    _renderQueue.pop_back();
+                    _objList[OBJECT_NOTEBOOK]->setCoords({ 0, 600 });
+                    _objList[OBJECT_NOTEBOOK]->getCollider()->moveCollider({ 0, 600 });
+                    notebookOpen = false;
+                }
+            }
+            else if (!isInteracting && !writingText) {
                 _interactingPerson = getPersonClick();
                 if (_interactingPerson != nullptr) {
                     isInteracting = true;
@@ -424,6 +466,8 @@ void TrainScene::playerInteraction(int option)
         _interactingPerson = nullptr;
         isInteracting = false;
     }
+    Ticket comparisonTicket =person->getTicket();
+    RailPass comparisonRailpass = person->getRailPass();
 
     if (currentNode == nodes.front()) {
     	//write player text
@@ -445,6 +489,7 @@ void TrainScene::playerInteraction(int option)
             _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK_SMALL], White }, { _buttons[i]->getCoords().x + button_text_offset_x, _buttons[i]->getCoords().y + button_text_offset_y }, SDL_BLENDMODE_BLEND, 200));
     	}
     }
+    
     return;
 
 }

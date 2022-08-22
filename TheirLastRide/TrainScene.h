@@ -24,8 +24,7 @@ enum OBJECT {
 	OBJECT_STAMP_MARK,
 	OBJECT_STAMP,
 	OBJECT_PUNCH,
-	OBJECT_NOTEBOOK_CLOSED,
-	OBJECT_NOTEBOOK_OPEN,
+	OBJECT_NOTEBOOK,
 	OBJECT_NOTEBOOK_PAGE,
 	OBJECT_TEXTBOX,
 	OBJECT_CHOICE,
@@ -49,6 +48,15 @@ enum TM_ANIM {
 	NUM_TM_ANIM
 };
 
+enum NOTEBOOK {
+	NOTEBOOK_O,
+	NOTEBOOK_C,
+	NOTEBOOK_P1,
+	NOTEBOOK_P2,
+	NOTEBOOK_P3,
+	NUM_NOTEBOOK
+};
+
 class Person;
 class Scene;
 class TrainScene : public Scene
@@ -59,6 +67,7 @@ private:
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
+	std::array<Texture*, NUM_NOTEBOOK> _nbSprites;
 	std::vector<Button*> _buttons;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin*> _cabins;
@@ -83,6 +92,7 @@ public:
 	void WriteText(const Text& text, const SDL_Point& pos);
 	std::vector<TrainCabin*> getCabins();
 	bool renderTextBox;
+	bool notebookOpen;
 	int date;
 };
 
