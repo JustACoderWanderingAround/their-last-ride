@@ -166,10 +166,6 @@ void Application::Exit()
     SDL_Quit();
 }
 
-void Application::changeScene(Scene* scene)
-{
-   // _mainScene = _scenes[SCENE_INTRO];
-}
 
 
 /// <summary>
