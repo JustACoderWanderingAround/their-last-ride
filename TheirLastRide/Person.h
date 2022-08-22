@@ -11,7 +11,6 @@ protected:
 	std::vector<Node*> _nodes;
 	int _PersonName;
 public:
-	virtual void interact() = 0;
 	std::vector<Node*> getNodes();
 	int getPersonName();
 

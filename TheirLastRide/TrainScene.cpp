@@ -126,9 +126,8 @@ void TrainScene::Init()
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TEXTBOX] = ObjectBuilder::CreateObject("Sprites//UI//dialogueBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_NOTEBOOK_PAGE] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookPage2.png", { 0, 200 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_NOTEBOOK] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookClosed.png", { 0, 600 }, new BoxCollider({0, 600, 150, 150}), SDL_BLENDMODE_BLEND);
-
+    _objList[OBJECT_NOTEBOOK_PAGE] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookPage1Txt.png", { 0, 200 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_NOTEBOOK] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookClosed.png", { 0, 600 }, new BoxCollider({0, 600, 150, 300}), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_NOTEBOOK]->setToScale(0.5);
     //_objList[OBJECT_CHOICE] = ObjectBuilder::CreateObject("Sprites//UI//optionBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_GEORGE]
@@ -166,14 +165,17 @@ void TrainScene::Init()
     }
     _nbSprites[NOTEBOOK_C]->loadImage("Sprites//Items//notebook//notebookClosed.png");
     _nbSprites[NOTEBOOK_O]->loadImage("Sprites//Items//notebook//notebookOpenBlank.png");
-    _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//Page2.png");
-    _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//Page3.png");
+    _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//Page1Txt.png");
+    _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//Page2.png");
+    _nbSprites[NOTEBOOK_P3]->loadImage("Sprites//Items//notebook//Page3.png");
     for (int i = 0; i < NUM_NOTEBOOK; i++)
     {
         _nbSprites[i]->setBlendMode(SDL_BLENDMODE_BLEND);
-        _nbSprites[i]->setScale(0.5);
     }
-
+    _nbSprites[NOTEBOOK_C]->setScale(0.5);
+    _nbSprites[NOTEBOOK_P1]->setScale(1);
+    _nbSprites[NOTEBOOK_P2]->setScale(1);
+    _nbSprites[NOTEBOOK_P3]->setScale(1);
 
 
     for (int i = 0; i < NUM_PASS_TXTR; i++)
