@@ -13,7 +13,7 @@ enum SceneName
 {
 	SCENE_TRAIN,
 	SCENE_MAINMENU,
-	SCENE_INTROSCENE,
+	SCENE_INTRO,
 	NUM_SCENE
 };
 
@@ -37,7 +37,7 @@ public:
 	void Init();
 	void Run();
 	void Exit();
-	void sceneChange(Scene* scene);
+	void changeScene(Scene* scene);
 	SDL_Window* getWindow() const;
 	SDL_Surface* getWindowSurface() const;
 	SDL_Renderer* getRenderer() const;
