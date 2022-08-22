@@ -92,8 +92,8 @@ private:
 	SDL_Point _mouse_coords;
 	SDL_Event _event;
 	Person* _interactingPerson;
-	int offSetX;
-	int offSetY;
+	int playerX;
+	int playerY;
 public:
 	bool writingText;
 	TrainScene();
