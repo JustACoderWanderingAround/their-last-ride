@@ -26,7 +26,7 @@ TrainCabin::~TrainCabin()
 /// </summary>
 void TrainCabin::fillSeats()
 {
-	std::vector<std::string> names = { "George", "Sasha" }; // to be changed
+	std::vector<std::string> names = { "George", "Sasha", "Emily", "Montag"}; // to be changed
 	unsigned short amountOfNonInteractablePeople = rand() % 5 + 1;
 	unsigned short amountOfInteractablePeople = 5; // to be changed according to level.
 	std::vector<int> positions;
@@ -49,7 +49,7 @@ void TrainCabin::fillSeats()
 	no_of_positions = positions.size();
 	for (int i = 0; i < amountOfInteractablePeople; i++)
 	{
-		_seats[positions[rand() % no_of_positions]] = new InteractablePerson(names[rand() % 2]);
+		_seats[positions[rand() % no_of_positions]] = new InteractablePerson(names[rand() % 4]);
 	}
 	/*for (int i = 0; i < no_of_positions; i++)
 	{

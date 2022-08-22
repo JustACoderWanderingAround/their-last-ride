@@ -122,7 +122,7 @@ void TrainScene::Init()
 	
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
-    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (offSetX) + 700 / 3, (offSetY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (playerX) + 700 / 3, (playerY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.2);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -170,9 +170,9 @@ void TrainScene::Init()
     }
     _nbSprites[NOTEBOOK_C]->loadImage("Sprites//Items//notebook//notebookClosed.png");
     _nbSprites[NOTEBOOK_O]->loadImage("Sprites//Items//notebook//notebookOpenBlank.png");
-    _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//Page1Txt.png");
-    _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//Page2.png");
-    _nbSprites[NOTEBOOK_P3]->loadImage("Sprites//Items//notebook//Page3.png");
+    _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//notebookPage1Txt.png");
+    _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//notebookPage2.png");
+    _nbSprites[NOTEBOOK_P3]->loadImage("Sprites//Items//notebook//notebookPage3Txt.png");
     for (int i = 0; i < NUM_NOTEBOOK; i++)
     {
         _nbSprites[i]->setBlendMode(SDL_BLENDMODE_BLEND);
