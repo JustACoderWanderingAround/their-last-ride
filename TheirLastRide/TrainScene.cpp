@@ -123,7 +123,7 @@ void TrainScene::Init()
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
     _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (offSetX) + 700 / 3, (offSetY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_PLAYER]->setToScale(1.3);
+    _objList[OBJECT_PLAYER]->setToScale(1.2);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TEXTBOX] = ObjectBuilder::CreateObject("Sprites//UI//dialogueBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -162,7 +162,7 @@ void TrainScene::Init()
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
         _tmAnimList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
-        _tmAnimList[i]->setScale(1.3);
+        _tmAnimList[i]->setScale(1.2);
     }
 
     for (int j = 0; j < NUM_NOTEBOOK; j++) {
