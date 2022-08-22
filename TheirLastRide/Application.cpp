@@ -84,9 +84,9 @@ void Application::Init()
 Application::Application()
     :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60)
 {
-    _scenes[SCENE_TRAIN] = new TrainScene;
-    _scenes[SCENE_MAINMENU] = new MenuScene;
-    _scenes[SCENE_INTRO] = new IntroScene;
+    _scenes[SCENE_TRAIN] = new TrainScene();
+    _scenes[SCENE_MAINMENU] = new MenuScene();
+    _scenes[SCENE_INTRO] = new IntroScene();
 }
 
 /// <summary>
@@ -113,6 +113,7 @@ void Application::Run()
     _mainScene->Init();
     _scenes[SCENE_TRAIN]->setRide(trainRide2);
     _scenes[SCENE_TRAIN]->setPlayer(player1);
+    _mainScene = _scenes[SCENE_MAINMENU];
     _timer.startTimer();
     while (!IsKeyPressed(VK_ESCAPE)) {
         while (SDL_PollEvent(&_event) != 0)
@@ -120,6 +121,23 @@ void Application::Run()
             GetFrameEvents().push_back(_event);
             if (_event.type == SDL_MOUSEMOTION) {
                 SDL_GetMouseState(&_mouse_coords.x, &_mouse_coords.y);
+            }
+            if (_event.type == SDL_MOUSEBUTTONDOWN) {
+                if (_event.button.button == SDL_BUTTON_LEFT) {
+                    if (_mainScene != _scenes[SCENE_TRAIN]) {
+                        if (_mainScene == _scenes[SCENE_MAINMENU])
+                        {
+                            _mainScene = _scenes[SCENE_INTRO];
+                            GetFrameEvents().clear();
+                            break;
+                        }
+                        else {
+                            if (_mainScene == _scenes[SCENE_INTRO] && static_cast<IntroScene*>(_scenes[SCENE_INTRO])->sceneClicks > 1) {
+                                _mainScene = _scenes[SCENE_TRAIN];
+                            }
+                        }
+                    }
+                }
             }
         }
         

@@ -13,8 +13,8 @@
 enum OBJECT2
 {
 	OBJECT_BACKGROUND2,
-	OBJECT_NORMAL_NOTE,
 	OBJECT_REAPER_NOTE,
+	OBJECT_NORMAL_NOTE,
 	NUM_OBJECT2
 };
 
@@ -26,9 +26,10 @@ private:
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT2> _objList;
 	std::vector<Object*> _renderQueue;
+	std::vector<Object*> _fadeQueue;
 	SDL_Event _event;
 public:
-	bool writingText;
+	int sceneClicks;
 	IntroScene();
 	void Init();
 	void Exit();
