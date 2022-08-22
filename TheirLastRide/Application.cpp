@@ -84,7 +84,7 @@ void Application::Init()
 Application::Application()
     :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60)
 {
-    _scenes[SCENE_TRAIN] = new TrainScene;
+    _scenes[SCENE_TRAIN] = new TrainScene; 
     _scenes[SCENE_MAINMENU] = new MenuScene;
     _scenes[SCENE_INTROSCENE] = new IntroScene;
 }
@@ -148,7 +148,7 @@ void Application::Exit()
 
 void Application::changeScene(Scene* scene)
 {
-    _mainScene = _scenes[SCENE_INTRO];
+    _mainScene = _scenes[SCENE_INTROSCENE];
 }
 
 
