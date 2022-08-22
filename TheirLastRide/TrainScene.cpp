@@ -12,6 +12,7 @@ const int x_offset = 190;
 const float player_speed = 1.0f;
 const float text_type_speed = 25;
 bool isInteracting = false;
+bool ticketFront = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
@@ -134,9 +135,13 @@ void TrainScene::Init()
     //_objList[OBJECT_SASHA]
   /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_SASHA] = ObjectBuilder::CreateObject("Sprites//Passengers//Sasha.png", { 0, 0 }, SDL_BLENDMODE_BLEND);*/
-    _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//childPass.png", { 384, 0 }, SDL_BLENDMODE_BLEND);
-    
+    _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, new BoxCollider({414, 120, 452, 272}), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//childPass.png", { 420, 36 }, new BoxCollider({ 456, 156, 452, 272 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_FROM] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey}, {600, 192}, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_TO] = ObjectBuilder::CreateTextObject({ "owa owa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 228 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_DOI] = ObjectBuilder::CreateTextObject({ "pain", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 264 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS_NAME] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 244 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS_EXPIRY] = ObjectBuilder::CreateTextObject({ "aaaaaaaa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 280 }, SDL_BLENDMODE_BLEND);
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
@@ -263,6 +268,25 @@ void TrainScene::Render()
         _objList[OBJECT_TEXTBOX]->getTexture().Render(_objList[OBJECT_TEXTBOX]->getCoords().x, _objList[OBJECT_TEXTBOX]->getCoords().y);
         _objList[OBJECT_TEXT]->getTexture().Render(_objList[OBJECT_TEXT]->getCoords().x, _objList[OBJECT_TEXT]->getCoords().y);
         _objList[OBJECT_TICKET]->getTexture().Render(_objList[OBJECT_TICKET]->getCoords().x, _objList[OBJECT_TICKET]->getCoords().y);
+        _objList[OBJECT_TICKET_FROM]->getTexture().Render(_objList[OBJECT_TICKET_FROM]->getCoords().x, _objList[OBJECT_TICKET_FROM]->getCoords().y);
+        _objList[OBJECT_TICKET_TO]->getTexture().Render(_objList[OBJECT_TICKET_TO]->getCoords().x, _objList[OBJECT_TICKET_TO]->getCoords().y);
+        _objList[OBJECT_TICKET_DOI]->getTexture().Render(_objList[OBJECT_TICKET_DOI]->getCoords().x, _objList[OBJECT_TICKET_DOI]->getCoords().y);
+
+        bool isRailpass = true; //attach to getRailpass
+        if (isRailpass)
+        {
+            _objList[OBJECT_RAILPASS]->getTexture().Render(_objList[OBJECT_RAILPASS]->getCoords().x, _objList[OBJECT_RAILPASS]->getCoords().y);
+            _objList[OBJECT_RAILPASS_NAME]->getTexture().Render(_objList[OBJECT_RAILPASS_NAME]->getCoords().x, _objList[OBJECT_RAILPASS_NAME]->getCoords().y);
+            _objList[OBJECT_RAILPASS_EXPIRY]->getTexture().Render(_objList[OBJECT_RAILPASS_EXPIRY]->getCoords().x, _objList[OBJECT_RAILPASS_EXPIRY]->getCoords().y);
+        }
+
+        if (ticketFront && isRailpass)
+        {
+            _objList[OBJECT_TICKET]->getTexture().Render(_objList[OBJECT_TICKET]->getCoords().x, _objList[OBJECT_TICKET]->getCoords().y);
+            _objList[OBJECT_TICKET_FROM]->getTexture().Render(_objList[OBJECT_TICKET_FROM]->getCoords().x, _objList[OBJECT_TICKET_FROM]->getCoords().y);
+            _objList[OBJECT_TICKET_TO]->getTexture().Render(_objList[OBJECT_TICKET_TO]->getCoords().x, _objList[OBJECT_TICKET_TO]->getCoords().y);
+            _objList[OBJECT_TICKET_DOI]->getTexture().Render(_objList[OBJECT_TICKET_DOI]->getCoords().x, _objList[OBJECT_TICKET_DOI]->getCoords().y);
+        }
     }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
@@ -291,6 +315,23 @@ void TrainScene::HandleInput()
         switch (event.type) {
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
+            if (isInteracting)
+            {
+                if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
+                {
+                    ticketFront = true;
+
+                }
+
+                else
+                {
+                    if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
+                    {
+                        ticketFront = false;
+                    }
+                }
+            }
+            
             if (_objList[OBJECT_NOTEBOOK]->getCollider()->isColliding(_mouseCollider)) {
                 if (!notebookOpen) {
                     _objList[OBJECT_NOTEBOOK]->setTexture(*(_nbSprites[NOTEBOOK_O]));
