@@ -1,5 +1,7 @@
 #include "Application.h"
 #include "TrainScene.h"
+#include "MenuScene.h"
+#include "IntroScene.h"
 #include <WinUser.h>
 #include <iostream>
 #include <SDL_ttf.h>
@@ -18,6 +20,8 @@ constexpr int SCR_HEIGHT = 720;
 /// Will be true if the scene is rendering text currently, else false.
 /// </summary>
 bool isWritingText = false;
+
+bool menuLoaded = false;
 
 /// <summary>
 /// Initialise the application.
@@ -80,6 +84,9 @@ void Application::Init()
 Application::Application()
     :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60)
 {
+    _scenes[SCENE_TRAIN] = new TrainScene;
+    _scenes[SCENE_MAINMENU] = new MenuScene;
+    _scenes[SCENE_INTROSCENE] = new IntroScene;
 }
 
 /// <summary>

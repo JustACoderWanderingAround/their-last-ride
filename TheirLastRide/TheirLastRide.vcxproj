@@ -154,6 +154,8 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="InteractablePerson.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NonInteractivePerson.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -178,7 +180,9 @@
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="InteractablePerson.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NonInteractivePerson.h" />
     <ClInclude Include="Object.h" />

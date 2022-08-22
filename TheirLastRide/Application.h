@@ -9,6 +9,14 @@
 #include "Scene.h"
 #include <vector>
 
+enum SceneName
+{
+	SCENE_TRAIN,
+	SCENE_MAINMENU,
+	SCENE_INTROSCENE,
+	NUM_SCENE
+};
+
 class Scene;
 class Application : public Singleton<Application>
 {
@@ -21,11 +29,15 @@ private:
 	SDL_Event _event;
 	bool _acceptInput;
 	SDL_Point _mouse_coords;
+	std::array <Scene*, NUM_SCENE> _scenes;
+	Scene* _mainScene;
+	
 public:
 	Application();
 	void Init();
 	void Run();
 	void Exit();
+	void sceneChange(Scene* scene);
 	SDL_Window* getWindow() const;
 	SDL_Surface* getWindowSurface() const;
 	SDL_Renderer* getRenderer() const;
