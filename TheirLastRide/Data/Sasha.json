@@ -1,6 +1,6 @@
 [
     {
-        "playerText": "You: Tickets please.",
+        "playerText": "TM: May I have your ticket please ?",
         "npcText": "",
         "results": [
             1
@@ -8,41 +8,34 @@
     },
     {
         "playerText": "",
-        "npcText": "Here you go.",
+        "npcText": "here",
         "results": [
-            2,
-            3,
-            4
+            2
         ]
     },
     {
-        "playerText": "How're you doing today?",
-        "npcText": "I feel swell! I'm going to Swegsville to Visit mother.",
-        "results": [5]
+        "playerText": "Hows it going ?",
+        "npcText": "I'm doing great, thanks !",
+        "results": [3, 4, 5]
     },
     {
-        "playerText": "That perfume smells nice. Did you buy it at the station gift shop?",
-        "npcText": "Indeed I did! I bought some for mother. She lives in Swegsville and I'm visiting her today.",
-        "results": [5]
-    },
-    {
-        "playerText": "Where are you travelling to?",
-        "npcText": "Swegsville. To visit mother.",
-        "results": [5]
-    },
-    {
-        "playerText": "We don't serve Swegsville.",
-        "npcText": "Do you not?",
+        "playerText": "So where are you headed today ?",
+        "npcText": "Swegsville. I'm visiting mother.",
         "results": [6]
     },
     {
-        "playerText": "Swegsville is served by the Winson's Arch North - Kilburn East Railway.",
-        "npcText": "Oh no. Where can I find them then?",
-        "results": [7]
+        "playerText": "Are you a student ?",
+        "npcText": "Yep ! I'm in nursing !",
+        "results": []
     },
     {
-        "playerText": "Platform 11.",
-        "npcText": "Thank you!",
+        "playerText": "Beautiful weather today huh ?",
+        "npcText": "Indeed !",
+        "results": []
+    },
+    {
+        "playerText": "Swegsville ? We don't serve that line. You might be looking for the West-Anglian-North Knightsbridge East Railway. Check platform 11 for their services, assuming they have any today.",
+        "npcText": "",
         "results": []
     }
 ]
