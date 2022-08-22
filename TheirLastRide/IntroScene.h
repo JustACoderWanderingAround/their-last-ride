@@ -22,12 +22,9 @@ class Scene;
 class IntroScene :public Scene
 {
 private:
-	unsigned int _currentCabin;
-	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT2> _objList;
 	std::vector<Object*> _renderQueue;
 	std::vector<Object*> _fadeQueue;
-	SDL_Event _event;
 public:
 	int sceneClicks;
 	IntroScene();
