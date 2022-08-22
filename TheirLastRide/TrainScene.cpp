@@ -5,8 +5,7 @@
 #include "BoxCollider.h"
 #include "Player.h"
 #include "Texture.h"
-
-
+#include <math.h>
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
@@ -17,6 +16,18 @@ double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
 std::string _dT;
+
+bool inBoundsUp(int y)
+{
+    if (y <= 220)
+    return false;
+}
+
+bool inBoundsDown(int y)
+{
+    if (y >= 320)
+    return false;
+}
 
 /// <summary>
 /// Constructor, used to initialize values.
@@ -76,12 +87,8 @@ void TrainScene::renderCabins()
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY});
                     std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100});
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });
+                    /*seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX, (y_offset * column) + initialY, 50, 50 });*/
                     static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(mainRide->stops, mainRide->invalidStops, mainRide->getDate()));
-                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getIssuingStn() << std::endl;
-                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getClippedState() << std::endl;
-                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getIssueDate() << std::endl;
-                    std::cout << static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket().getDestination() << std::endl;
                     _renderQueue.push_back(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
@@ -111,7 +118,7 @@ void TrainScene::Init()
 	_cabins.push_back(new TrainCabin());
 
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
-    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (offSetX) + 700 / 3, (offSetY) + 300 / 4, 60, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.3);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -125,6 +132,8 @@ void TrainScene::Init()
     //_objList[OBJECT_SASHA]
   /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_SASHA] = ObjectBuilder::CreateObject("Sprites//Passengers//Sasha.png", { 0, 0 }, SDL_BLENDMODE_BLEND);*/
+    _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//childPass.png", { 384, 0 }, SDL_BLENDMODE_BLEND);
     
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
@@ -163,6 +172,21 @@ void TrainScene::Init()
     }
 
 
+
+    for (int i = 0; i < NUM_PASS_TXTR; i++)
+    {
+       _passTextureList[i] = new Texture();
+    }
+
+    _passTextureList[CHILD_PASS]->loadImage("Sprites//Items//childPass.png");
+    _passTextureList[ADULT_PASS]->loadImage("Sprites//Items//adultPass.png");
+    _passTextureList[TICKET]->loadImage("Sprites//Items//ticket.png");
+    _passTextureList[TICKET_PUNCH]->loadImage("Sprites//Items//ticketPunch.png");
+   
+    for (int i = 0; i < NUM_PASS_TXTR; i++)
+    {
+        _passTextureList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
+    }
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
     renderCabins();
@@ -233,6 +257,7 @@ void TrainScene::Render()
     if (isInteracting) {
         _objList[OBJECT_TEXTBOX]->getTexture().Render(_objList[OBJECT_TEXTBOX]->getCoords().x, _objList[OBJECT_TEXTBOX]->getCoords().y);
         _objList[OBJECT_TEXT]->getTexture().Render(_objList[OBJECT_TEXT]->getCoords().x, _objList[OBJECT_TEXT]->getCoords().y);
+        _objList[OBJECT_TICKET]->getTexture().Render(_objList[OBJECT_TICKET]->getCoords().x, _objList[OBJECT_TICKET]->getCoords().y);
     }
 
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
@@ -280,7 +305,7 @@ void TrainScene::HandleInput()
             }
             else if (!isInteracting && !writingText) {
                 _interactingPerson = getPersonClick();
-                if (_interactingPerson != nullptr) {
+                if (_interactingPerson != nullptr && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y}) <= 150) {
                     isInteracting = true;
                     playerInteraction();
                 }
@@ -323,7 +348,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('W'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBoundsUp(offSetY) != false)
         {
             offSetY -= player_speed;
         }
@@ -375,7 +400,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('S'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBoundsDown(offSetY) != false) 
         {
             offSetY += player_speed;
         }
@@ -509,6 +534,11 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
     writingText = true;
 }
 
+float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)
+{
+    return sqrt(pow(second.x - first.x, 2) + pow(second.y - first.y, 2));
+}
+
 /// <summary>
 /// Get the list of train cabins(logic)
 /// </summary>
@@ -517,5 +547,6 @@ std::vector<TrainCabin*> TrainScene::getCabins()
 {
     return _cabins;
 }
+
 
 

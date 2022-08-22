@@ -19,8 +19,6 @@ enum OBJECT {
 	OBJECT_TEXT,
 	OBJECT_GEORGE,
 	OBJECT_SASHA,
-	OBJECT_TICKET,
-	OBJECT_RAILPASS,
 	OBJECT_STAMP_MARK,
 	OBJECT_STAMP,
 	OBJECT_PUNCH,
@@ -28,6 +26,10 @@ enum OBJECT {
 	OBJECT_NOTEBOOK_PAGE,
 	OBJECT_TEXTBOX,
 	OBJECT_CHOICE,
+	OBJECT_TICKET,
+	OBJECT_TICKET_TEXT,
+	OBJECT_RAILPASS,
+	OBJECT_RAILPASS_TEXT,
 	NUM_OBJECT
 };
 
@@ -46,6 +48,15 @@ enum TM_ANIM {
 	TM_ANIM_BACK_WALK_1,
 	TM_ANIM_BACK_WALK_2,
 	NUM_TM_ANIM
+};
+
+enum PASS_TXTR {
+	
+	CHILD_PASS,
+	ADULT_PASS,
+	TICKET,
+	TICKET_PUNCH,
+	NUM_PASS_TXTR
 };
 
 enum NOTEBOOK {
@@ -68,6 +79,7 @@ private:
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
 	std::array<Texture*, NUM_NOTEBOOK> _nbSprites;
+	std::array<Texture*, NUM_PASS_TXTR> _passTextureList;
 	std::vector<Button*> _buttons;
 	std::vector<Object*> _renderQueue; //maybe change to deque/priority queue?
 	std::vector<TrainCabin*> _cabins;
@@ -90,6 +102,7 @@ public:
 	void HandleInput();
 	void playerInteraction(int option = NULL);
 	void WriteText(const Text& text, const SDL_Point& pos);
+	float getDistance(const SDL_Point& first, const SDL_Point& second);
 	std::vector<TrainCabin*> getCabins();
 	bool renderTextBox;
 	bool notebookOpen;
