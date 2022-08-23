@@ -7,8 +7,6 @@
 #include "BoxCollider.h"
 #include "Texture.h"
 
-const int x_level = 35;
-const int y_level = 480;
 int iterator2 = 0;
 int frame_count2 = 0;
 bool isFading = false;
