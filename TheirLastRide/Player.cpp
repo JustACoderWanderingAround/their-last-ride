@@ -34,11 +34,11 @@ bool Player::compareToBook(InteractablePerson* p, int attribute)
 	RailPass* railpass = p->getRailPass();
 	switch (attribute) {
 	case 1:
-		return (ruleBook[0].find(ticket.getDestination()));
+		return (ruleBook[0].find(ticket->getDestination()));
 	case 2:
-		return (getDay() == ticket.getIssueDate());
+		return (getDay() == ticket->getIssueDate());
 	case 3:
-		return (ruleBook[1] == ticket.getIssuingStn());
+		return (ruleBook[1] == ticket->getIssuingStn());
 	case 4:
 		return (railpass->getName() == p->getName());
 	case 5: 
