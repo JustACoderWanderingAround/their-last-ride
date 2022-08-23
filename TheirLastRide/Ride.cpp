@@ -99,7 +99,16 @@ void Ride::setCarriageNum(int cn)
 {
 	_carriageNum = cn;
 }
+void Ride::setWrongVerdict(int wv)
+{
+	_wrongVerdict = wv;
+}
 int Ride::getDate()
 {
 	return _date;
+}
+
+int Ride::getWrongVerdict()
+{
+	return _wrongVerdict;
 }
