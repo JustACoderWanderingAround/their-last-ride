@@ -8,7 +8,22 @@
 #include <SDL_ttf.h>
 #include "Ride.h"
 #include "Player.h"
+#include <fstream>
 
+void to_json(json& j, const Ride& n) {
+    j = json{ {"start", n.getStart() }, {"stops", n.getStops() }, {"invalid", n.getInvalidStops() }, {"people", n.getInteractablePeople() }, {"carriageNum", n.getCarriageNum() } , {"nonInteractableNum", n.getNonInteractable() } , {"date", n.getDate() } };
+}
+
+void from_json(const json& j, Ride& n) {
+    n.setStart(j.at("start").get<std::string>());
+    n.setStops(j.at("stops").get<std::vector<std::string>>());
+    n.setInvalidStops(j.at("invalid").get<std::vector<std::string>>());
+    n.setInteractablePeople(j.at("people").get<std::vector<std::string>>());
+    n.setCarriageNum(j.at("carriageNum").get<int>());
+    n.setNonInteractableNumber(j.at("nonInteractableNum").get<int>());
+    n.setDate(j.at("date").get<int>());
+    n.setInteractableNumber(n.getInteractablePeople().size());
+}
 /// <summary>
 /// The window screen width.
 /// </summary>
@@ -81,9 +96,7 @@ void Application::Init()
     {
         _rides[i] = new Ride();
     }
-    _rides[RIDE_1]->loadAttributes(0);
-    _rides[RIDE_2]->loadAttributes(1);
-    _rides[RIDE_3]->loadAttributes(2);
+    loadRides();
 }
 
 /// <summary>
@@ -107,7 +120,7 @@ void Application::Run()
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
     _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
-    trainScene->setRide(_rides[RIDE_3]);
+    trainScene->setRide(_rides.front());
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
     {
@@ -177,6 +190,24 @@ void Application::Exit()
     }
     SDL_DestroyWindow(_window);
     SDL_Quit();
+}
+
+void Application::loadRides()
+{
+    std::ifstream f("Data\\Ride.json");
+    json j;
+    if (!f) {
+        std::cout << "File not loaded succesfully.\n";
+        exit(0);
+    }
+    else {
+        j = json::parse(f);
+    }
+    std::vector<Ride> tempRides = j.get<std::vector<Ride>>();
+    for (int i = 0; i < NUM_RIDE; i++)
+    {
+        *(_rides[i]) = tempRides[i];
+    }
 }
 
 

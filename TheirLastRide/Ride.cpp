@@ -4,25 +4,11 @@
 #include "json.hpp"
 using json = nlohmann::json;
 
-void to_json(json& j, const Ride& n) {
-	j = json{ {"start", n.getStart() }, {"stops", n.getStops() }, {"invalid", n.getInvalidStops() }, {"people", n.getInteractablePeople() }, {"carriageNum", n.getCarriageNum() } , {"nonInteractableNum", n.getNonInteractive() } , {"date", n.getDate() } };
-}
-
-void from_json(const json& j,Ride& n) {
-	n.setStart(j.at("start").get<std::string>());
-	n.setStops(j.at("stops").get<std::vector<std::string>>());
-	n.setInvalidStops(j.at("invalid").get<std::vector<std::string>>());
-	n.setInteractablePeople(j.at("people").get<std::vector<std::string>>());
-	n.setCarriageNum(j.at("carriageNum").get<int>());
-	n.setNonInteractableNumber(j.at("nonInteractableNum").get<int>());
-	n.setDate(j.at("date").get<int>());
-	n.setInteractableNumber(n.getInteractablePeople().size());
-}
 
 Ride::Ride()
 {
-	interactableNumber = 1;
-	nonInteractableNumber = 1;
+	_interactableNumber = 1;
+	_nonInteractableNumber = 1;
 }
 
 Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)
@@ -46,6 +32,11 @@ Ride::~Ride()
 {
 }
 
+int Ride::getInteractable()
+{
+	return _interactableNumber;
+}
+
 
 
 int Ride::getNonInteractable() const
@@ -58,30 +49,11 @@ int Ride::getCarriageNum() const
 	return _carriageNum;
 }
 
-bool Ride::loadAttributes(int rideNumber)
-{
-	//TODO: make this into a loadJson function
-	std::ifstream f("Data\\Ride.json");
-	json j;
-	if (!f) {
-		std::cout << "File not loaded succesfully.\n";
-		return false;
-	}
-	else {
-		j = json::parse(f);
-	}
-	std::vector<Ride> testRide = j.get<std::vector<Ride>>();
-	_start = testRide[rideNumber].getStart();
-	_stops = testRide[rideNumber].getStops();
-	_invalidStops = testRide[rideNumber].getInvalidStops();
-	_interactablePeople = testRide[rideNumber].getInteractablePeople();
-	//std::cout << _nodes[0];
-	return true;
-	/*for (int i = 0; i < tempNodes2.size(); i++)
-	{
-		std::cout << _nodes[i]->playerText << std::endl;
-	}*/
-}
+//bool Ride::loadAttributes(int rideNumber)
+//{
+//	//TODO: make this into a loadJson function
+//	
+//}
 void Ride::setStart(const std::string& s)
 {
 	_start = s;
@@ -142,7 +114,7 @@ bool Ride::operator==(const std::string& s) const
 
 int Ride::getDate() const
 {
-	return date;
+	return _date;
 }
 
 int Ride::getWrongVerdict()

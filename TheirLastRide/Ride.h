@@ -26,7 +26,7 @@ public:
 	int getCarriageNum() const;
 	int getDate() const;
 	int getWrongVerdict();
-	bool loadAttributes(int rideNumber);
+	/*bool loadAttributes(int rideNumber);*/
 	void setStart(const std::string& s);
 	void setStops(const std::vector<std::string>& s);
 	void setInvalidStops(const std::vector<std::string>& is);

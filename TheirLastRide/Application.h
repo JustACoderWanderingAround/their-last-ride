@@ -48,6 +48,7 @@ public:
 	void Init();
 	void Run();
 	void Exit();
+	void loadRides();
 	SDL_Window* getWindow() const;
 	SDL_Surface* getWindowSurface() const;
 	SDL_Renderer* getRenderer() const;

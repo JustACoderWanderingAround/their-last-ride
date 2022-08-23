@@ -165,7 +165,7 @@ void TrainScene::renderCabins()
 void TrainScene::Init()
 {
     _mouseCollider = new BoxCollider({ _mouse_coords.x, _mouse_coords.y, 4, 4 });
-    for (int i = 0; i < _mainRide->carriageNum; i++) {
+    for (int i = 0; i < _mainRide->getCarriageNum(); i++) {
         _cabins.push_back(new TrainCabin());
     }
 
@@ -815,7 +815,7 @@ void TrainScene::fillCabins()
             positions.push_back(i);
     }
     size_t no_of_positions = positions.size();
-    for (int i = 0; i < _mainRide->nonInteractableNumber; i++)
+    for (int i = 0; i < _mainRide->getNonInteractable(); i++)
     {
         newPosition = positions[rand() % no_of_positions];
         cabin = _cabins[rand() % _cabins.size()];
@@ -832,7 +832,7 @@ void TrainScene::fillCabins()
     }
     no_of_positions = positions.size();
     int nameIndex;
-    for (int i = 0; i < _mainRide->interactableNumber; i++)
+    for (int i = 0; i < _mainRide->getInteractable(); i++)
     {
         newPosition = positions[rand() % no_of_positions];
         cabin = _cabins[rand() % _cabins.size()];
