@@ -16,6 +16,7 @@ const float text_type_speed = 25;
 bool isInteracting = false;
 bool ticketFront = false;
 bool ticketStamp = false;
+bool ticketReturn = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
@@ -204,6 +205,8 @@ void TrainScene::Init()
     _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", _objList[OBJECT_TICKET]->getCoords() , SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 100, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER]->setToScale(0.4);
+    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 300, 200 }, new BoxCollider({1260, 300, 50, 50 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RETURN]->setToScale(0.75);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
 
@@ -313,12 +316,15 @@ void TrainScene::Render()
         if (ticketStamp && ticketFront) {
             RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
         }
+       
+        RenderAtCoords(_objList[OBJECT_RETURN]);
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
         RenderAtCoords(_objList[OBJECT_NOTEBOOK_PAGE]);
     }
 
+  
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
 }
 
@@ -347,14 +353,21 @@ void TrainScene::HandleInput()
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (isInteracting)
             {
+                
                 if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
                 {
                     static_cast<InteractablePerson*>(_interactingPerson)->getTicket().setClippedState(true);
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
                     break;
                 }
-                if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider)) 
+                if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider))
+                {
                     ticketStamp = true;
+                }
+                if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
+                {
+                    ticketReturn = true;
+                }
                 if (static_cast<InteractablePerson*>(_interactingPerson)->verdictChecker(ticketStamp) == false)
                 {
                     _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
