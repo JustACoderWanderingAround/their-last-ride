@@ -265,10 +265,18 @@ void TrainScene::Render()
 {
     SDL_RenderClear(Application::GetInstance()->getRenderer()); // Clear the screen.
     // Object rendering inside here
-    for (auto i : _renderQueue) {
-        RenderAtCoords(i);
+    
+    for (int i = 0; i < _renderQueue.size(); i++)
+    {
+        RenderAtCoords(_renderQueue[i]);
+        if (i == _renderQueue.size() / 2) {
+            renderCabins();
+        }
+
     }
-    renderCabins();
+    
+    
+    
     // UI Rendering
     if (isInteracting) {
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
