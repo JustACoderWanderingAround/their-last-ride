@@ -269,7 +269,7 @@ void TrainScene::Render()
     for (int i = 0; i < _renderQueue.size(); i++)
     {
         RenderAtCoords(_renderQueue[i]);
-        if (i == _renderQueue.size() / 2) {
+        if (i == 0) {
             renderCabins();
         }
 
