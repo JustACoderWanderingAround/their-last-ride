@@ -310,7 +310,7 @@ void TrainScene::Render()
         }
         RenderAtCoords(_objList[OBJECT_STAMPER]);
         RenderAtCoords(_objList[OBJECT_PUNCHER]);
-        if (ticketStamp) {
+        if (ticketStamp && ticketFront) {
             RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
         }
     }
