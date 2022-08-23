@@ -30,7 +30,7 @@ SDL_Point Player::getCoords()
 
 bool Player::compareToBook(InteractablePerson* p, int attribute)
 {
-	Ticket ticket = p->getTicket();
+	Ticket* ticket = p->getTicket();
 	RailPass* railpass = p->getRailPass();
 	switch (attribute) {
 	case 1:
