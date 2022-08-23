@@ -20,6 +20,7 @@ public:
     bool getPassType();
     Node*& getCurrentNode();
     void setTicket(Ticket* t);
+    void setRailPass(RailPass* r);
 protected:
 
     //data members
@@ -27,6 +28,7 @@ protected:
     bool _PredetermindedVerdict;
     bool _PassType;
     int _ScytheUse; //for unwilling passengers only 
+
 
 private:
     Node* _currentNode;

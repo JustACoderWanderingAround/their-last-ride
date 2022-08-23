@@ -1,0 +1,39 @@
+[
+		{
+			"playerText": "TM: Tickets please",
+			"npcText": "",
+			"results": [
+					1
+			]
+		},   
+		{
+			"playerText": "",
+			"npcText": "An overweight man in his thirties. There doesn't seem to be anything special about him.",
+			"results": [
+				2
+			]
+		},
+		{
+			"playerText": "How are you doing?",
+			"npcText": "Bill: I have no idea how I ended up here. I had a massive headache and blacked out... and here I am.",
+			"results": [
+				3, 4, 5
+			]
+		},
+		{
+			"playerText": "What were you doing when that happened?",
+			"npcText": "Bill: I was playing basketball.",
+			"results": [3, 4, 5]
+		},
+		{
+			"playerText": "How did you get a ticket?",
+			"npcText": "Bill: I just had it in my pocket when I came around.",
+			"results": [3, 4, 5]
+		},
+		{
+			"playerText": "How are you feeling right now?",
+			"npcText": "Bill: My body feels kind of stiff... I probably hurt myself during the game.",
+			"results": [3, 4, 5]
+		}
+		
+]

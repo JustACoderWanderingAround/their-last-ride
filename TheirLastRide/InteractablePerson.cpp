@@ -80,6 +80,7 @@ bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
 {
 	
 	return (_PlayerVerdict == _PredetermindedVerdict);
+	std::cout << "correct" << std::endl;
 	
 }
 Ticket InteractablePerson::getTicket()
@@ -110,4 +111,9 @@ Node*& InteractablePerson::getCurrentNode()
 void InteractablePerson::setTicket(Ticket* t)
 {
 	_Ticket = *t;
+}
+
+void InteractablePerson::setRailPass(RailPass* r)
+{
+	_RailPass = r;
 }
