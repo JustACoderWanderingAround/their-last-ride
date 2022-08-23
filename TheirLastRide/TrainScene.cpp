@@ -19,6 +19,8 @@ bool ticketStamp = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
+int pageChanger = 0;
+int keyTimer = 0;
 std::string _dT;
 
 bool inBoundsUp(int y)
@@ -145,7 +147,7 @@ void TrainScene::Init()
   /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_SASHA] = ObjectBuilder::CreateObject("Sprites//Passengers//Sasha.png", { 0, 0 }, SDL_BLENDMODE_BLEND);*/
     _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, new BoxCollider({414, 120, 452, 272}), SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//childPass.png", { 420, 36 }, new BoxCollider({ 456, 156, 452, 272 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//adultPass.png", { 420, 36 }, new BoxCollider({ 456, 156, 452, 272 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey}, {600, 192}, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_TO] = ObjectBuilder::CreateTextObject({ "owa owa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 228 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_DOI] = ObjectBuilder::CreateTextObject({ "pain", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 264 }, SDL_BLENDMODE_BLEND);
@@ -182,6 +184,7 @@ void TrainScene::Init()
     _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//notebookPage1Txt.png");
     _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//notebookPage2.png");
     _nbSprites[NOTEBOOK_P3]->loadImage("Sprites//Items//notebook//notebookPage3Txt.png");
+    _nbSprites[NOTEBOOK_P4]->loadImage("Sprites//Items//notebook//notebookPage4Txt.png");
     for (int i = 0; i < NUM_NOTEBOOK; i++)
     {
         _nbSprites[i]->setBlendMode(SDL_BLENDMODE_BLEND);
@@ -190,6 +193,7 @@ void TrainScene::Init()
     _nbSprites[NOTEBOOK_P1]->setScale(1);
     _nbSprites[NOTEBOOK_P2]->setScale(1);
     _nbSprites[NOTEBOOK_P3]->setScale(1);
+    _nbSprites[NOTEBOOK_P4]->setScale(1);
 
 
     for (int i = 0; i < NUM_PASS_TXTR; i++)
@@ -285,8 +289,6 @@ void TrainScene::Render()
 
     }
     
-    
-    
     // UI Rendering
     if (isInteracting) {
         
@@ -299,6 +301,10 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
             RenderAtCoords(_objList[OBJECT_TICKET_TO]);
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
+
+            if (ticketStamp) {
+                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+            }
         }
        
         bool isRailpass = _interactingPerson; //attach to getRailpass
@@ -315,12 +321,15 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
             RenderAtCoords(_objList[OBJECT_TICKET_TO]);
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
+           
+            if (ticketStamp) {
+                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+            }
         }
         RenderAtCoords(_objList[OBJECT_STAMPER]);
         RenderAtCoords(_objList[OBJECT_PUNCHER]);
-        if (ticketStamp && ticketFront) {
-            RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
-        }
+       
+       
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
@@ -421,12 +430,41 @@ void TrainScene::HandleInput()
             case SDLK_DOWN:
                 break;
 
+            case SDLK_RIGHT:
+                pageChanger = (pageChanger + 1 <= 4) ? pageChanger + 1:pageChanger;
+                break;
+
+            case SDLK_LEFT:
+                pageChanger = (pageChanger - 1 >= 1) ? pageChanger - 1 : pageChanger;
+                break;
+
             case SDLK_UP:
                 break;
             }
         }
     }
     
+    switch (pageChanger)
+    {
+    case 1:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P1]));
+        break;
+
+    case 2:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P2]));
+        break;
+
+    case 3:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P3]));
+        break;
+
+    case 4:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P4]));
+        break;
+    }
+
+    
+
     switch (last_dir)
     {
     case 1:
@@ -575,8 +613,21 @@ void TrainScene::playerInteraction(int option)
     _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket()->getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_TO]->updateText(person->getTicket()->getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM]->updateText(_mainRide->start, Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    
+    if (!person->getPassType())
+    {
+        _objList[OBJECT_RAILPASS]->setTexture(*(_passTextureList[ADULT_PASS]));
+        _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    }
+
+    if (person->getPassType())
+    {
+        _objList[OBJECT_RAILPASS]->setTexture(*(_passTextureList[CHILD_PASS]));
+        _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Pink, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Pink, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    }
+   
     if (_buttons.size() != 0) {
         for (int i = 0; i < person->getCurrentNode()->results.size() * 2; i++)
         {

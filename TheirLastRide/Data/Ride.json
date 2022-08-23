@@ -3,7 +3,7 @@
     "start": "NOSTON CTRL",
     "stops": ["NOSTON EAST", "EWING BRIDGE"],
     "invalid": [ "BENTON CTRL", "LLYN L LVL", "W ARCH" ],
-    "people": [ "George", "Sasha", "Emily", "Montag", "Bill"  ]
+    "people": [ "George", "Sasha", "Emily", "Montag", "Bill" ]
   },
   {
     "start": "NOSTON CTRL",
@@ -15,7 +15,7 @@
     "start": "NOSTON CTRL",
     "stops": [ "NOSTON EAST", "EWING BRIDGE", "EWING TOWN", "HARBOURSIDE" ],
     "invalid": [ "BENTON CTRL", "BENTON SID ST", "LLYN L LVL", "LLYN BY SEA", "W ARCH", "KIRKEN VIC", "TORQUAY TOWN", "TORQUAY HAM RD", "HATFIELD H", "FORT KNIGHT", "HATFIELD H" ],
-    "people": [ "George", "Sasha" ]
+    "people": [ "George", "Sasha", "Emily", "Montag", "Bill" ]
   }
 ]
 
