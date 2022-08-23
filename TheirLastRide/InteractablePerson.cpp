@@ -111,3 +111,8 @@ void InteractablePerson::setTicket(Ticket* t)
 {
 	_Ticket = *t;
 }
+
+void InteractablePerson::setRailPass(RailPass* r)
+{
+	_RailPass = r;
+}

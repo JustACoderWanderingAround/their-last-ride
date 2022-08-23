@@ -8,6 +8,7 @@
 
 int main(void)
 {
+	srand(unsigned int(time(NULL)));
 	Application* app = Application::GetInstance();
 	app ->Init();
 	app ->Run();

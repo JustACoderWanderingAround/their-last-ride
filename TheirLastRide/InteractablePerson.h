@@ -20,6 +20,7 @@ public:
     bool getPassType();
     Node*& getCurrentNode();
     void setTicket(Ticket* t);
+    void setRailPass(RailPass* r);
 protected:
 
     //data members
