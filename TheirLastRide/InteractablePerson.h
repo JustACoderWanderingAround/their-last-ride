@@ -14,7 +14,7 @@ public:
     InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass);
     InteractablePerson(const std::string& name);
     bool verdictChecker(bool _PlayerVerdict);
-    Ticket getTicket();
+    Ticket* getTicket();
     RailPass* getRailPass();
     std::string getName();
     bool getPassType();
@@ -32,7 +32,7 @@ protected:
 
 private:
     Node* _currentNode;
-    Ticket _Ticket;
+    Ticket* _Ticket;
     RailPass* _RailPass;
     std::string _name;
 };

@@ -2,6 +2,7 @@
 #include "TrainScene.h"
 #include "MenuScene.h"
 #include "IntroScene.h"
+#include "OverviewScene.h"
 #include <WinUser.h>
 #include <iostream>
 #include <SDL_ttf.h>
@@ -87,6 +88,7 @@ Application::Application()
     _scenes[SCENE_TRAIN] = new TrainScene();
     _scenes[SCENE_MAINMENU] = new MenuScene();
     _scenes[SCENE_INTRO] = new IntroScene();
+    _scenes[SCENE_OVERVIEW] = new OverviewScene();
 }
 
 /// <summary>

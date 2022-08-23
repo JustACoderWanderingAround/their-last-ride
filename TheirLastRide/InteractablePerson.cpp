@@ -55,7 +55,7 @@ InteractablePerson::InteractablePerson(std::string name, bool passType, bool ver
 	: _name (name),
 	_PassType (passType),
 	_PredetermindedVerdict (verdict),
-	_Ticket (*ticket),
+	_Ticket (ticket),
 	_RailPass (railpass),
 	_currentNode(nullptr)
 {
@@ -83,7 +83,7 @@ bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
 	std::cout << "correct" << std::endl;
 	
 }
-Ticket InteractablePerson::getTicket()
+Ticket* InteractablePerson::getTicket()
 {
 	return _Ticket;
 }
@@ -110,7 +110,7 @@ Node*& InteractablePerson::getCurrentNode()
 
 void InteractablePerson::setTicket(Ticket* t)
 {
-	_Ticket = *t;
+	_Ticket = t;
 }
 
 void InteractablePerson::setRailPass(RailPass* r)
