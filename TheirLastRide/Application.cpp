@@ -84,11 +84,6 @@ void Application::Init()
     _rides[RIDE_1]->loadAttributes(0);
     _rides[RIDE_2]->loadAttributes(1);
     _rides[RIDE_3]->loadAttributes(2);
-    _rides[RIDE_1]->setCarriageNum(1);
-    _rides[RIDE_2]->setCarriageNum(2);
-    _rides[RIDE_3]->setCarriageNum(1);
-    _rides[RIDE_3]->setInteractableNumber(1);
-    _rides[RIDE_3]->setNonInteractableNumber(5);
 }
 
 /// <summary>

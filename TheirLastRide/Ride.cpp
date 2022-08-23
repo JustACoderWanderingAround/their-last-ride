@@ -21,8 +21,8 @@ void from_json(const json& j,Ride& n) {
 
 Ride::Ride()
 {
-	_interactableNumber = 1;
-	_nonInteractableNumber = 1;
+	interactableNumber = 1;
+	nonInteractableNumber = 1;
 }
 
 Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)
@@ -47,11 +47,6 @@ Ride::~Ride()
 }
 
 
-
-int Ride::getInteractable()
-{
-    return _interactableNumber;
-}
 
 int Ride::getNonInteractable() const
 {
@@ -147,7 +142,7 @@ bool Ride::operator==(const std::string& s) const
 
 int Ride::getDate() const
 {
-	return _date;
+	return date;
 }
 
 int Ride::getWrongVerdict()
