@@ -23,21 +23,21 @@
 		{
 			"playerText": "Ah, that's fine.'",
 			"npcText": "Richward: *grunts louder*",
-			"results": [3, 4, 5]
+			"results": [4, 5, 6]
 		},
 		{
 			"playerText": "Rough day?",
 			"npcText": "Richward: Duh! I lost 13 ranked matches of League of Legends in a row! I am LIVID",
-			"results": [3, 4, 5]
+			"results": [3, 5, 6]
 		},
 		{
 			"playerText": "I see, I won't bother you anymore.'",
 			"npcText": "Richward: Yeah, just leave me alone already.",
-			"results": [6]
+			"results": [3, 4, 6]
 		},
 		{
 			"playerText": "",
 			"npcText": "*grunts*",
-			"results": [6]
+			"results": []
 		}
 ]

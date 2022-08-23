@@ -105,8 +105,8 @@ void Application::Run()
     trainRide3->loadAttributes(2);
     trainRide1->setCarriageNum(1);
     trainRide2->setCarriageNum(2);
-    trainRide3->setCarriageNum(3);
-    trainRide3->setInteractableNumber(2);
+    trainRide3->setCarriageNum(1);
+    trainRide3->setInteractableNumber(1);
     trainRide3->setNonInterableNumber(5);
     Player* player1 = new Player(trainRide1->stops);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
@@ -139,6 +139,13 @@ void Application::Run()
                                 changeScene(_scenes[SCENE_TRAIN]);
                                 break;
                             }
+                        }
+                    }
+                    else {
+                        if (trainScene->getMainRide()->interactablePeople.size() == 0) {
+                            _mainScene = _scenes[SCENE_OVERVIEW];
+                            GetFrameEvents().clear();
+                            break;
                         }
                     }
                 }

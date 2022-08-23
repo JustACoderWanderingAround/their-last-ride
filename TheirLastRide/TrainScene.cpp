@@ -8,6 +8,9 @@
 #include "Texture.h"
 #include <math.h>
 #include <string>
+#include <algorithm>
+#include <functional>
+
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
@@ -251,6 +254,12 @@ void TrainScene::Exit()
 /// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
+    if (_mainRide != nullptr && _mainRide->interactablePeople.size() == 0) {
+        std::cout << "Done.\n";
+    }
+    if (_mainRide != nullptr) {
+        std::cout << _mainRide->interactablePeople.size() << "\n";
+    }
     HandleInput();
     /*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
     _mouseCollider->moveCollider(_mouse_coords);
@@ -384,11 +393,6 @@ void TrainScene::HandleInput()
                 if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
                 {
                     ticketReturn = true;
-                }
-                if (static_cast<InteractablePerson*>(_interactingPerson)->verdictChecker(ticketStamp) == false)
-                {
-                    _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
-                    break;
                 }
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                 {
@@ -669,14 +673,23 @@ void TrainScene::playerInteraction(int option)
     if (currentNode == nullptr)
         currentNode = nodes.front();
     if (_dT == currentNode->npcText && currentNode->results.size() == 0) {
-        for (int i = 0; i < 2; i++)
-        {
-            _renderQueue.pop_back();
+        if (person->getTicket()->getClippedState()) {
+            for (int i = 0; i < 2; i++)
+            {
+                _renderQueue.pop_back();
+            }
+            if (person->verdictChecker(ticketStamp) == false)
+            {
+                _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
+            }
+            _mainRide->interactablePeople.erase(std::remove(_mainRide->interactablePeople.begin(), _mainRide->interactablePeople.end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), _mainRide->interactablePeople.end());
+            person->getCurrentNode() = nullptr;
+            _interactingPerson = nullptr;
+            isInteracting = false;
         }
-        
-        person->getCurrentNode() = nullptr;
-        _interactingPerson = nullptr;
-        isInteracting = false;
+        else {
+            return;
+        }
     }
 
     if (currentNode == nodes.front()) {
@@ -780,6 +793,11 @@ void TrainScene::setPlayer(Player* p)
 void TrainScene::setRide(Ride* r)
 {
     _mainRide = r;
+}
+
+Ride* TrainScene::getMainRide()
+{
+    return _mainRide;
 }
 
 /// <summary>

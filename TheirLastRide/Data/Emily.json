@@ -23,17 +23,23 @@
 		{
 			"playerText": "Where do you live?",
 			"npcText": "Emily: Stardrop Vale. But I'm making a stop at Noston East.",
-			"results": [3, 4, 5]
+			"results": [4, 5, 6]
 		},
 		{
 			"playerText": "That's nice, where did you travel to?",
 			"npcText": "Emily: Noston, Ewing. I went around the region.",
-			"results": [3, 4, 5]
+			"results": [3, 5, 6]
 		},
 		{
 			"playerText": "Did you enjoy your stay? ",
 			"npcText": "Emily: It was wonderful! But I'm ready to head home now.",
-			"results": [3, 4, 5]
+			"results": [ 3, 4, 6 ]
+		},
+
+		{
+			"playerText": "Safe trip home. ",
+			"npcText": " ",
+			"results": []
 		}
 		
 ]

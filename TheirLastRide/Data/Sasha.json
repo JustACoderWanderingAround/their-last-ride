@@ -21,17 +21,17 @@
     {
         "playerText": "So where are you headed today ?",
         "npcText": "Swegsville. I'm visiting mother.",
-        "results": [6]
+        "results": [4, 5, 6]
     },
     {
         "playerText": "Are you a student ?",
         "npcText": "Yep ! I'm in nursing !",
-        "results": []
+        "results": [3, 5, 6]
     },
     {
         "playerText": "Beautiful weather today huh ?",
         "npcText": "Indeed !",
-        "results": []
+        "results": [3, 4, 6]
     },
     {
         "playerText": "Swegsville ? We don't serve that line. You might be looking for the West-Anglian-North Knightsbridge East Railway. Check platform 11 for their services, assuming they have any today.",

@@ -23,17 +23,21 @@
 		{
 			"playerText": "Are you travelling by yourself?",
 			"npcText": "Jeanie: Yeah! Mama said I'm old enough to ",
-			"results": [3, 4, 5]
+			"results": [4, 5, 6]
 		},
 		{
 			"playerText": "Where are you going today?",
 			"npcText": "Jeanie: Hatfield! I'm visiting Granny.",
-			"results": [3, 4, 5]
+			"results": [3, 5, 6]
 		},
 		{
 			"playerText": "Who bought the ticket for you? ",
 			"npcText": "Jeanie: Mama bought a Rail Pass for me, she said it would let me visit Granny anytime.",
-			"results": [3, 4, 5]
+			"results": [3, 4, 6]
+		},
+		{
+			"playerText": "That's lovely! Have a nice trip dear. ",
+			"npcText": "Jeanie: Mama bought a Rail Pass for me, she said it would let me visit Granny anytime.",
+			"results": []
 		}
-		
 ]

@@ -23,17 +23,22 @@
 		{
 			"playerText": "What were you doing when that happened?",
 			"npcText": "Bill: I was playing basketball.",
-			"results": [3, 4, 5]
+			"results": [4, 5, 6]
 		},
 		{
 			"playerText": "How did you get a ticket?",
 			"npcText": "Bill: I just had it in my pocket when I came around.",
-			"results": [3, 4, 5]
+			"results": [3, 5, 6]
 		},
 		{
 			"playerText": "How are you feeling right now?",
 			"npcText": "Bill: My body feels kind of stiff... I probably hurt myself during the game.",
-			"results": [3, 4, 5]
+			"results": [ 3, 4, 6 ]
+		},
+		{
+			"playerText": "Goodbye.",
+			"npcText": "",
+			"results": [ ]
 		}
 		
 ]

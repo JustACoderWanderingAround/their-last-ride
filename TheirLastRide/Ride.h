@@ -7,7 +7,7 @@ class Ride
 	int _nonInteractableNumber;
 	int _carriageNum;
 	int _date;
-	int _wrongVerdict;
+	int _wrongVerdictCount;
 public:
 	std::string start;
 	std::vector<std::string> stops;
@@ -28,6 +28,6 @@ public:
 	void setNonInterableNumber(int nin);
 	void setCarriageNum(int cn);
 	void setWrongVerdict(int wv);
-
+	bool operator==(const std::string& s) const;
 };
 
