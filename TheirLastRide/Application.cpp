@@ -103,14 +103,9 @@ void Application::Run()
     trainRide1->loadAttributes(0);
     trainRide2->loadAttributes(1);
     trainRide3->loadAttributes(2);
-    trainRide1->setCarriageNum(1);
-    trainRide2->setCarriageNum(2);
-    trainRide3->setCarriageNum(3);
-    trainRide3->setInteractableNumber(5);
-    trainRide3->setNonInterableNumber(5);
     Player* player1 = new Player(trainRide1->stops);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
+    _mainScene = _scenes[SCENE_MAINMENU];//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(trainRide3);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)

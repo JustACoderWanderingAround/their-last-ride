@@ -5,7 +5,7 @@
 using json = nlohmann::json;
 
 void to_json(json& j, const Ride& n) {
-	j = json{ {"start", n.start}, {"stops", n.stops }, {"invalid", n.invalidStops}, {"people", n.interactablePeople}};
+	j = json{ {"start", n.start}, {"stops", n.stops }, {"invalid", n.invalidStops}, {"people", n.interactablePeople}, {"carriageNum", n.carriageNum}, {"date", n.date}};
 }
 
 void from_json(const json& j,Ride& n) {
@@ -13,29 +13,31 @@ void from_json(const json& j,Ride& n) {
 	j.at("stops").get_to(n.stops);
 	j.at("invalid").get_to(n.invalidStops);
 	j.at("people").get_to(n.interactablePeople);
+	j.at("carriageNum").get_to(n.carriageNum);
+	j.at("date").get_to(n.date);
 }
 
 Ride::Ride()
 {
-	_interactableNumber = 1;
-	_nonInteractableNumber = 1;
+	interactableNumber = 1;
+	nonInteractableNumber = 1;
 }
 
 Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN)
 {
     start = str;
     stops = stp;
-    _interactableNumber = iN;
-    _nonInteractableNumber = nN;
+    interactableNumber = iN;
+    nonInteractableNumber = nN;
 }
 Ride::Ride(std::string str, std::vector<std::string> stp, int iN, int nN, int cN, int d)
 {
 	start = str;
 	stops = stp;
-	_interactableNumber = iN;
-	_nonInteractableNumber = nN;
-	_carriageNum = cN;
-	_date = d;
+	interactableNumber = iN;
+	nonInteractableNumber = nN;
+	carriageNum = cN;
+	date = d;
 }
 
 Ride::~Ride()
@@ -44,20 +46,7 @@ Ride::~Ride()
 
 
 
-int Ride::getInteractable()
-{
-    return _interactableNumber;
-}
 
-int Ride::getNonInteractable()
-{
-    return _nonInteractableNumber;
-}
-
-int Ride::getCarriageNum()
-{
-	return _carriageNum;
-}
 
 bool Ride::loadAttributes(int rideNumber)
 {
@@ -76,28 +65,11 @@ bool Ride::loadAttributes(int rideNumber)
 	stops = testRide[rideNumber].stops;
 	invalidStops = testRide[rideNumber].invalidStops;
 	interactablePeople = testRide[rideNumber].interactablePeople;
-	//std::cout << _nodes[0];
+	interactableNumber = testRide[rideNumber].interactableNumber;
+	nonInteractableNumber = testRide[rideNumber].nonInteractableNumber;
+	carriageNum = testRide[rideNumber].carriageNum;
+	date = testRide[rideNumber].date;
 	return true;
-	/*for (int i = 0; i < tempNodes2.size(); i++)
-	{
-		std::cout << _nodes[i]->playerText << std::endl;
-	}*/
-}
-void Ride::setDate(int d)
-{
-	_date = d;
-}
-void Ride::setInteractableNumber(int in)
-{
-	_interactableNumber = in;
-}
-void Ride::setNonInterableNumber(int nin)
-{
-	_nonInteractableNumber = nin;
-}
-void Ride::setCarriageNum(int cn)
-{
-	_carriageNum = cn;
 }
 void Ride::setWrongVerdict(int wv)
 {
@@ -111,7 +83,7 @@ bool Ride::operator==(const std::string& s) const
 
 int Ride::getDate()
 {
-	return _date;
+	return date;
 }
 
 int Ride::getWrongVerdict()
