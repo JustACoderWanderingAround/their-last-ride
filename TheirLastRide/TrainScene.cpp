@@ -136,7 +136,7 @@ void TrainScene::Init()
   /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_SASHA] = ObjectBuilder::CreateObject("Sprites//Passengers//Sasha.png", { 0, 0 }, SDL_BLENDMODE_BLEND);*/
     _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, new BoxCollider({414, 120, 452, 272}), SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//childPass.png", { 420, 36 }, new BoxCollider({ 456, 156, 452, 272 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//adultPass.png", { 420, 36 }, new BoxCollider({ 456, 156, 452, 272 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey}, {600, 192}, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_TO] = ObjectBuilder::CreateTextObject({ "owa owa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 228 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_DOI] = ObjectBuilder::CreateTextObject({ "pain", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 264 }, SDL_BLENDMODE_BLEND);
@@ -276,8 +276,6 @@ void TrainScene::Render()
 
     }
     
-    
-    
     // UI Rendering
     if (isInteracting) {
         
@@ -290,6 +288,10 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
             RenderAtCoords(_objList[OBJECT_TICKET_TO]);
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
+
+            if (ticketStamp) {
+                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+            }
         }
        
         bool isRailpass = _interactingPerson; //attach to getRailpass
@@ -306,12 +308,15 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
             RenderAtCoords(_objList[OBJECT_TICKET_TO]);
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
+           
+            if (ticketStamp) {
+                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+            }
         }
         RenderAtCoords(_objList[OBJECT_STAMPER]);
         RenderAtCoords(_objList[OBJECT_PUNCHER]);
-        if (ticketStamp) {
-            RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
-        }
+       
+       
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
@@ -563,8 +568,21 @@ void TrainScene::playerInteraction(int option)
     _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket().getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_TO]->updateText(person->getTicket().getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM]->updateText(_mainRide->start, Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    
+    if (!person->getPassType())
+    {
+        _objList[OBJECT_RAILPASS]->setTexture(*(_passTextureList[ADULT_PASS]));
+        _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    }
+
+    if (person->getPassType())
+    {
+        _objList[OBJECT_RAILPASS]->setTexture(*(_passTextureList[CHILD_PASS]));
+        _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Pink, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Pink, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    }
+   
     if (_buttons.size() != 0) {
         for (int i = 0; i < person->getCurrentNode()->results.size() * 2; i++)
         {
