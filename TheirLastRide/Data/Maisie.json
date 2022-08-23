@@ -8,31 +8,31 @@
 		},   
 		{
 			"playerText": "",
-			"npcText": "She is wearing a bright red outfit with a garish blue hat. She seems to be fidgeting where she sits. ",
+			"npcText": "You notice her pale complexion, and she seems to be quite tired. She is holding a small hankerchief, occasionally dabbing at her forehead. ",
 			"results": [
 				2
 			]
 		},
 		{
-			"playerText": "Why are you travelling today?",
-			"npcText": "Emily: I'm headed home! Was on holiday for a bit.",
+			"playerText": "How are you feeling today, Miss?",
+			"npcText": "Maisie: I've been better, to be honest.",
 			"results": [
 				3, 4, 5
 			]
 		},
 		{
-			"playerText": "Where do you live?",
-			"npcText": "Emily: Stardrop Vale. But I'm making a stop at Noston East.",
+			"playerText": "Oh dear. Can I help in any way?",
+			"npcText": "Maisie: *cough* No, thank you though. *cough* ",
 			"results": [3, 4, 5]
 		},
 		{
-			"playerText": "That's nice, where did you travel to?",
-			"npcText": "Emily: Noston, Ewing. I went around the region.",
+			"playerText": "Will you be alright for the duration of the trip?",
+			"npcText": "Maisie: *smiles* Well, I don't think my condition can get any worse. *cough* *cough*",
 			"results": [3, 4, 5]
 		},
 		{
-			"playerText": "Did you enjoy your stay? ",
-			"npcText": "Emily: It was wonderful! But I'm ready to head home now.",
+			"playerText": "Where are you headed?",
+			"npcText": "Maisie: I'm not too sure, honestly. *cough* My vision is a little cloudy... I can't really read my ticket... *cough*",
 			"results": [3, 4, 5]
 		}
 		
