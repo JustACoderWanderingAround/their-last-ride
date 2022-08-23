@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 #include "BoxCollider.h"
 #include "Player.h"
+#include "InteractablePerson.h"
 #include "Texture.h"
 #include <math.h>
 #include <string>
@@ -351,8 +352,11 @@ void TrainScene::HandleInput()
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
                     break;
                 }
-                if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider)) {
+                if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider)) 
                     ticketStamp = true;
+                if (static_cast<InteractablePerson*>(_interactingPerson)->verdictChecker(ticketStamp) == false)
+                {
+                    
                     break;
                 }
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
