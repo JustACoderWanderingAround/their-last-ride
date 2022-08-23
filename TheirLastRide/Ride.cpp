@@ -112,6 +112,11 @@ bool Ride::operator==(const std::string& s) const
 	return true;
 }
 
+bool Ride::checkInteractable(const std::string& name)
+{
+	return (std::find(_interactablePeople.begin(), _interactablePeople.end(), name) != _interactablePeople.end());
+}
+
 int Ride::getDate() const
 {
 	return _date;

@@ -41,5 +41,6 @@ public:
 	void setCarriageNum(int cn);
 	void setWrongVerdict(int wv);
 	bool operator==(const std::string& s) const;
+	bool checkInteractable(const std::string& name);
 };
 

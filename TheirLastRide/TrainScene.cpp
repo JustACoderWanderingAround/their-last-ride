@@ -733,7 +733,7 @@ void TrainScene::playerInteraction(int option)
         return;
     }
     if (_dT == currentNode->npcText && currentNode->results.size() == 0) {
-        if (person->getTicket()->getClippedState()) {
+        if (person->getTicket()->getClippedState() && _mainRide->checkInteractable(person->getName())) {
             /*for (int i = 0; i < 2; i++)
             {
                 _renderQueue.pop_back();

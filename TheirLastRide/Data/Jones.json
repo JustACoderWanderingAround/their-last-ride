@@ -1,39 +1,80 @@
 [
-		{
-			"playerText": "TM: Tickets please",
-			"npcText": "",
-			"results": [
-					1
-			]
-		}, 
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		]
+	},
 	{
 		"playerText": "",
 		"npcText": "Jones: Here. *He hands it to you without making eye contact*",
 		"results": [
 			2
 		]
-	}, 
+	},
 	{
 		"playerText": "",
 		"npcText": "He holds a lit cigar to his mouth, eyes shifting about the cabin. With every exhale, his face is engulfed in thunderheads of tobacco smoke.",
 		"results": [
-			3, 4, 5
+			3,
+			7,
+			9
 		]
 	},
-		{
-			"playerText": "So where are you headed today?",
-			"npcText": "Jones: Fort Knight. Got business to do, money to make.",
-			"results": [4]
-		},
-		{
-			"playerText": "What business?",
-			"npcText": "Jones: Checking out a new fox farm.",
-			"results": [5, 6]
-		},
-		{
-			"playerText": "Isn't that quite cruel?'",
-			"npcText": "Jones: Hardly. ",
-			"results": [3, 4, 5]
-		}
-		
+	{
+		"playerText": "So where are you headed today?",
+		"npcText": "Jones: Fort Knight. Got business to do, money to make.",
+		"results": [ 4 ]
+	},
+	{
+		"playerText": "What business?",
+		"npcText": "Jones: Checking out a new fox farm.",
+		"results": [ 5, 6 ]
+	},
+	{
+		"playerText": "Isn't that quite cruel?'",
+		"npcText": "Jones: Hardly. You haven't seen the real world, boy. You take what you can and leave the rest to fend for themselves.",
+		"results": [13] 
+	},
+	{
+		"playerText": "A fox farm?",
+		"npcText": "Jones: Endangered Silver Foxes. Their pelts sell for a fortune, seeing as there are only about a hundred left in the wild.",
+		"results": [13] 
+	},
+	{
+		"playerText": "Enjoying your trip so far?",
+		"npcText": "Jones: *scoffs* No. I hate taking the train. Too many plebians, disgusting creatures.",
+		"results": [ 8 ]
+	},
+	{
+		"playerText": "Then why are you taking the train?",
+		"npcText": "Jones: My useless chaffeur said he 'needed time off' to 'visit his mother'. Honestly, It's impossible to find good help these days.",
+		"results": [13] 
+	},
+	{
+		"playerText": "Could you put away your cigar, Sir?",
+		"npcText": "Jones: Who do you think you are?",
+		"results": [ 10 ]
+	},
+	{
+		"playerText": "...The ticketmaster. You need to comply with the rules, Sir.",
+		"npcText": "Jones: ...Do you know who you are talking to?",
+		"results": [ 11, 12 ]
+	},
+	{
+		"playerText": "A passenger.",
+		"npcText": "Jones: A passenger?! I am the CEO of Skum Bags, the largest manufacturer of exotic fur and leather goods.",
+		"results": [13] 
+	},
+	{
+		"playerText": "Sorry, Sir. I will take my leave.",
+		"npcText": "Jones: Damn straight.",
+		"results": []
+	},
+	{
+		"playerText": "Sure. You do you, I suppose.",
+		"npcText": "",
+		"results": []
+	}
 ]
