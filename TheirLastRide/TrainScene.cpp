@@ -8,6 +8,9 @@
 #include "Texture.h"
 #include <math.h>
 #include <string>
+#include <algorithm>
+#include <functional>
+
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
@@ -108,7 +111,6 @@ void TrainScene::renderCabins()
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
                     /*std::cout << "Collider:(" << (x_offset * row) + 100 + initialX << "," << (y_offset * column) + initialY << ")\n";*/
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
                     static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
                     static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
                     RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
@@ -248,6 +250,12 @@ void TrainScene::Exit()
 /// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
+    if (_mainRide != nullptr && _mainRide->interactablePeople.size() == 0) {
+        std::cout << "Done.\n";
+    }
+    if (_mainRide != nullptr) {
+        std::cout << _mainRide->interactablePeople.size() << "\n";
+    }
     HandleInput();
     /*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
     _mouseCollider->moveCollider(_mouse_coords);
@@ -372,11 +380,7 @@ void TrainScene::HandleInput()
                 }
                 if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider)) 
                     ticketStamp = true;
-                if (static_cast<InteractablePerson*>(_interactingPerson)->verdictChecker(ticketStamp) == false)
-                {
-                    _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
-                    break;
-                }
+          
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                 {
                     ticketFront = true;
@@ -656,14 +660,23 @@ void TrainScene::playerInteraction(int option)
     if (currentNode == nullptr)
         currentNode = nodes.front();
     if (_dT == currentNode->npcText && currentNode->results.size() == 0) {
-        for (int i = 0; i < 2; i++)
-        {
-            _renderQueue.pop_back();
+        if (person->getTicket()->getClippedState()) {
+            for (int i = 0; i < 2; i++)
+            {
+                _renderQueue.pop_back();
+            }
+            if (person->verdictChecker(ticketStamp) == false)
+            {
+                _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
+            }
+            _mainRide->interactablePeople.erase(std::remove(_mainRide->interactablePeople.begin(), _mainRide->interactablePeople.end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), _mainRide->interactablePeople.end());
+            person->getCurrentNode() = nullptr;
+            _interactingPerson = nullptr;
+            isInteracting = false;
         }
-        
-        person->getCurrentNode() = nullptr;
-        _interactingPerson = nullptr;
-        isInteracting = false;
+        else {
+            return;
+        }
     }
 
     if (currentNode == nodes.front()) {
