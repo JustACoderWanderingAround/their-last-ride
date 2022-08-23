@@ -77,6 +77,18 @@ void Application::Init()
         // End the program
         exit(0);
     }
+    for (int i = 0; i < NUM_RIDE; i++)
+    {
+        _rides[i] = new Ride();
+    }
+    _rides[RIDE_1]->loadAttributes(0);
+    _rides[RIDE_2]->loadAttributes(1);
+    _rides[RIDE_3]->loadAttributes(2);
+    _rides[RIDE_1]->setCarriageNum(1);
+    _rides[RIDE_2]->setCarriageNum(2);
+    _rides[RIDE_3]->setCarriageNum(1);
+    _rides[RIDE_3]->setInteractableNumber(1);
+    _rides[RIDE_3]->setNonInterableNumber(5);
 }
 
 /// <summary>
@@ -97,21 +109,10 @@ Application::Application()
 void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
-    Ride* trainRide1 = new Ride();
-    Ride* trainRide2 = new Ride();
-    Ride* trainRide3 = new Ride();
-    trainRide1->loadAttributes(0);
-    trainRide2->loadAttributes(1);
-    trainRide3->loadAttributes(2);
-    trainRide1->setCarriageNum(1);
-    trainRide2->setCarriageNum(2);
-    trainRide3->setCarriageNum(1);
-    trainRide3->setInteractableNumber(1);
-    trainRide3->setNonInterableNumber(5);
-    Player* player1 = new Player(trainRide1->stops);
+    Player* player1 = new Player(_rides[RIDE_1]->stops);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
     _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
-    trainScene->setRide(trainRide3);
+    trainScene->setRide(_rides[RIDE_3]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
     {
