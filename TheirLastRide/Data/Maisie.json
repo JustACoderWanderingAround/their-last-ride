@@ -1,0 +1,39 @@
+[
+		{
+			"playerText": "TM: Tickets please",
+			"npcText": "",
+			"results": [
+					1
+			]
+		},   
+		{
+			"playerText": "",
+			"npcText": "She is wearing a bright red outfit with a garish blue hat. She seems to be fidgeting where she sits. ",
+			"results": [
+				2
+			]
+		},
+		{
+			"playerText": "Why are you travelling today?",
+			"npcText": "Emily: I'm headed home! Was on holiday for a bit.",
+			"results": [
+				3, 4, 5
+			]
+		},
+		{
+			"playerText": "Where do you live?",
+			"npcText": "Emily: Stardrop Vale. But I'm making a stop at Noston East.",
+			"results": [3, 4, 5]
+		},
+		{
+			"playerText": "That's nice, where did you travel to?",
+			"npcText": "Emily: Noston, Ewing. I went around the region.",
+			"results": [3, 4, 5]
+		},
+		{
+			"playerText": "Did you enjoy your stay? ",
+			"npcText": "Emily: It was wonderful! But I'm ready to head home now.",
+			"results": [3, 4, 5]
+		}
+		
+]
