@@ -7,6 +7,7 @@ class Ride
 	int _nonInteractableNumber;
 	int _carriageNum;
 	int _date;
+	int _wrongVerdict;
 public:
 	std::string start;
 	std::vector<std::string> stops;
@@ -20,11 +21,13 @@ public:
 	int getNonInteractable();
 	int getCarriageNum();
 	int getDate();
+	int getWrongVerdict();
 	bool loadAttributes(int rideNumber);
 	void setDate(int d);
 	void setInteractableNumber(int in);
 	void setNonInterableNumber(int nin);
 	void setCarriageNum(int cn);
+	void setWrongVerdict(int wv);
 
 };
 
