@@ -1,0 +1,84 @@
+[
+		{
+			"playerText": "TM: Can I see your ticket ?",
+			"npcText": "",
+			"results": [
+					1
+			]
+		},   
+		{
+			"playerText": "",
+			"npcText": "Row.D: What are you, a cop ?",
+			"results": [
+				2
+			]
+		},
+		{
+			"playerText": "",
+			"npcText": "He reeks of alchohol and you notice reddish stains down his front",
+			"results": [
+				3, 4, 5
+			]
+		},
+		{
+			"playerText": "Have you been drinking sir ?",
+			"npcText": "Row.D: Whats it to you, bub ?",
+			"results": [10]
+		},
+		{
+			"playerText": "What happened to your head ?",
+			"npcText": "Row.D: None of your goddamn business, bruv.",
+			"results": [10]
+		},
+		{
+			"playerText": "Is that vodka ?",
+			"npcText": "Row.D: Yea, you got a problem with that ?",
+			"results": [6, 7]
+		},
+		{
+			"playerText": "You do know alchohol is prohitbited on this train",
+			"npcText": "What are you gonna do about it huh ?",
+			"results": [10]
+		},
+		{
+			"playerText": "I'm just impressed you can down it straight",
+			"npcText": "Ah, this is like water to me",
+			"results": [8]
+		},
+		{
+			"playerText": "So, what happened to your head ?",
+			"npcText": "Some idiot from the bar jumped me while I was walking home",
+			"results": [9]
+		},
+		{
+			"playerText": "Sounds like a rough time. Tell you what, if you show me your ticket I can get you a drink from the back.",
+			"npcText": "You got yourself a deal",
+			"results": []
+		},
+		{
+			"playerText": "I still need to see that ticket",
+			"npcText": "piss off bruv. My head hurts.",
+			"results": [11, 12]
+		},
+		{
+			"playerText": "You need medical assistance.",
+			"npcText": "I don't need jack from you. Piss off",
+			"results": []
+		},
+		{
+			"playerText": "So what happened ?",
+			"npcText": "I got jumped you twat",
+			"results": [13, 14]
+		},
+		{
+			"playerText": "You want some water to sober up ?",
+			"npcText": "Hell no, I don't want to be sober.'",
+			"results": []
+		}
+		{
+			"playerText": "Sounds like a rough time. Tell you what, if you show me your ticket I can get you a drink from the back.",
+			"npcText": "Fine.",
+			"results": []
+		}
+	
+]

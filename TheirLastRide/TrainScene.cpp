@@ -109,7 +109,7 @@ void TrainScene::renderCabins()
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
                     /*std::cout << "Collider:(" << (x_offset * row) + 100 + initialX << "," << (y_offset * column) + initialY << ")\n";*/
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
+    
                     static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
                     static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
                     RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
@@ -217,7 +217,7 @@ void TrainScene::Init()
     _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", _objList[OBJECT_TICKET]->getCoords() , SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 100, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER]->setToScale(0.4);
-    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 300, 200 }, new BoxCollider({1260, 300, 50, 50 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 300, 200 }, new BoxCollider({1260, 0, 50, 50 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RETURN]->setToScale(0.75);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
