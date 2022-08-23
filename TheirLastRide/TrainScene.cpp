@@ -191,6 +191,7 @@ void TrainScene::Init()
     _objList[OBJECT_TICKET_DOI] = ObjectBuilder::CreateTextObject({ "pain", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 264 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS_NAME] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 244 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS_EXPIRY] = ObjectBuilder::CreateTextObject({ "aaaaaaaa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 280 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_HEAD] = ObjectBuilder::CreateObject("Sprites//Passengers//SashaHead.png", { 165, 435 }, SDL_BLENDMODE_BLEND);
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
@@ -367,10 +368,13 @@ void TrainScene::Render()
 
     
     // UI Rendering
-    if (isInteracting) {
+    InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
+
+    if (isInteracting && _mainRide->checkInteractable(person->getName())){
         
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
         RenderAtCoords(_objList[OBJECT_TEXT]);
+        RenderAtCoords(_objList[OBJECT_HEAD]);
 
         if (!ticketFront)
         {
@@ -445,12 +449,14 @@ void TrainScene::HandleInput()
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (isInteracting)
             {
+
                 if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
                 {
                     static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->setClippedState(true);
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
                     break;
                 }
+
                 if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider))
                 {
                     ticketStamp = true;
@@ -474,6 +480,7 @@ void TrainScene::HandleInput()
                 if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
                 {
                     std::cout << "LOLLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL" << std::endl;
+                    _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET]);
                     ticketReturn = true;
                 }
 
@@ -696,9 +703,17 @@ void TrainScene::playerInteraction(int option)
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
     Ticket* comparisonTicket = person->getTicket();
     RailPass* comparisonRailpass = person->getRailPass();
+    std::string filepath = "Sprites//Passengers//" + person->getName() + "Head.png";
+    Texture headTexture;
+    headTexture.loadImage(filepath);
+    headTexture.setBlendMode(SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_HEAD]->setTexture(headTexture);
+    _objList[OBJECT_HEAD]->setToScale(0.9);
+
     _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket()->getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_TO]->updateText(person->getTicket()->getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM]->updateText(_mainRide->getStart(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    
     
     if (!person->getPassType())
     {
