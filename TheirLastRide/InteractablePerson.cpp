@@ -80,6 +80,7 @@ bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
 {
 	
 	return (_PlayerVerdict == _PredetermindedVerdict);
+	std::cout << "correct" << std::endl;
 	
 }
 Ticket* InteractablePerson::getTicket()
