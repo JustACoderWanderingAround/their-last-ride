@@ -1,4 +1,18 @@
 #include "RailPass.h"
+#include "json.hpp"
+using json = nlohmann::json;
+
+
+//void to_json(json& j, const RailPass& n) {
+//	j = json{ {"playerText", n.playerText}, {"npcText", n.npcText } ,{"results", n.results} };
+//}
+//
+//void from_json(const json& j, RailPass& n) {
+//	j.at("playerText").get_to(n.playerText);
+//	j.at("npcText").get_to(n.npcText);
+//	j.at("results").get_to(n.results);
+//}
+
 
 RailPass::RailPass()
 {
