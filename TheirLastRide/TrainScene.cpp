@@ -19,6 +19,8 @@ bool ticketStamp = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
+int pageChanger = 0;
+int keyTimer = 0;
 std::string _dT;
 
 bool inBoundsUp(int y)
@@ -174,6 +176,7 @@ void TrainScene::Init()
     _nbSprites[NOTEBOOK_P1]->loadImage("Sprites//Items//notebook//notebookPage1Txt.png");
     _nbSprites[NOTEBOOK_P2]->loadImage("Sprites//Items//notebook//notebookPage2.png");
     _nbSprites[NOTEBOOK_P3]->loadImage("Sprites//Items//notebook//notebookPage3Txt.png");
+    _nbSprites[NOTEBOOK_P4]->loadImage("Sprites//Items//notebook//notebookPage4Txt.png");
     for (int i = 0; i < NUM_NOTEBOOK; i++)
     {
         _nbSprites[i]->setBlendMode(SDL_BLENDMODE_BLEND);
@@ -182,6 +185,7 @@ void TrainScene::Init()
     _nbSprites[NOTEBOOK_P1]->setScale(1);
     _nbSprites[NOTEBOOK_P2]->setScale(1);
     _nbSprites[NOTEBOOK_P3]->setScale(1);
+    _nbSprites[NOTEBOOK_P4]->setScale(1);
 
 
     for (int i = 0; i < NUM_PASS_TXTR; i++)
@@ -413,12 +417,41 @@ void TrainScene::HandleInput()
             case SDLK_DOWN:
                 break;
 
+            case SDLK_RIGHT:
+                pageChanger = (pageChanger + 1 <= 4) ? pageChanger + 1:pageChanger;
+                break;
+
+            case SDLK_LEFT:
+                pageChanger = (pageChanger - 1 >= 1) ? pageChanger - 1 : pageChanger;
+                break;
+
             case SDLK_UP:
                 break;
             }
         }
     }
     
+    switch (pageChanger)
+    {
+    case 1:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P1]));
+        break;
+
+    case 2:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P2]));
+        break;
+
+    case 3:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P3]));
+        break;
+
+    case 4:
+        _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P4]));
+        break;
+    }
+
+    
+
     switch (last_dir)
     {
     case 1:
