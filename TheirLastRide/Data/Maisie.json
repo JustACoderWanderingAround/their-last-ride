@@ -23,17 +23,22 @@
 		{
 			"playerText": "Oh dear. Can I help in any way?",
 			"npcText": "Maisie: *cough* No, thank you though. *cough* ",
-			"results": [3, 4, 5]
+			"results": [4, 5, 6]
 		},
 		{
 			"playerText": "Will you be alright for the duration of the trip?",
 			"npcText": "Maisie: *smiles* Well, I don't think my condition can get any worse. *cough* *cough*",
-			"results": [3, 4, 5]
+			"results": [3, 5, 6]
 		},
 		{
 			"playerText": "Where are you headed?",
 			"npcText": "Maisie: I'm not too sure, honestly. *cough* My vision is a little cloudy... I can't really read my ticket... *cough*",
-			"results": [3, 4, 5]
+			"results": [ 3, 4, 6 ]
+		},
+		{
+			"playerText": "Get well soon, Miss.",
+			"npcText": " ",
+			"results": []
 		}
 		
 ]
