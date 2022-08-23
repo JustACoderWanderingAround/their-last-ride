@@ -1,0 +1,39 @@
+[
+		{
+			"playerText": "TM: Tickets please",
+			"npcText": "",
+			"results": [
+					1
+			]
+		}, 
+	{
+		"playerText": "",
+		"npcText": "Jones: Here. *He hands it to you without making eye contact*",
+		"results": [
+			2
+		]
+	}, 
+	{
+		"playerText": "",
+		"npcText": "He holds a lit cigar to his mouth, eyes shifting about the cabin. With every exhale, his face is engulfed in thunderheads of tobacco smoke.",
+		"results": [
+			3, 4, 5
+		]
+	},
+		{
+			"playerText": "So where are you headed today?",
+			"npcText": "Jones: Fort Knight. Got business to do, money to make.",
+			"results": [4]
+		},
+		{
+			"playerText": "What business?",
+			"npcText": "Jones: Checking out a new fox farm.",
+			"results": [5, 6]
+		},
+		{
+			"playerText": "Isn't that quite cruel?'",
+			"npcText": "Jones: Hardly. ",
+			"results": [3, 4, 5]
+		}
+		
+]

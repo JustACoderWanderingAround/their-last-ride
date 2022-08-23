@@ -1,6 +1,7 @@
 #include "Ticket.h"
 
 Ticket::Ticket()
+    : _clipped(false)
 {
     _IssuingStn = "NOSTON CTRL";
     _Destination = "NOSTON EAST";
@@ -8,6 +9,7 @@ Ticket::Ticket()
 }
 
 Ticket::Ticket(std::vector<std::string> dS, std::vector<std::string> randStops, int iD)
+    : _clipped(false)
 {
     int i = rand() % dS.size();
     int j = rand() % 10;

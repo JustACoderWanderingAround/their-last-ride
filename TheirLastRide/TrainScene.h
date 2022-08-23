@@ -119,5 +119,6 @@ public:
 	void setPlayer(Player* p);
 	void setRide(Ride* r);
 	int date;
+	Ride* getMainRide();
 };
 

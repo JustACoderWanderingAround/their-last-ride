@@ -23,16 +23,21 @@
 		{
 				"playerText": "How are you feeling now ?",
 				"npcText": "I'm a little tired to be honest...",
-				"results": []
+				"results": [4, 5, 6]
 		},
 		{
 				"playerText": "You woke up here after a nap ?",
 				"npcText": "I sat down to take a nap... and I woke up here.",
-				"results": []
+				"results": [3, 5, 6]
 		},
-		{
-				"playerText": "Are you sure you weren't doing anything else ?",
-				"npcText": "Yes. I took a nap and here I am.",
-				"results":  []
-		}
+	{
+		"playerText": "Are you sure you weren't doing anything else ?",
+		"npcText": "Yes. I took a nap and here I am.",
+		"results": [ 3, 4, 6 ]
+	},
+	{
+		"playerText": "Alright. Thanks, sir.",
+		"npcText": "",
+		"results": []
+	}
 ]

@@ -101,8 +101,14 @@ void Ride::setCarriageNum(int cn)
 }
 void Ride::setWrongVerdict(int wv)
 {
-	_wrongVerdict = wv;
+	_wrongVerdictCount = wv;
 }
+
+bool Ride::operator==(const std::string& s) const
+{
+	return true;
+}
+
 int Ride::getDate()
 {
 	return _date;
@@ -110,5 +116,5 @@ int Ride::getDate()
 
 int Ride::getWrongVerdict()
 {
-	return _wrongVerdict;
+	return _wrongVerdictCount;
 }
