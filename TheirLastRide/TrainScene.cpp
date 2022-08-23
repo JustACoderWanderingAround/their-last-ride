@@ -84,29 +84,29 @@ void TrainScene::renderCabins()
     auto seats = _cabins[_currentCabin]->getSeats();
     for (int row = 0; row < 6; row++) {
         if (seats[TrainCabin::ConvertToPosition({ 0, row })] != NULL) {
-            if (row > 2) {
+            if (row < 3) {
                 seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 0) + initialY + 100 });
             }
             else
-                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 0) + initialY + 100 });
+                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX + 100, (y_offset * 0) + initialY + 100 });
              
 
             RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 0, row })]);
         }
         
     }
-    /*for (int row = 0; row < 6; row++) {
+    for (int row = 0; row < 6; row++) {
         if (seats[TrainCabin::ConvertToPosition({ 3, row })] != NULL) {
-            if (row > 2) {
+            if (row < 3) {
                 seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row)+ initialX, (y_offset * 3) + initialY + 100 });
             }
             else
-                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 3) + initialY + 100 });
+                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX + 100, (y_offset * 3) + initialY + 100 });
 
 
-            RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 0, row })]);
+            RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 3, row })]);
         }
-    }*/
+    }
     for (int column = 1; column < 3; column++) {
         {
             if (column == 2) {
