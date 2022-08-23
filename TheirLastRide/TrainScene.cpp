@@ -782,6 +782,11 @@ void TrainScene::setRide(Ride* r)
     _mainRide = r;
 }
 
+Ride* TrainScene::getMainRide()
+{
+    return _mainRide;
+}
+
 /// <summary>
 /// Get the list of train cabins(logic)
 /// </summary>

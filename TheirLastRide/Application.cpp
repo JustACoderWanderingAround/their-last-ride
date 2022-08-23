@@ -141,6 +141,13 @@ void Application::Run()
                             }
                         }
                     }
+                    else {
+                        if (trainScene->getMainRide()->interactablePeople.size() == 0) {
+                            _mainScene = _scenes[SCENE_OVERVIEW];
+                            GetFrameEvents().clear();
+                            break;
+                        }
+                    }
                 }
             }
         }
