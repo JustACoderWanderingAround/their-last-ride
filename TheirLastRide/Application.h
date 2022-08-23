@@ -42,7 +42,7 @@ private:
 	std::array <Scene*, NUM_SCENE> _scenes;
 	std::array<Ride*, NUM_RIDE> _rides;
 	Scene* _mainScene;
-	
+	int _currentRide;
 public:
 	Application();
 	void Init();
