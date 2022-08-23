@@ -149,7 +149,7 @@ void Application::Run()
                                 break;
                             }
                             else {
-                                if (_mainScene == _scenes[SCENE_OVERVIEW] && static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW])->sceneClicks > 5) {
+                                /*if (_mainScene == _scenes[SCENE_OVERVIEW] && static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW])->sceneClicks > 5) {
                                     if(_currentRide + 1 <= _rides.size())
                                         _currentRide++;
                                     trainScene->setMainRide(_rides[_currentRide]);
@@ -157,18 +157,18 @@ void Application::Run()
                                     changeScene(trainScene);
                                     GetFrameEvents().clear();
                                     continue;
-                                }
+                                }*/
                             }
                         }
                     }
-                    else {
-                        if (trainScene->getMainRide()->getInteractablePeople().size() == 0) {
-                            /*_mainScene = _scenes[SCENE_OVERVIEW];*/
-                            changeScene(_scenes[SCENE_OVERVIEW]);
-                            GetFrameEvents().clear();
-                            break;
-                        }
-                    }
+                    //else {
+                    //    if (trainScene->getMainRide()->getInteractablePeople().size() == 0) {
+                    //        /*_mainScene = _scenes[SCENE_OVERVIEW];*/
+                    //        changeScene(_scenes[SCENE_OVERVIEW]);
+                    //        GetFrameEvents().clear();
+                    //        break;
+                    //    }
+                    //}
                 }
             }
         }
@@ -270,9 +270,34 @@ SDL_Point Application::getMouseCoords() const
     return _mouse_coords;
 }
 
+std::array<Scene*, NUM_SCENE> Application::getScenes() const
+{
+    return _scenes;
+}
+
 SDL_Event* Application::getEvent()
 {
     return &_event;
+}
+
+std::array<Ride*, NUM_RIDE> Application::getRides() const
+{
+    return _rides;
+}
+
+void Application::setCurrentRide(int iterator)
+{
+    _currentRide = iterator;
+}
+
+int Application::getCurrentRide() const
+{
+    return _currentRide;
+}
+
+void Application::updateCurrentRide()
+{
+    static_cast<TrainScene*>(_scenes[SCENE_TRAIN])->setMainRide(_rides[_currentRide]);
 }
 
 /// <summary>
@@ -289,4 +314,5 @@ void Application::changeScene(Scene* scene)
 {
     _mainScene->Exit();
     _mainScene = scene;
+    GetFrameEvents().clear();
 }

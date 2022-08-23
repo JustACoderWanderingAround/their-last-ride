@@ -36,6 +36,8 @@ enum OBJECT {
 	OBJECT_STAMPER,
 	OBJECT_RETURN,
 	OBJECT_PUNCHER,
+	OBJECT_BLACK_SCREEN,
+	OBJECT_ANNOUCEMENT,
 	NUM_OBJECT
 };
 
@@ -75,11 +77,20 @@ enum NOTEBOOK {
 	NUM_NOTEBOOK
 };
 
+enum FADE_ANIM {
+	FADE_ANIM_OFF,
+	FADE_ANIM_START,
+	FADE_ANIM_MIDDLE,
+	FADE_ANIM_END,
+	NUM_FADE_ANIM_STATES
+};
+
 class Person;
 class Scene;
 class TrainScene : public Scene
 {
 private:
+	FADE_ANIM _currentAnimState;
 	int level;
 	int _currentCabin;
 	BoxCollider* _mouseCollider;
@@ -122,5 +133,6 @@ public:
 	int date;
 	Ride* getMainRide();
 	void setMainRide(Ride* ride);
+	void fade(bool dir);
 };
 

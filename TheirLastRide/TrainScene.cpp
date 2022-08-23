@@ -16,15 +16,19 @@ const int y_level = 480;
 const int x_offset = 190;
 const float player_speed = 1.0f;
 const float text_type_speed = 25;
+bool isTransitioning = false;
 bool isInteracting = false;
 bool ticketFront = false;
 bool ticketStamp = false;
 bool ticketReturn = false;
+bool moveDirectionRight = false;
+bool renderAnnoucement = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
 int pageChanger = 0;
 int keyTimer = 0;
+int blackScreenAlpha = 0;
 std::string _dT;
 
 bool inBoundsUp(int y)
@@ -164,11 +168,17 @@ void TrainScene::renderCabins()
 /// </summary>
 void TrainScene::Init()
 {
+    _currentCabin = 0;
+    renderAnnoucement = false;
+    _currentAnimState = FADE_ANIM::FADE_ANIM_OFF;
     _mouseCollider = new BoxCollider({ _mouse_coords.x, _mouse_coords.y, 4, 4 });
     for (int i = 0; i < _mainRide->getCarriageNum(); i++) {
         _cabins.push_back(new TrainCabin());
     }
+    blackScreenAlpha = 0;
 
+    _objList[OBJECT_BLACK_SCREEN] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
     _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
     _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (playerX) + 700 / 3, (playerY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.2);
@@ -256,6 +266,7 @@ void TrainScene::Init()
     _objList[OBJECT_PUNCHER]->setToScale(0.4);
     _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 850, 90 }, new BoxCollider({850 + 85, 90 + 85, 342, 85 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RETURN]->setToScale(0.75);
+    _objList[OBJECT_ANNOUCEMENT] = ObjectBuilder::CreateTextObject({ "Press anywhere to whistle!", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2 - 150, 0 }, SDL_BLENDMODE_BLEND);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
 
@@ -318,34 +329,119 @@ void TrainScene::Exit()
 /// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
-    if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
-        std::cout << "Done.\n";
-    }
-    /*if (_mainRide != nullptr) {
-        std::cout << _mainRide->interactablePeople.size() << "\n";
-    }*/
-    HandleInput();
-    /*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
-    _mouseCollider->moveCollider(_mouse_coords);
-    if (_textQueue.size() > 0) {
-        iterator += dt * text_type_speed;
-        if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
-            _textQueue.erase(_textQueue.begin());
-            writingText = false;
-        }  
-        else {
-            if (iterator > 1.0) {
-                _displayText += _textQueue.front().msg[_displayText.length() - 1];
-                iterator = 0;
-            }
+   /* if (!isTransitioning) {*/
+        if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
+            renderAnnoucement = true;
+            /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
+            std::cout << "Done.\n";
         }
+        
+        //HandleInput();
+        ///*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
+        //_mouseCollider->moveCollider(_mouse_coords);
+        //if (_textQueue.size() > 0) {
+        //    iterator += dt * text_type_speed;
+        //    if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
+        //        _textQueue.erase(_textQueue.begin());
+        //        writingText = false;
+        //    }
+        //    else {
+        //        if (iterator > 1.0) {
+        //            _displayText += _textQueue.front().msg[_displayText.length() - 1];
+        //            iterator = 0;
+        //        }
+        //    }
 
-        _dT = _displayText;
-        _dT.erase(0, 1);
-        _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        //    _dT = _displayText;
+        //    _dT.erase(0, 1);
+        //    _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        //}
+        //_objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
+    /*}*/
+    //else {
+    //    /*if (isTransitioning) {*/
+    //    if (_fadeQueue.size() > 0) {
+    //        isTransitioning = true;
+    //        if (frame_count % 3 == 0) {
+    //            //frame_count = 0;
+    //            if (!_fadeQueue.front())
+    //                ++blackScreenAlpha;
+    //            else
+    //                --blackScreenAlpha;
+    //            std::cout << blackScreenAlpha;
+    //            _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
+    //            if (!fadeDirection && blackScreenAlpha == 255) {
+    //                _fadeQueue.erase(_fadeQueue.begin());
+    //                // Do your action here.
+
+    //                if (_fadeQueue.size() == 0)
+    //                    isTransitioning = false;
+    //            }
+    //            else {
+    //                if (fadeDirection && blackScreenAlpha == 0)
+    //                {
+    //                    _fadeQueue.erase(_fadeQueue.begin());
+    //                    if (_fadeQueue.size() == 0)
+    //                        isTransitioning = false;
+    //                }
+    //            }
+    //        }
+    //    }
+    //   /* }*/
+    //}
+    switch (_currentAnimState) {
+    case FADE_ANIM_OFF:
+        HandleInput();
+        /*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
+        _mouseCollider->moveCollider(_mouse_coords);
+        if (_textQueue.size() > 0) {
+            iterator += dt * text_type_speed;
+            if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
+                _textQueue.erase(_textQueue.begin());
+                writingText = false;
+            }
+            else {
+                if (iterator > 1.0) {
+                    _displayText += _textQueue.front().msg[_displayText.length() - 1];
+                    iterator = 0;
+                }
+            }
+
+            _dT = _displayText;
+            _dT.erase(0, 1);
+            _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        }
+        _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
+        break;
+    case FADE_ANIM_START:
+        if (frame_count % 2 == 0) {
+            ++blackScreenAlpha;
+            _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
+        }
+        if (blackScreenAlpha == 255) {
+            _currentAnimState = FADE_ANIM::FADE_ANIM_MIDDLE;
+        }
+        break;
+    case FADE_ANIM_MIDDLE:
+        _currentCabin = (moveDirectionRight) ? _currentCabin + 1 : _currentCabin - 1;
+        playerX = (moveDirectionRight) ? 30 : 980;
+        _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
+        _currentAnimState = FADE_ANIM::FADE_ANIM_END;
+        break;
+    case FADE_ANIM_END:
+        if (frame_count % 2 == 0) {
+            --blackScreenAlpha;
+            _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
+        }
+        if (blackScreenAlpha == 0) {
+            _currentAnimState = FADE_ANIM::FADE_ANIM_OFF;
+        }
+        break;
+    default:
+        break;
     }
     frame_count += 1;
-    _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
+    /*std::cout << isTransitioning << "\n";*/
 }
 
 /// <summary>
@@ -355,7 +451,6 @@ void TrainScene::Render()
 {
     SDL_RenderClear(Application::GetInstance()->getRenderer()); // Clear the screen.
     // Object rendering inside here
-    
     for (int i = 0; i < _renderQueue.size(); i++)
     {
         RenderAtCoords(_renderQueue[i]);
@@ -416,7 +511,10 @@ void TrainScene::Render()
         RenderAtCoords(_objList[OBJECT_NOTEBOOK_PAGE]);
     }
 
-  
+    RenderAtCoords(_objList[OBJECT_BLACK_SCREEN]);
+    if (renderAnnoucement) {
+        RenderAtCoords(_objList[OBJECT_ANNOUCEMENT]);
+    }
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
 }
 
@@ -443,6 +541,10 @@ void TrainScene::HandleInput()
         switch (event.type) {
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
+            if (renderAnnoucement) {
+                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
+                return;
+            }
             if (isInteracting)
             {
                 if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
@@ -619,10 +721,13 @@ void TrainScene::HandleInput()
             }
         }
 
-        if (_currentCabin - 1 >= 0 && playerX <= -45)
+        if (_currentCabin - 1 >= 0 && playerX <= -45 && _currentAnimState == FADE_ANIM::FADE_ANIM_OFF)
         {
-            _currentCabin -= 1;
-            playerX = 980;
+            /*fade(false);*/
+            _currentAnimState = FADE_ANIM::FADE_ANIM_START;
+            moveDirectionRight = false;
+            /*_currentCabin -= 1;
+            playerX = 980;*/
             std::cout << "hehexd" << _currentCabin << std::endl;
         }
 
@@ -676,10 +781,10 @@ void TrainScene::HandleInput()
             }
         }
 
-        if (_currentCabin + 1 < _cabins.size() && playerX >= 1050)
+        if (_currentCabin + 1 < _cabins.size() && playerX >= 1050 && _currentAnimState == FADE_ANIM::FADE_ANIM_OFF)
         {
-            _currentCabin += 1;
-            playerX = 30;
+            _currentAnimState = FADE_ANIM::FADE_ANIM_START;
+            moveDirectionRight = true;
             std::cout << "pogchamp ?!" << std::endl;
         }
 
@@ -887,6 +992,12 @@ void TrainScene::setRide(Ride* r)
 Ride* TrainScene::getMainRide()
 {
     return _mainRide;
+}
+
+void TrainScene::fade(bool dir)
+{
+    isTransitioning = true;
+    moveDirectionRight = dir;
 }
 
 void TrainScene::setMainRide(Ride* ride)

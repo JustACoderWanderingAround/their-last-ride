@@ -54,7 +54,12 @@ public:
 	SDL_Renderer* getRenderer() const;
 	static bool IsKeyPressed(unsigned short key);
 	SDL_Point getMouseCoords() const;
+	std::array<Scene*, NUM_SCENE> getScenes() const;
 	SDL_Event* getEvent();
+	std::array<Ride*, NUM_RIDE> getRides() const;
+	void setCurrentRide(int iterator);
+	int getCurrentRide() const;
+	void updateCurrentRide();
 	std::vector<SDL_Event>& GetFrameEvents();
 	void changeScene(Scene* scene);
 };

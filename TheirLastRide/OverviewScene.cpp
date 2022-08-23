@@ -1,6 +1,7 @@
 #include "OverviewScene.h"
 #include "ObjectBuilder.h"
 #include "TextManager.h"
+#include "TrainScene.h"
 int iterator3 = 0;
 int frame_count3 = 0;
 bool isFading_overview = false;
@@ -82,7 +83,11 @@ void OverviewScene::HandleInput()
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             if (event.button.button == SDL_BUTTON_LEFT) {
                 if (sceneClicks == _objList.size() - 1) {
-                    sceneClicks++;
+                    if (Application::GetInstance()->getCurrentRide() + 1 <= Application::GetInstance()->getRides().size())
+                        Application::GetInstance()->setCurrentRide(Application::GetInstance()->getCurrentRide() + 1);
+                    Application::GetInstance()->updateCurrentRide();
+                    Application::GetInstance()->getScenes()[SCENE_TRAIN]->Init();
+                    Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_TRAIN]);
                     return;
                 }
                 _fadeQueue.push_back(_objList[sceneClicks + 1]);

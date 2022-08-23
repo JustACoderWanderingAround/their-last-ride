@@ -4,7 +4,7 @@
     "stops": ["NOSTON EAST", "EWING BRIDGE"],
     "invalid": [ "BENTON CTRL", "LLYN L LVL", "W ARCH" ],
     "people": [ "George" ],
-    "carriageNum" : 1,
+    "carriageNum" : 2,
     "nonInteractableNum" : 4,
     "date" : 5
   },
