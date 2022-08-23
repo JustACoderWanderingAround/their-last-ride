@@ -13,7 +13,7 @@ public:
 	Player(std::vector<std::string> stops);
 	~Player();
 	SDL_Point getCoords();
-	bool compareToBook(InteractablePerson p, int attribute);
+	bool compareToBook(InteractablePerson* p, int attribute);
 	bool giveVerdict(std::string chosenVerdict);
 	void playerMovement();
 	bool getPassType();

@@ -29,6 +29,7 @@ protected:
     bool _PassType;
     int _ScytheUse; //for unwilling passengers only 
 
+
 private:
     Node* _currentNode;
     Ticket _Ticket;
