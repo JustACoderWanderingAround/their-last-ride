@@ -5,7 +5,6 @@ class Scene;
 class NonInteractivePerson :
     public Person
 {
-private:
-    int _NonInteractiveReply;
-    void interact();
+public:
+    NonInteractivePerson();
 };

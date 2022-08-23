@@ -1,9 +1,16 @@
 #include "NonInteractivePerson.h"
 #include "Player.h"
+#include "ObjectBuilder.h"
+#include "Application.h"
 #include <iostream>
 
-void NonInteractivePerson::interact()
+NonInteractivePerson::NonInteractivePerson()
 {
-	std::cout << _NonInteractiveReply << std::endl;
+	std::vector<std::string> spriteLst = { "Richward", "Maisie" , "Jeanie" };
+	int nameIndex = rand() % spriteLst.size();
+	Texture selfTexture;
+	selfTexture.loadImage("Sprites//Passengers//" + spriteLst[nameIndex] + ".PNG");
+	selfTexture.setBlendMode(SDL_BLENDMODE_BLEND);
+	selfTexture.setScale(1.1);
+	_txt = selfTexture;
 }
-
