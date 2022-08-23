@@ -8,6 +8,15 @@
 #include "InteractablePerson.h"
 #include "Scene.h"
 #include <vector>
+#include "Ride.h"
+
+enum RideName
+{
+	RIDE_1,
+	RIDE_2,
+	RIDE_3,
+	NUM_RIDE
+};
 
 enum SceneName
 {
@@ -31,6 +40,7 @@ private:
 	bool _acceptInput;
 	SDL_Point _mouse_coords;
 	std::array <Scene*, NUM_SCENE> _scenes;
+	std::array<Ride*, NUM_RIDE> _rides;
 	Scene* _mainScene;
 	
 public:
