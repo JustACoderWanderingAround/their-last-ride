@@ -121,5 +121,6 @@ public:
 	void setRide(Ride* r);
 	int date;
 	Ride* getMainRide();
+	void setMainRide(Ride* ride);
 };
 

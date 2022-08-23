@@ -88,7 +88,7 @@ void Application::Init()
     _rides[RIDE_2]->setCarriageNum(2);
     _rides[RIDE_3]->setCarriageNum(1);
     _rides[RIDE_3]->setInteractableNumber(1);
-    _rides[RIDE_3]->setNonInterableNumber(5);
+    _rides[RIDE_3]->setNonInteractableNumber(5);
 }
 
 /// <summary>
@@ -109,7 +109,7 @@ Application::Application()
 void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
-    Player* player1 = new Player(_rides[RIDE_1]->stops);
+    Player* player1 = new Player(_rides[RIDE_1]->getStops());
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
     _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[RIDE_3]);
@@ -143,7 +143,7 @@ void Application::Run()
                         }
                     }
                     else {
-                        if (trainScene->getMainRide()->interactablePeople.size() == 0) {
+                        if (trainScene->getMainRide()->getInteractablePeople().size() == 0) {
                             _mainScene = _scenes[SCENE_OVERVIEW];
                             GetFrameEvents().clear();
                             break;
@@ -174,6 +174,12 @@ void Application::Run()
 /// </summary>
 void Application::Exit()
 {
+    for (auto ride : _rides) {
+        if (ride != nullptr) {
+            delete ride;
+            ride = nullptr;
+        }
+    }
     SDL_DestroyWindow(_window);
     SDL_Quit();
 }
