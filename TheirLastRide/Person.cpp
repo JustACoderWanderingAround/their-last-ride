@@ -5,7 +5,7 @@ std::vector<Node*> Person::getNodes()
 	return _nodes;
 }
 
-int Person::getPersonName()
+std::string Person::getPersonName()
 {
 	return _PersonName;
 }
