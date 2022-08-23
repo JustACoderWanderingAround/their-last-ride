@@ -175,7 +175,7 @@ void TrainScene::Init()
     _objList[OBJECT_NOTEBOOK_PAGE] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookPage1Txt.png", { 0, 200 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_NOTEBOOK] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookClosed.png", { 0, 600 }, new BoxCollider({0, 600, 150, 300}), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_NOTEBOOK]->setToScale(0.5);
-    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.PNG", { 300, 90 }, new BoxCollider({ 910, 165,100, 100 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.PNG", { 930, 90 }, new BoxCollider({ 930 + 85, 90 + 85, 342, 85 }), SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_CHOICE] = ObjectBuilder::CreateObject("Sprites//UI//optionBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_GEORGE]
     //_objList[OBJECT_SASHA]
@@ -251,7 +251,7 @@ void TrainScene::Init()
     _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", _objList[OBJECT_TICKET]->getCoords() , SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 100, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER]->setToScale(0.4);
-    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 300, 90 }, new BoxCollider({1260, 0, 50, 50 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 850, 90 }, new BoxCollider({850 + 85, 90 + 85, 342, 85 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RETURN]->setToScale(0.75);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
@@ -421,11 +421,7 @@ void TrainScene::HandleInput()
                 {
                     ticketStamp = true;
                 }
-                if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
-                {
-                    std::cout << "LOLLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL" << std::endl;
-                    ticketReturn = true;
-                }
+               
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                 {
                     ticketFront = true;
@@ -439,6 +435,12 @@ void TrainScene::HandleInput()
                         ticketFront = false;
                         break;
                     }
+                }
+
+                if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
+                {
+                    std::cout << "LOLLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL" << std::endl;
+                    ticketReturn = true;
                 }
 
             }
@@ -464,6 +466,7 @@ void TrainScene::HandleInput()
                 _interactingPerson = getPersonClick();
                 if (_interactingPerson != nullptr && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y}) <= 150) {
                     isInteracting = true;
+                    ticketReturn = false;
                     ticketStamp = false;
                     playerInteraction();
                 }
@@ -704,12 +707,27 @@ void TrainScene::playerInteraction(int option)
     }
     if (currentNode == nullptr)
         currentNode = nodes.front();
+    if (ticketReturn) {
+        /*for (int i = 0; i < 2; i++)
+        {
+            _renderQueue.pop_back();
+        }*/
+        /*if (person->verdictChecker(ticketStamp) == false)
+        {
+            _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
+        }*/
+        _mainRide->interactablePeople.erase(std::remove(_mainRide->interactablePeople.begin(), _mainRide->interactablePeople.end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), _mainRide->interactablePeople.end());
+        person->getCurrentNode() = nullptr;
+        _interactingPerson = nullptr;
+        isInteracting = false;
+        return;
+    }
     if (_dT == currentNode->npcText && currentNode->results.size() == 0) {
         if (person->getTicket()->getClippedState()) {
-            for (int i = 0; i < 2; i++)
+            /*for (int i = 0; i < 2; i++)
             {
                 _renderQueue.pop_back();
-            }
+            }*/
             if (person->verdictChecker(ticketStamp) == false)
             {
                 _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
@@ -724,26 +742,27 @@ void TrainScene::playerInteraction(int option)
         }
     }
 
+   
     if (currentNode == nodes.front()) {
-    	//write player text
-        _renderQueue.push_back(_objList[OBJECT_TEXTBOX]);
-    	WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK]}, {480, 500});
-        _renderQueue.push_back(_objList[OBJECT_TEXT]);
+        //write player text
+        WriteText({ currentNode->playerText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+        //_renderQueue.push_back(_objList[OBJECT_TEXT]);
         person->getCurrentNode() = nodes[currentNode->results.front()];
     }
     else {
-    	//write npc 
-    	WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
-    	for (int i = 0; i < currentNode->results.size(); i++)
-    	{
-    		_buttons.push_back(new Button(i + 1));
-    		_buttons.back()->setCoords({ button_x, button_y + y_offset * i });
+        //write npc 
+        WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
+        for (int i = 0; i < currentNode->results.size(); i++)
+        {
+            _buttons.push_back(new Button(i + 1));
+            _buttons.back()->setCoords({ button_x, button_y + y_offset * i });
             _buttons.back()->getCollider() = new BoxCollider({ button_x + 600, button_y + y_offset * i + 250, 300, 60 });
             _renderQueue.push_back(_buttons.back());
             //create the text on the button
             _renderQueue.push_back(ObjectBuilder::CreateTextObject({ nodes[currentNode->results[i]]->playerText,  TextManager::GetInstance()->getFonts()[FONT_REDENSEK_SMALL], White }, { _buttons[i]->getCoords().x + button_text_offset_x, _buttons[i]->getCoords().y + button_text_offset_y }, SDL_BLENDMODE_BLEND, 200));
-    	}
+        }
     }
+    
     
     return;
 
