@@ -90,6 +90,7 @@ void TrainScene::renderCabins()
                     /*std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";*/
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100});
                     static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
+                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
                     RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
@@ -269,7 +270,7 @@ void TrainScene::Render()
     for (int i = 0; i < _renderQueue.size(); i++)
     {
         RenderAtCoords(_renderQueue[i]);
-        if (i == _renderQueue.size() / 2) {
+        if (i == 0) {
             renderCabins();
         }
 

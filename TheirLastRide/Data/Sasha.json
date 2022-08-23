@@ -35,7 +35,7 @@
     },
     {
         "playerText": "Swegsville ? We don't serve that line. You might be looking for the West-Anglian-North Knightsbridge East Railway. Check platform 11 for their services, assuming they have any today.",
-        "npcText": "",
+        "npcText": "ok",
         "results": []
     }
 ]
