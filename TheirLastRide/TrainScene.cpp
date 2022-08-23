@@ -279,13 +279,18 @@ void TrainScene::Render()
     
     // UI Rendering
     if (isInteracting) {
+        
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
         RenderAtCoords(_objList[OBJECT_TEXT]);
-        RenderAtCoords(_objList[OBJECT_TICKET]);
-        RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
-        RenderAtCoords(_objList[OBJECT_TICKET_TO]);
-        RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
 
+        if (!ticketFront)
+        {
+            RenderAtCoords(_objList[OBJECT_TICKET]);
+            RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
+            RenderAtCoords(_objList[OBJECT_TICKET_TO]);
+            RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
+        }
+       
         bool isRailpass = _interactingPerson; //attach to getRailpass
         if (isRailpass)
         {
@@ -534,7 +539,7 @@ void TrainScene::HandleInput()
             }
         }
 
-        if (_currentCabin + 1 < _cabins.size() && playerX >= 1000)
+        if (_currentCabin + 1 < _cabins.size() && playerX >= 1050)
         {
             _currentCabin += 1;
             playerX = 30;
