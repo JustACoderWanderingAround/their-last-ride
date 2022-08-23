@@ -86,27 +86,15 @@ void TrainScene::renderCabins()
     for (int row = 0; row < 6; row++) {
         if (seats[TrainCabin::ConvertToPosition({ 0, row })] != NULL) {
             if (row < 3) {
-                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 0) + initialY + 100 });
+                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, initialY + 100 });
             }
             else
-                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX + 100, (y_offset * 0) + initialY + 100 });
+                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX + 100, initialY + 100 });
              
 
             RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 0, row })]);
         }
         
-    }
-    for (int row = 0; row < 6; row++) {
-        if (seats[TrainCabin::ConvertToPosition({ 3, row })] != NULL) {
-            if (row < 3) {
-                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row)+ initialX, (y_offset * 3) + initialY + 100 });
-            }
-            else
-                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX + 100, (y_offset * 3) + initialY + 100 });
-
-
-            RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 3, row })]);
-        }
     }
     for (int column = 1; column < 3; column++) {
         {
@@ -154,6 +142,18 @@ void TrainScene::renderCabins()
 
                 }
             }
+        }
+    }
+    for (int row = 0; row < 6; row++) {
+        if (seats[TrainCabin::ConvertToPosition({ 3, row })] != NULL) {
+            if (row < 3) {
+                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 2) + initialY + 55 });
+            }
+            else
+                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX + 100, (y_offset * 2) + initialY + 55 });
+
+
+            RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 3, row })]);
         }
     }
 }
@@ -285,8 +285,31 @@ void TrainScene::Exit()
     for (auto i : _objList) {
         if (i != nullptr) {
             delete i;
+            i = nullptr;
         }
     }
+    for (auto i : _tmAnimList) {
+        if (i != nullptr) {
+            delete i;
+            i = nullptr;
+        }
+    }
+    for (auto i : _nbSprites) {
+        if (i != nullptr) {
+            delete i;
+            i = nullptr;
+        }
+    }
+    for (auto i : _passTextureList) {
+        if (i != nullptr) {
+            delete i;
+            i = nullptr;
+        }
+    }
+    _renderQueue.clear();
+    _textQueue.clear();
+    _cabins.clear();
+    _displayText = " ";
 }
 
 /// <summary>
@@ -341,6 +364,7 @@ void TrainScene::Render()
         }
 
     }
+
     
     // UI Rendering
     if (isInteracting) {
@@ -726,7 +750,9 @@ void TrainScene::playerInteraction(int option)
         {
             _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
         }*/
-        _mainRide->getInteractablePeople().erase(std::remove(_mainRide->getInteractablePeople().begin(), _mainRide->getInteractablePeople().end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), _mainRide->getInteractablePeople().end());
+        auto ppl = _mainRide->getInteractablePeople();
+        ppl.erase(std::remove(ppl.begin(), ppl.end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), ppl.end());
+        _mainRide->setInteractablePeople(ppl);
         person->getCurrentNode() = nullptr;
         _interactingPerson = nullptr;
         isInteracting = false;
@@ -742,7 +768,9 @@ void TrainScene::playerInteraction(int option)
             {
                 _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
             }
-            _mainRide->getInteractablePeople().erase(std::remove(_mainRide->getInteractablePeople().begin(), _mainRide->getInteractablePeople().end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), _mainRide->getInteractablePeople().end());
+            auto ppl = _mainRide->getInteractablePeople();
+            ppl.erase(std::remove(ppl.begin(), ppl.end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), ppl.end());
+            _mainRide->setInteractablePeople(ppl);
             person->getCurrentNode() = nullptr;
             _interactingPerson = nullptr;
             isInteracting = false;

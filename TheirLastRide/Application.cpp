@@ -103,7 +103,7 @@ void Application::Init()
 /// Constructor to initialise values. Initalise the pointers as NULL, and set the target FPS in here.
 /// </summary>
 Application::Application()
-    :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60)
+    :   _winSurface(NULL), _window(NULL), _renderer(NULL), _targetFps(60), _currentRide(0)
 {
     _scenes[SCENE_TRAIN] = new TrainScene();
     _scenes[SCENE_MAINMENU] = new MenuScene();
@@ -120,7 +120,7 @@ void Application::Run()
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
     _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
-    trainScene->setRide(_rides.front());
+    trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
     {
@@ -136,7 +136,7 @@ void Application::Run()
             }
             if (_event.type == SDL_MOUSEBUTTONDOWN) {
                 if (_event.button.button == SDL_BUTTON_LEFT) {
-                    if (_mainScene != _scenes[SCENE_TRAIN]) {
+                    if (_mainScene != trainScene) {
                         if (_mainScene == _scenes[SCENE_MAINMENU])
                         {
                             changeScene(_scenes[SCENE_INTRO]);
@@ -145,14 +145,26 @@ void Application::Run()
                         }
                         else {
                             if (_mainScene == _scenes[SCENE_INTRO] && static_cast<IntroScene*>(_scenes[SCENE_INTRO])->sceneClicks > 1) {
-                                changeScene(_scenes[SCENE_TRAIN]);
+                                changeScene(trainScene);
                                 break;
+                            }
+                            else {
+                                if (_mainScene == _scenes[SCENE_OVERVIEW] && static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW])->sceneClicks > 5) {
+                                    if(_currentRide + 1 <= _rides.size())
+                                        _currentRide++;
+                                    trainScene->setMainRide(_rides[_currentRide]);
+                                    trainScene->Init();
+                                    changeScene(trainScene);
+                                    GetFrameEvents().clear();
+                                    continue;
+                                }
                             }
                         }
                     }
                     else {
                         if (trainScene->getMainRide()->getInteractablePeople().size() == 0) {
-                            _mainScene = _scenes[SCENE_OVERVIEW];
+                            /*_mainScene = _scenes[SCENE_OVERVIEW];*/
+                            changeScene(_scenes[SCENE_OVERVIEW]);
                             GetFrameEvents().clear();
                             break;
                         }

@@ -67,6 +67,12 @@ void OverviewScene::Render()
 
 void OverviewScene::Exit()
 {
+    for (auto i : _objList) {
+        if (i != nullptr) {
+            delete i;
+            i = nullptr;
+        }
+    }
 }
 
 void OverviewScene::HandleInput()
