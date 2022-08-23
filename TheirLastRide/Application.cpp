@@ -77,6 +77,13 @@ void Application::Init()
         // End the program
         exit(0);
     }
+    for (int i = 0; i < NUM_RIDE; i++)
+    {
+        _rides[i] = new Ride();
+    }
+    _rides[RIDE_1]->loadAttributes(0);
+    _rides[RIDE_2]->loadAttributes(1);
+    _rides[RIDE_3]->loadAttributes(2);
 }
 
 /// <summary>
@@ -105,8 +112,8 @@ void Application::Run()
     trainRide3->loadAttributes(2);
     Player* player1 = new Player(trainRide1->stops);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    _mainScene = _scenes[SCENE_MAINMENU];//CHANGE TRAIN TO MAINMENU
-    trainScene->setRide(trainRide3);
+    _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
+    trainScene->setRide(_rides[RIDE_3]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
     {
