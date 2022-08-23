@@ -79,45 +79,75 @@ void TrainScene::renderCabins()
     x_offset = 190;
     y_offset = 180;
     auto seats = _cabins[_currentCabin]->getSeats();
-    for (int column = 1; column < 3; column++)
-    {
-        if (column == 2) {
-            RenderAtCoords(_objList[OBJECT_PLAYER]);
-            RenderAtCoords(_objList[OBJECT_CHAIR_ROW]);
-        }
-        for (int row = 0; row < 6; row++)
-        {
-            if (row < 3) {
-                if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY});
-                    /*std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";*/
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100});
-                    if (static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket() == nullptr) {
-                        static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
-                    }
-                    if (static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getRailPass() == nullptr) {
-                        static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
-                    }
-                    
-                    RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
-                }
+    for (int row = 0; row < 6; row++) {
+        if (seats[TrainCabin::ConvertToPosition({ 0, row })] != NULL) {
+            if (row > 2) {
+                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 0) + initialY + 100 });
             }
-            else {
-                
-                if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
-                    /*std::cout << "Collider:(" << (x_offset * row) + 100 + initialX << "," << (y_offset * column) + initialY << ")\n";*/
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
-                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
-                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
-                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
-                    RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
+            else
+                seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 0) + initialY + 100 });
+             
+
+            RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 0, row })]);
+        }
+        
+    }
+    /*for (int row = 0; row < 6; row++) {
+        if (seats[TrainCabin::ConvertToPosition({ 3, row })] != NULL) {
+            if (row > 2) {
+                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row)+ initialX, (y_offset * 3) + initialY + 100 });
+            }
+            else
+                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 3) + initialY + 100 });
+
+
+            RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 0, row })]);
+        }
+    }*/
+    for (int column = 1; column < 3; column++) {
+        {
+            if (column == 2) {
+                RenderAtCoords(_objList[OBJECT_PLAYER]);
+                RenderAtCoords(_objList[OBJECT_CHAIR_ROW]);
+            }
+            for (int row = 0; row < 6; row++)
+            {
+                if (row < 3) {
+                    if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
+                        seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY });
+                        /*std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";*/
+                        if (seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() == nullptr) {
+                            seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
+                        }
+                        if (static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket() == nullptr) {
+                            static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
+                        }
+                        if (static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getRailPass() == nullptr) {
+                            static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
+                        }
+
+                        RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
+                    }
                 }
-                
+                else {
+
+                    if (seats[TrainCabin::ConvertToPosition({ column, row })] != NULL) {
+                        seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
+                        /*std::cout << "Collider:(" << (x_offset * row) + 100 + initialX << "," << (y_offset * column) + initialY << ")\n";*/
+                        if (seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() == nullptr) {
+                            seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
+                        }
+
+
+                        static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
+                        static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
+                        RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
+                    }
+
+                }
             }
         }
     }
-    
 }
 
 /// <summary>

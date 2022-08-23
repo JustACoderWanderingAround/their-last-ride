@@ -104,7 +104,7 @@ void Application::Run()
     trainRide1->setCarriageNum(1);
     trainRide2->setCarriageNum(2);
     trainRide3->setCarriageNum(3);
-    trainRide3->setInteractableNumber(2);
+    trainRide3->setInteractableNumber(5);
     trainRide3->setNonInterableNumber(5);
     Player* player1 = new Player(trainRide1->stops);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);

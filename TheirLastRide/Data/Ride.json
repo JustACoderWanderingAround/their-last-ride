@@ -12,7 +12,7 @@
     "people": [ "George", "Sasha", "Maisie" ]
   },
   {
-    "start": "NOSTON CTRL",
+    "start": "NOSTON CTRL", 
     "stops": [ "NOSTON EAST", "EWING BRIDGE", "EWING TOWN", "HARBOURSIDE" ],
     "invalid": [ "BENTON CTRL", "BENTON SID ST", "LLYN L LVL", "LLYN BY SEA", "W ARCH", "KIRKEN VIC", "TORQUAY TOWN", "TORQUAY HAM RD", "HATFIELD H", "FORT KNIGHT", "HATFIELD H" ],
     "people": [ "George", "Sasha", "Emily", "Montag", "Bill" ]
