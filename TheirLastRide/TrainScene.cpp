@@ -92,8 +92,13 @@ void TrainScene::renderCabins()
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * column) + initialY});
                     /*std::cout << "Collider:(" << (x_offset * row) + initialX << "," << (y_offset * column) + initialY << ")\n";*/
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100});
-                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
-                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
+                    if (static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getTicket() == nullptr) {
+                        static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
+                    }
+                    if (static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getRailPass() == nullptr) {
+                        static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
+                    }
+                    
                     RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
             }
@@ -103,6 +108,9 @@ void TrainScene::renderCabins()
                     seats[TrainCabin::ConvertToPosition({ column, row })]->setCoords({ (x_offset * row) + 100 + initialX,(y_offset * column) + initialY });
                     /*std::cout << "Collider:(" << (x_offset * row) + 100 + initialX << "," << (y_offset * column) + initialY << ")\n";*/
                     seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + 100 + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
+                    seats[TrainCabin::ConvertToPosition({ column, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getWidth() / 3, (y_offset * column) + initialY + seats[TrainCabin::ConvertToPosition({column, row})]->getTexture().getHeight() / 4, 60, 100 });
+                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setTicket(new Ticket(_mainRide->stops, _mainRide->invalidStops, _mainRide->getDate()));
+                    static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->setRailPass(new RailPass(static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getName(), static_cast<InteractablePerson*>(seats[TrainCabin::ConvertToPosition({ column, row })])->getPassType(), rand() % 30 + 1));
                     RenderAtCoords(seats[TrainCabin::ConvertToPosition({ column, row })]);
                 }
                 
@@ -314,7 +322,7 @@ void TrainScene::Render()
         }
         RenderAtCoords(_objList[OBJECT_STAMPER]);
         RenderAtCoords(_objList[OBJECT_PUNCHER]);
-        if (ticketStamp) {
+        if (ticketStamp && ticketFront) {
             RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
         }
     }
@@ -351,9 +359,9 @@ void TrainScene::HandleInput()
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (isInteracting)
             {
-                if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
+                if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
                 {
-                    static_cast<InteractablePerson*>(_interactingPerson)->getTicket().setClippedState(true);
+                    static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->setClippedState(true);
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
                     break;
                 }
@@ -361,7 +369,7 @@ void TrainScene::HandleInput()
                     ticketStamp = true;
                 if (static_cast<InteractablePerson*>(_interactingPerson)->verdictChecker(ticketStamp) == false)
                 {
-                    
+                    _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
                     break;
                 }
                 if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
@@ -595,10 +603,10 @@ void TrainScene::HandleInput()
 void TrainScene::playerInteraction(int option)
 {
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
-    Ticket comparisonTicket = person->getTicket();
+    Ticket* comparisonTicket = person->getTicket();
     RailPass* comparisonRailpass = person->getRailPass();
-    _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket().getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_TICKET_TO]->updateText(person->getTicket().getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket()->getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_TO]->updateText(person->getTicket()->getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM]->updateText(_mainRide->start, Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
