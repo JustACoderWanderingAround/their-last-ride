@@ -1,39 +1,45 @@
 [
-		{
-			"playerText": "TM: Tickets please",
-			"npcText": "",
-			"results": [
-					1
-			]
-		},   
-		{
-			"playerText": "",
-			"npcText": "He is a clean-shaven man, with dark hair and strong features. The black-and-red jacket he is wearing smells faintly of smoke and kerosene.",
-			"results": [
-				2
-			]
-		},
-		{
-			"playerText": "How's your day been?",
-			"npcText": "Montag: It's alright. 'Been thinking little at all about nothing in particular.",
-			"results": [
-				3, 4, 5
-			]
-		},
-		{
-			"playerText": "What's up with the burning smell?",
-			"npcText": "Montag: A library in town caught fire, I was at the scene.",
-			"results": [3, 4, 5]
-		},
-		{
-			"playerText": "So where are you headed to?",
-			"npcText": "Montag: Ewing. I'm visiting an old friend.",
-			"results": [3, 4, 5]
-		},
-		{
-			"playerText": "What do you do?",
-			"npcText": "Montag: I'm a fireman, like my father and his father.",
-			"results": [3, 4, 5]
-		}
-		
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		]
+	},
+	{
+		"playerText": "",
+		"npcText": "He is a clean-shaven man, with dark hair and strong features. The black-and-red jacket he is wearing smells faintly of smoke and kerosene.",
+		"results": [
+			2
+		]
+	},
+	{
+		"playerText": "How's your day been?",
+		"npcText": "Montag: It's alright. 'Been thinking little at all about nothing in particular.",
+		"results": [
+			3,
+			4,
+			5
+		]
+	},
+	{
+		"playerText": "What's up with the burning smell?",
+		"npcText": "Montag: A library in town caught fire, I was at the scene.",
+		"results": [4, 5, 6]
+	},
+	{
+		"playerText": "So where are you headed to?",
+		"npcText": "Montag: Ewing. I'm visiting an old friend.",
+		"results": [3, 5, 6]
+	},
+	{
+		"playerText": "What do you do?",
+		"npcText": "Montag: I'm a fireman, like my father and his father.",
+		"results": [3, 4, 6]
+	},
+	{
+		"playerText": "Nice chat. Thanks",
+		"npcText": " ",
+		"results": [ ]
+	}
 ]
