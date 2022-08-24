@@ -10,6 +10,7 @@ enum OSObject {
     OBJECT_RIDE_NUMBER,
     OBJECT_OVERVIEW_BLANK_NORMAL_NOTE,
     OBJECT_OVERVIEW_NORMAL_NOTE,
+    OBJECT_OVERVIEW_BLACK_SCREEN,
     NUM_OBJECT_OVERVIEW
 };
 
@@ -20,6 +21,7 @@ private:
     std::array<Object*, NUM_OBJECT_OVERVIEW> _objList;
     std::vector<Object*> _renderQueue;
     std::vector<Object*> _fadeQueue;
+    std::vector<Object*> _unfadeQueue;
     int rideNumber;
 public:
     int sceneClicks;

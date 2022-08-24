@@ -168,7 +168,7 @@ void TrainScene::Init()
     for (int i = 0; i < _mainRide->getCarriageNum(); i++) {
         _cabins.push_back(new TrainCabin());
     }
-    blackScreenAlpha = 0;
+    blackScreenAlpha = 255;
 
     _objList[OBJECT_BLACK_SCREEN] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
@@ -273,6 +273,7 @@ void TrainScene::Init()
     playerY = 300;
     notebookOpen = false;
     fillCabins();
+    _currentAnimState = FADE_ANIM::FADE_ANIM_END;
 }
 /// <summary>
 /// Called on scene exit. Used to prevent memory leaks.
@@ -323,66 +324,11 @@ void TrainScene::Exit()
 /// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
-   /* if (!isTransitioning) {*/
-        if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
-            renderAnnoucement = true;
-            /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
-            std::cout << "Done.\n";
-        }
-        
-        //HandleInput();
-        ///*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
-        //_mouseCollider->moveCollider(_mouse_coords);
-        //if (_textQueue.size() > 0) {
-        //    iterator += dt * text_type_speed;
-        //    if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
-        //        _textQueue.erase(_textQueue.begin());
-        //        writingText = false;
-        //    }
-        //    else {
-        //        if (iterator > 1.0) {
-        //            _displayText += _textQueue.front().msg[_displayText.length() - 1];
-        //            iterator = 0;
-        //        }
-        //    }
-
-        //    _dT = _displayText;
-        //    _dT.erase(0, 1);
-        //    _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-        //}
-        //_objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
-    /*}*/
-    //else {
-    //    /*if (isTransitioning) {*/
-    //    if (_fadeQueue.size() > 0) {
-    //        isTransitioning = true;
-    //        if (frame_count % 3 == 0) {
-    //            //frame_count = 0;
-    //            if (!_fadeQueue.front())
-    //                ++blackScreenAlpha;
-    //            else
-    //                --blackScreenAlpha;
-    //            std::cout << blackScreenAlpha;
-    //            _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
-    //            if (!fadeDirection && blackScreenAlpha == 255) {
-    //                _fadeQueue.erase(_fadeQueue.begin());
-    //                // Do your action here.
-
-    //                if (_fadeQueue.size() == 0)
-    //                    isTransitioning = false;
-    //            }
-    //            else {
-    //                if (fadeDirection && blackScreenAlpha == 0)
-    //                {
-    //                    _fadeQueue.erase(_fadeQueue.begin());
-    //                    if (_fadeQueue.size() == 0)
-    //                        isTransitioning = false;
-    //                }
-    //            }
-    //        }
-    //    }
-    //   /* }*/
-    //}
+    if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
+        renderAnnoucement = true;
+        /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
+        std::cout << "Done.\n";
+    }
     switch (_currentAnimState) {
     case FADE_ANIM_OFF:
         HandleInput();
@@ -417,6 +363,10 @@ void TrainScene::Update(double dt)
         }
         break;
     case FADE_ANIM_MIDDLE:
+        if (renderAnnoucement) {
+            Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
+            break;
+        }
         _currentCabin = (moveDirectionRight) ? _currentCabin + 1 : _currentCabin - 1;
         playerX = (moveDirectionRight) ? 30 : 980;
         _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
@@ -453,7 +403,6 @@ void TrainScene::Render()
         }
 
     }
-
     
     // UI Rendering
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
@@ -540,7 +489,7 @@ void TrainScene::HandleInput()
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (renderAnnoucement) {
-                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
+                _currentAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
             }
             if (isInteracting)
