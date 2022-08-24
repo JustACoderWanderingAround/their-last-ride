@@ -590,7 +590,7 @@ void TrainScene::HandleInput()
         {
             SDL_Point stampOffset = { _mouse_coords.x - 100 , _mouse_coords.y - 50 };
             SDL_Point colliderOffset = { _mouse_coords.x + 50 , _mouse_coords.y + 50 };
-            _objList[OBJECT_STAMPER]->getCollider()->moveCollider(colliderOffset);
+            _objList[OBJECT_STAMPER]->getCollider()->moveCollider(_mouse_coords);
             _objList[OBJECT_STAMPER]->setCoords(stampOffset);
            
             //ticketStamp = true;
