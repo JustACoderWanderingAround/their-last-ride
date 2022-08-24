@@ -35,6 +35,5 @@ private:
     Node* _currentNode;
     Ticket* _Ticket;
     RailPass* _RailPass;
-    std::string _name;
 };
 

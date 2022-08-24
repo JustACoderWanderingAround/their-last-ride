@@ -4,38 +4,45 @@
         "npcText": "",
         "results": [
             1
-        ]
+        ],
+        "end": "goodstart"
     },
     {
         "playerText": "",
         "npcText": "here",
         "results": [
             2
-        ]
+        ],
+        "end": 0
     },
     {
         "playerText": "Hows it going ?",
         "npcText": "I'm doing great, thanks !",
-        "results": [3, 4, 5]
+        "results": [3, 4, 5],
+        "end": 0
     },
     {
         "playerText": "So where are you headed today ?",
         "npcText": "Swegsville. I'm visiting mother.",
-        "results": [4, 5, 6]
+        "results": [4, 5, 6],
+        "end": 0
     },
     {
         "playerText": "Are you a student ?",
         "npcText": "Yep ! I'm in nursing !",
-        "results": [3, 5, 6]
+        "results": [3, 5, 6],
+        "end": 0
     },
     {
         "playerText": "Beautiful weather today huh ?",
         "npcText": "Indeed !",
-        "results": [3, 4, 6]
+        "results": [3, 4, 6],
+        "end": 0
     },
     {
         "playerText": "Swegsville ? We don't serve that line. You might be looking for the West-Anglian-North Knightsbridge East Railway. Check platform 11 for their services, assuming they have any today.",
         "npcText": "ok",
-        "results": []
+        "results": [],
+        "end": 0
     }
 ]

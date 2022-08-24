@@ -4,41 +4,48 @@
 			"npcText": "",
 			"results": [
 					1
-			]
+			],
+			"end": "goodstart"
 		},   
 		{
 			"playerText": "",
 			"npcText": "You notice her pale complexion, and she seems to be quite tired. She is holding a small hankerchief, occasionally dabbing at her forehead. ",
 			"results": [
 				2
-			]
+			],
+			"end": 0
 		},
 		{
 			"playerText": "How are you feeling today, Miss?",
 			"npcText": "Maisie: I've been better, to be honest.",
 			"results": [
 				3, 4, 5
-			]
+			],
+			"end": 0
 		},
 		{
 			"playerText": "Oh dear. Can I help in any way?",
 			"npcText": "Maisie: *cough* No, thank you though. *cough* ",
-			"results": [4, 5, 6]
+			"results": [4, 5, 6],
+			"end": 0
 		},
 		{
 			"playerText": "Will you be alright for the duration of the trip?",
 			"npcText": "Maisie: *smiles* Well, I don't think my condition can get any worse. *cough* *cough*",
-			"results": [3, 5, 6]
+			"results": [3, 5, 6],
+			"end": 0
 		},
 		{
 			"playerText": "Where are you headed?",
 			"npcText": "Maisie: I'm not too sure, honestly. *cough* My vision is a little cloudy... I can't really read my ticket... *cough*",
-			"results": [ 3, 4, 6 ]
+			"results": [ 3, 4, 6 ],
+			"end": 0
 		},
 		{
 			"playerText": "Get well soon, Miss.",
 			"npcText": " ",
-			"results": []
+			"results": [],
+			"end": 0
 		}
 		
 ]

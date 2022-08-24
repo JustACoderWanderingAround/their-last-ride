@@ -9,13 +9,14 @@
 using json = nlohmann::json;
 
 void to_json(json& j, const Node& n) {
-	j = json{ {"playerText", n.playerText}, {"npcText", n.npcText } ,{"results", n.results}};
+	j = json{ {"playerText", n.playerText}, {"npcText", n.npcText } ,{"results", n.results}, {"end", n.ending} };
 }
 
 void from_json(const json& j, Node& n) {
 	j.at("playerText").get_to(n.playerText);
 	j.at("npcText").get_to(n.npcText);
 	j.at("results").get_to(n.results);
+	n.ending = j.at("end").get<NODE_ENDING>();
 }
 
 InteractablePerson::InteractablePerson()
@@ -47,25 +48,27 @@ bool InteractablePerson::loadNodes()
 	{
 		_nodes.push_back(new Node()); // assign a default empty node on the heap to a pointer in the vector
 		*(_nodes.back()) = tempNodes[i]; // place the nodes with the file content data into those nodes
+		std::cout << tempNodes[i].ending;
 	}
 	return true;
 }
 
 InteractablePerson::InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass)
-	: _name (name),
+	: 
 	_PassType (passType),
 	_PredetermindedVerdict (verdict),
 	_Ticket (ticket),
 	_RailPass (railpass),
 	_currentNode(nullptr)
 {
-
+	_name = name;
 }
 
 
 InteractablePerson::InteractablePerson(const std::string& name)
-	: _name(name), _currentNode(nullptr), _RailPass(nullptr)
+	: _currentNode(nullptr), _RailPass(nullptr)
 {
+	_name = name;
 	std::string filepath = "Sprites\\Passengers\\" + _name + ".png";
 	_txt.loadImage(filepath);
 	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
