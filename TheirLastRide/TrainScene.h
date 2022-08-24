@@ -117,6 +117,7 @@ public:
 	Person* getPersonClick();
 	void renderCabins();
 	void RenderAtCoords(Object* obj);
+	void RenderAtMouse(Object* obj);
 	void Init();
 	void Exit();
 	void Update(double dt);

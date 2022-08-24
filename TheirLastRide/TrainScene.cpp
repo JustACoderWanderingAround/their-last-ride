@@ -36,17 +36,6 @@ bool inBounds(SDL_Point coords) {
     return (coords.y >= 220 && coords.y <= 320) && (coords.x >= -45 && coords.x <= 1050);
 }
 
-bool inBoundsLeft(int x)
-{
-    if (x <= 220)
-    return false;
-}
-
-bool inBoundsRight(int x)
-{
-    if (x <= 220)
-    return false;
-}
 /// <summary>
 /// Constructor, used to initialize values.
 /// </summary>
@@ -483,7 +472,7 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
 
             if (ticketStamp) {
-                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+                RenderAtCoords/*_mouse_coords*/(_objList[OBJECT_STAMP_MARK]);
             }
         }
        
@@ -506,13 +495,14 @@ void TrainScene::Render()
                 RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
             }
         }
-        RenderAtCoords(_objList[OBJECT_STAMPER]);
-        RenderAtCoords(_objList[OBJECT_PUNCHER]);
+
         if (ticketStamp && ticketFront) {
             RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
         }
        
         RenderAtCoords(_objList[OBJECT_RETURN]);
+        RenderAtCoords(_objList[OBJECT_PUNCHER]);
+        RenderAtCoords(_objList[OBJECT_STAMPER]);
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
@@ -562,24 +552,20 @@ void TrainScene::HandleInput()
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
                     break;
                 }
-
-                if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider))
-                {
-                    ticketStamp = true;
-                }
                
-                if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
-                {
-                    ticketFront = true;
-                    break;
-                }
-
                 else
                 {
-                    if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
+                    if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                     {
-                        ticketFront = false;
+                        ticketFront = true;
                         break;
+                    }
+                    else {
+                        if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
+                        {
+                            ticketFront = false;
+                            break;
+                        }
                     }
                 }
 
@@ -623,6 +609,13 @@ void TrainScene::HandleInput()
             }
             break;
         }
+        {
+            if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
+            {
+                ticketFront = true;
+                break;
+            }
+        }
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym) {
             case SDLK_DOWN:
@@ -639,6 +632,19 @@ void TrainScene::HandleInput()
             case SDLK_UP:
                 break;
             }
+        }
+    }
+
+    if (Application::IsKeyPressed(VK_LBUTTON))
+    {
+        if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider))
+        {
+            SDL_Point stampOffset = { _mouse_coords.x - 100 , _mouse_coords.y - 50 };
+            SDL_Point colliderOffset = { _mouse_coords.x + 50 , _mouse_coords.y + 50 };
+            _objList[OBJECT_STAMPER]->getCollider()->moveCollider(colliderOffset);
+            _objList[OBJECT_STAMPER]->setCoords(stampOffset);
+           
+            //ticketStamp = true;
         }
     }
     
@@ -948,6 +954,11 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
 void TrainScene::RenderAtCoords(Object* obj)
 {
     obj->getTexture().Render(obj->getCoords().x, obj->getCoords().y);
+}
+
+void TrainScene::RenderAtMouse(Object* obj)
+{
+    obj->getTexture().Render(_mouse_coords.x, _mouse_coords.y);
 }
 
 float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)
