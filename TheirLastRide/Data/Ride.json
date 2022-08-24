@@ -12,7 +12,7 @@
     "start": "NOSTON CTRL",
     "stops": [ "NOSTON EAST", "EWING BRIDGE", "FORT KNIGHT", "HATFIELD H." ],
     "invalid": [ "BENTON CTRL", "LLYN L LVL", "W ARCH", "KIRKEN VIC", "TORQUAY TOWN" ],
-    "people": [ "George", "Sasha", "Maisie" , "Jeanie" ],
+    "people": [ "George" ],
     "carriageNum" : 2,
     "nonInteractableNum" : 3,
     "date" : 16

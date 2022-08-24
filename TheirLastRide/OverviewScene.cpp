@@ -18,6 +18,7 @@ void OverviewScene::Init()
     iterator3 = 0;
     iterator4 = 255;
     sceneClicks = 0;
+    isFading_overview = false;
     changeToScene = false;
     _objList[OBJECT_OVERVIEW_BLACK_SCREEN] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
 	_objList[OBJECT_OVERVIEW_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
@@ -99,6 +100,9 @@ void OverviewScene::Exit()
             i = nullptr;
         }
     }
+    _renderQueue.clear();
+    _fadeQueue.clear();
+    _unfadeQueue.clear();
 }
 
 void OverviewScene::HandleInput()
@@ -107,21 +111,23 @@ void OverviewScene::HandleInput()
     for (auto event : events) {
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             if (event.button.button == SDL_BUTTON_LEFT) {
-                if (sceneClicks == _objList.size() - 2) {
-                    if (Application::GetInstance()->getCurrentRide() + 1 <= Application::GetInstance()->getRides().size())
-                        Application::GetInstance()->setCurrentRide(Application::GetInstance()->getCurrentRide() + 1);
-                    Application::GetInstance()->updateCurrentRide();
-                    Application::GetInstance()->getScenes()[SCENE_TRAIN]->Init();
-                    _fadeQueue.push_back(_objList[OBJECT_OVERVIEW_BLACK_SCREEN]);
-                    changeToScene = true;
-                    /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_TRAIN]);*/
-                    return;
+                if (!changeToScene) {
+                    if (sceneClicks >= _objList.size() - 2) {
+                        if (Application::GetInstance()->getCurrentRide() + 1 <= Application::GetInstance()->getRides().size())
+                            Application::GetInstance()->setCurrentRide(Application::GetInstance()->getCurrentRide() + 1);
+                        Application::GetInstance()->updateCurrentRide();
+                        Application::GetInstance()->getScenes()[SCENE_TRAIN]->Init();
+                        _fadeQueue.push_back(_objList[OBJECT_OVERVIEW_BLACK_SCREEN]);
+                        changeToScene = true;
+                        /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_TRAIN]);*/
+                        return;
+                    }
+                    /*if (sceneClicks != 0)*/
+                    _fadeQueue.push_back(_objList[sceneClicks + 1]);
+                    /*else
+                        _unfadeQueue.push_back(_objList[OBJECT_OVERVIEW_BLACK_SCREEN]);*/
+                    sceneClicks++;
                 }
-                /*if (sceneClicks != 0)*/
-                _fadeQueue.push_back(_objList[sceneClicks + 1]);
-                /*else
-                    _unfadeQueue.push_back(_objList[OBJECT_OVERVIEW_BLACK_SCREEN]);*/
-                sceneClicks++;
             }
         }
     }

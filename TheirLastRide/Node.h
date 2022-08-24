@@ -4,6 +4,21 @@
 #include "json.hpp"
 using json = nlohmann::json;
 
+enum NODE_ENDING {
+	NODE_NO_END,
+	NODE_GOOD_END,
+	NODE_GOOD_START_END,
+	NODE_BAD_END,
+	NUM_ENDS
+};
+
+NLOHMANN_JSON_SERIALIZE_ENUM(NODE_ENDING, {
+	{NODE_NO_END, nullptr},
+	{NODE_GOOD_END, "good"},
+	{NODE_GOOD_START_END, "goodstart"},
+	{NODE_BAD_END, "bad"},
+	})
+
 /// <summary>
 /// The structure for our data for dialogue.
 /// </summary>
@@ -16,6 +31,7 @@ struct Node
 	std::string playerText;
 	std::string npcText;
 	std::vector<unsigned int> results;
+	NODE_ENDING ending;
 	Node();
 	Node(const std::string& t, const std::vector<unsigned int>& r);
 };

@@ -4,41 +4,48 @@
 			"npcText": "",
 			"results": [
 					1
-			]
+			],
+			"end": "good"
 		},   
 		{
 			"playerText": "",
 			"npcText": "An overweight man in his thirties. There doesn't seem to be anything special about him.",
 			"results": [
 				2
-			]
+			],
+			"end": 0
 		},
 		{
 			"playerText": "How are you doing?",
 			"npcText": "Bill: I have no idea how I ended up here. I had a massive headache and blacked out... and here I am.",
 			"results": [
 				3, 4, 5
-			]
+			],
+			"end": 0
 		},
 		{
 			"playerText": "What were you doing when that happened?",
 			"npcText": "Bill: I was playing basketball.",
-			"results": [4, 5, 6]
+			"results": [4, 5, 6],
+			"end": 0
 		},
 		{
 			"playerText": "How did you get a ticket?",
 			"npcText": "Bill: I just had it in my pocket when I came around.",
-			"results": [3, 5, 6]
+			"results": [3, 5, 6],
+			"end": 0
 		},
 		{
 			"playerText": "How are you feeling right now?",
 			"npcText": "Bill: My body feels kind of stiff... I probably hurt myself during the game.",
-			"results": [ 3, 4, 6 ]
+			"results": [ 3, 4, 6 ],
+			"end": 0
 		},
 		{
 			"playerText": "Goodbye.",
 			"npcText": "",
-			"results": [ ]
+			"results": [ ],
+			"end": 0
 		}
 		
 ]
