@@ -88,12 +88,12 @@ void TrainScene::renderCabins()
             if (row < 3) {
                 seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, initialY + 100 });
                 if (seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() == nullptr) {
-                    seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getWidth() / 3, initialY + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getHeight() / 4 + 40, 60, 100 });
+                    seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getWidth() / 3, initialY + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getHeight() / 4 + 55, 60, 100 });
                 }
             }
             else {
                 if (seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() == nullptr) {
-                    seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getWidth() / 3 + 100, initialY + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getHeight() / 4 + 40, 60, 100 });
+                    seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getWidth() / 3 + 100, initialY + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getHeight() / 4 + 55, 60, 100 });
                 }
                 seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX + 100, initialY + 100 });
             }
@@ -551,9 +551,7 @@ void TrainScene::HandleInput()
                 _currentAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
             }
-            if (isNonInteracting && !writingText) {
-                isNonInteracting = false;
-            }
+            
             if (isInteracting)
             {
                
@@ -610,22 +608,16 @@ void TrainScene::HandleInput()
                         playerInteraction();
                     }
                     else {
-                        if (typeid(*_interactingPerson) == typeid(NonInteractivePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 250) {
+                        if (typeid(*_interactingPerson) == typeid(NonInteractivePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 250 && !isNonInteracting) {
                             isNonInteracting = true;
                             nonInteractiveInteraction();
                         }
                     }
                 }
                 else {
-                    /*std::cout << (_interactingPerson != nullptr && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 450) << std::endl;*/
-                    /*if (_interactingPerson != nullptr) {
-                        std::cout << _interactingPerson << std::endl;
-                    }*/
-                    /*if (typeid(*_interactingPerson) == typeid(NonInteractivePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 450) {
-                        std::cout << "Work";
-                        isNonInteracting = true;
-                        nonInteractiveInteraction();
-                    }*/
+                    if (isNonInteracting && !writingText) {
+                        isNonInteracting = false;
+                    }
                 }
             }
             else {
