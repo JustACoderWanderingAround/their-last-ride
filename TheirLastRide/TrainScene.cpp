@@ -22,6 +22,7 @@ bool isInteracting = false;
 bool ticketFront = false;
 bool ticketStamp = false;
 bool ticketReturn = false;
+bool ticketPunch = false;
 bool moveDirectionRight = false;
 bool renderAnnoucement = false;
 double iterator = 0;
@@ -255,8 +256,8 @@ void TrainScene::Init()
     
     _objList[OBJECT_STAMPER] = ObjectBuilder::CreateObject("Sprites//Items//deathStamp.png", { 0, 0 }, new BoxCollider({0 + 50, 0 + 50, 150, 150}), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_STAMPER]->setToScale(0.5);
-    _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", _objList[OBJECT_TICKET]->getCoords() , SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 100, 100 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", _objList[OBJECT_TICKET]->getCoords(), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 150, 150 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER]->setToScale(0.4);
     _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 850, 90 }, new BoxCollider({850 + 85, 90 + 85, 342, 85 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RETURN]->setToScale(0.75);
@@ -421,7 +422,7 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
 
             if (ticketStamp) {
-                RenderAtCoords/*_mouse_coords*/(_objList[OBJECT_STAMP_MARK]);
+            RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
             }
         }
        
@@ -494,29 +495,21 @@ void TrainScene::HandleInput()
             }
             if (isInteracting)
             {
-
-                if (!static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->getClippedState() && ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
+               
+                
+                if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                 {
-                    static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->setClippedState(true);
-                    _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
+                    ticketFront = true;
                     break;
                 }
-               
-                else
-                {
-                    if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
+                else {
+                    if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
                     {
-                        ticketFront = true;
+                        ticketFront = false;
                         break;
                     }
-                    else {
-                        if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
-                        {
-                            ticketFront = false;
-                            break;
-                        }
-                    }
                 }
+                
 
                 if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
                 {
@@ -590,10 +583,39 @@ void TrainScene::HandleInput()
         {
             SDL_Point stampOffset = { _mouse_coords.x - 100 , _mouse_coords.y - 50 };
             SDL_Point colliderOffset = { _mouse_coords.x + 50 , _mouse_coords.y + 50 };
+           
             _objList[OBJECT_STAMPER]->getCollider()->moveCollider(_mouse_coords);
             _objList[OBJECT_STAMPER]->setCoords(stampOffset);
-           
-            //ticketStamp = true;
+        }
+        else
+            if (ticketFront && _objList[OBJECT_PUNCHER]->getCollider()->isColliding(_mouseCollider))
+            {
+                SDL_Point punchOffset = { _mouse_coords.x - 100 , _mouse_coords.y - 50 };
+                SDL_Point colliderOffset = { _mouse_coords.x + 50 , _mouse_coords.y + 50 };
+
+                _objList[OBJECT_PUNCHER]->getCollider()->moveCollider(_mouse_coords);
+                _objList[OBJECT_PUNCHER]->setCoords(punchOffset);
+            }
+    }
+    else {
+        if (_objList[OBJECT_STAMPER]->getCollider()->isColliding(_objList[OBJECT_TICKET]->getCollider()))
+        {
+            SDL_Point stamperStartPos = { 0, 0 };
+            SDL_Point stamperColliderStartPos = { 50, 50 };
+            
+            ticketStamp = true;
+            _objList[OBJECT_STAMPER]->getCollider()->moveCollider(stamperColliderStartPos);
+            _objList[OBJECT_STAMPER]->setCoords(stamperStartPos);
+        }
+        if (_objList[OBJECT_PUNCHER]->getCollider()->isColliding(_objList[OBJECT_TICKET]->getCollider()))
+        {
+             SDL_Point punchStartPos = { 130, 25 };
+             SDL_Point punchColliderStartPos = { 180, 75 };
+
+             static_cast<InteractablePerson*>(_interactingPerson)->getTicket()->setClippedState(true);
+             _objList[OBJECT_TICKET]->setTexture(*(_passTextureList[TICKET_PUNCH]));
+             _objList[OBJECT_PUNCHER]->getCollider()->moveCollider(punchColliderStartPos);
+             _objList[OBJECT_PUNCHER]->setCoords(punchStartPos);
         }
     }
     

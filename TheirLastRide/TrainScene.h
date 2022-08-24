@@ -22,7 +22,6 @@ enum OBJECT {
 	OBJECT_TICKET,
 	OBJECT_RAILPASS,
 	OBJECT_STAMP_MARK,
-	OBJECT_STAMP,
 	OBJECT_PUNCH,
 	OBJECT_NOTEBOOK,
 	OBJECT_NOTEBOOK_PAGE,
@@ -130,6 +129,7 @@ public:
 	void fillCabins();
 	bool renderTextBox;
 	bool notebookOpen;
+	bool isHolding;
 	void setPlayer(Player* p);
 	void setRide(Ride* r);
 	int date;
