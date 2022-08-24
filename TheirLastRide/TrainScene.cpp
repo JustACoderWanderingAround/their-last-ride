@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <functional>
+#include <typeinfo>
 
 const int x_level = 35;
 const int y_level = 480;
@@ -31,16 +32,8 @@ int keyTimer = 0;
 int blackScreenAlpha = 0;
 std::string _dT;
 
-bool inBoundsUp(int y)
-{
-    if (y <= 220)
-    return false;
-}
-
-bool inBoundsDown(int y)
-{
-    if (y >= 320)
-    return false;
+bool inBounds(SDL_Point coords) {
+    return (coords.y >= 220 && coords.y <= 320) && (coords.x >= -45 && coords.x <= 1050);
 }
 
 /// <summary>
@@ -175,7 +168,7 @@ void TrainScene::Init()
     for (int i = 0; i < _mainRide->getCarriageNum(); i++) {
         _cabins.push_back(new TrainCabin());
     }
-    blackScreenAlpha = 0;
+    blackScreenAlpha = 255;
 
     _objList[OBJECT_BLACK_SCREEN] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
@@ -280,6 +273,7 @@ void TrainScene::Init()
     playerY = 300;
     notebookOpen = false;
     fillCabins();
+    _currentAnimState = FADE_ANIM::FADE_ANIM_END;
 }
 /// <summary>
 /// Called on scene exit. Used to prevent memory leaks.
@@ -330,66 +324,11 @@ void TrainScene::Exit()
 /// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
-   /* if (!isTransitioning) {*/
-        if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
-            renderAnnoucement = true;
-            /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
-            std::cout << "Done.\n";
-        }
-        
-        //HandleInput();
-        ///*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
-        //_mouseCollider->moveCollider(_mouse_coords);
-        //if (_textQueue.size() > 0) {
-        //    iterator += dt * text_type_speed;
-        //    if ((_displayText.length() - 1) == _textQueue.front().msg.length()) {
-        //        _textQueue.erase(_textQueue.begin());
-        //        writingText = false;
-        //    }
-        //    else {
-        //        if (iterator > 1.0) {
-        //            _displayText += _textQueue.front().msg[_displayText.length() - 1];
-        //            iterator = 0;
-        //        }
-        //    }
-
-        //    _dT = _displayText;
-        //    _dT.erase(0, 1);
-        //    _objList[OBJECT_TEXT]->updateText(_dT, White, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-        //}
-        //_objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
-    /*}*/
-    //else {
-    //    /*if (isTransitioning) {*/
-    //    if (_fadeQueue.size() > 0) {
-    //        isTransitioning = true;
-    //        if (frame_count % 3 == 0) {
-    //            //frame_count = 0;
-    //            if (!_fadeQueue.front())
-    //                ++blackScreenAlpha;
-    //            else
-    //                --blackScreenAlpha;
-    //            std::cout << blackScreenAlpha;
-    //            _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
-    //            if (!fadeDirection && blackScreenAlpha == 255) {
-    //                _fadeQueue.erase(_fadeQueue.begin());
-    //                // Do your action here.
-
-    //                if (_fadeQueue.size() == 0)
-    //                    isTransitioning = false;
-    //            }
-    //            else {
-    //                if (fadeDirection && blackScreenAlpha == 0)
-    //                {
-    //                    _fadeQueue.erase(_fadeQueue.begin());
-    //                    if (_fadeQueue.size() == 0)
-    //                        isTransitioning = false;
-    //                }
-    //            }
-    //        }
-    //    }
-    //   /* }*/
-    //}
+    if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
+        renderAnnoucement = true;
+        /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
+        std::cout << "Done.\n";
+    }
     switch (_currentAnimState) {
     case FADE_ANIM_OFF:
         HandleInput();
@@ -424,6 +363,10 @@ void TrainScene::Update(double dt)
         }
         break;
     case FADE_ANIM_MIDDLE:
+        if (renderAnnoucement) {
+            Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
+            break;
+        }
         _currentCabin = (moveDirectionRight) ? _currentCabin + 1 : _currentCabin - 1;
         playerX = (moveDirectionRight) ? 30 : 980;
         _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
@@ -460,7 +403,6 @@ void TrainScene::Render()
         }
 
     }
-
     
     // UI Rendering
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
@@ -479,7 +421,7 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
 
             if (ticketStamp) {
-                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+                RenderAtCoords/*_mouse_coords*/(_objList[OBJECT_STAMP_MARK]);
             }
         }
        
@@ -502,13 +444,14 @@ void TrainScene::Render()
                 RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
             }
         }
-        RenderAtCoords(_objList[OBJECT_STAMPER]);
-        RenderAtCoords(_objList[OBJECT_PUNCHER]);
+
         if (ticketStamp && ticketFront) {
             RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
         }
        
         RenderAtCoords(_objList[OBJECT_RETURN]);
+        RenderAtCoords(_objList[OBJECT_PUNCHER]);
+        RenderAtCoords(_objList[OBJECT_STAMPER]);
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
@@ -546,7 +489,7 @@ void TrainScene::HandleInput()
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (renderAnnoucement) {
-                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
+                _currentAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
             }
             if (isInteracting)
@@ -558,30 +501,25 @@ void TrainScene::HandleInput()
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET_PUNCH]);
                     break;
                 }
-
-                if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider))
-                {
-                    ticketStamp = true;
-                }
                
-                if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
-                {
-                    ticketFront = true;
-                    break;
-                }
-
                 else
                 {
-                    if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
+                    if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                     {
-                        ticketFront = false;
+                        ticketFront = true;
                         break;
+                    }
+                    else {
+                        if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
+                        {
+                            ticketFront = false;
+                            break;
+                        }
                     }
                 }
 
                 if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
                 {
-                    std::cout << "LOLLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL" << std::endl;
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET]);
                     ticketReturn = true;
                 }
@@ -620,6 +558,13 @@ void TrainScene::HandleInput()
             }
             break;
         }
+        {
+            if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
+            {
+                ticketFront = true;
+                break;
+            }
+        }
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym) {
             case SDLK_DOWN:
@@ -636,6 +581,19 @@ void TrainScene::HandleInput()
             case SDLK_UP:
                 break;
             }
+        }
+    }
+
+    if (Application::IsKeyPressed(VK_LBUTTON))
+    {
+        if (ticketFront && _objList[OBJECT_STAMPER]->getCollider()->isColliding(_mouseCollider))
+        {
+            SDL_Point stampOffset = { _mouse_coords.x - 100 , _mouse_coords.y - 50 };
+            SDL_Point colliderOffset = { _mouse_coords.x + 50 , _mouse_coords.y + 50 };
+            _objList[OBJECT_STAMPER]->getCollider()->moveCollider(colliderOffset);
+            _objList[OBJECT_STAMPER]->setCoords(stampOffset);
+           
+            //ticketStamp = true;
         }
     }
     
@@ -681,7 +639,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('W'))
     {
-        if (frame_count % 3 == 0 && inBoundsUp(playerY) != false)
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y - 1 }))
         {
             playerY -= player_speed;
         }
@@ -707,7 +665,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('A'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x - 1, _objList[OBJECT_PLAYER]->getCoords().y}))
         {
             playerX -= player_speed;
         }
@@ -743,7 +701,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('S'))
     {
-        if (frame_count % 3 == 0 && inBoundsDown(playerY) != false) 
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y + 1 }))
         {
             playerY += player_speed;
         }
@@ -768,7 +726,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('D'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x + 1, _objList[OBJECT_PLAYER]->getCoords().y}))
         {
             playerX += player_speed;
         }
@@ -805,6 +763,7 @@ void TrainScene::HandleInput()
 /// </summary>
 void TrainScene::playerInteraction(int option)
 {
+    
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
     Ticket* comparisonTicket = person->getTicket();
     RailPass* comparisonRailpass = person->getRailPass();
@@ -944,6 +903,11 @@ void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
 void TrainScene::RenderAtCoords(Object* obj)
 {
     obj->getTexture().Render(obj->getCoords().x, obj->getCoords().y);
+}
+
+void TrainScene::RenderAtMouse(Object* obj)
+{
+    obj->getTexture().Render(_mouse_coords.x, _mouse_coords.y);
 }
 
 float TrainScene::getDistance(const SDL_Point& first, const SDL_Point& second)
