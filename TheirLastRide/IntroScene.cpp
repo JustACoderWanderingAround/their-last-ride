@@ -10,6 +10,7 @@
 int iterator2 = 0;
 int frame_count2 = 0;
 bool isFading = false;
+bool goToTrain = false;
 
 IntroScene::IntroScene()
 {
@@ -18,7 +19,10 @@ IntroScene::IntroScene()
 
 void IntroScene::Init()
 {
+    goToTrain = false;
     sceneClicks = 0;
+    _objList[OBJECT_INTRO_BLACK_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_INTRO_BLACK_BACKGROUND]->setToAlpha(0);
     _objList[OBJECT_BACKGROUND2] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
     _objList[OBJECT_NORMAL_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionNormalNote.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_REAPER_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionReaperNote.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -32,6 +36,7 @@ void IntroScene::Init()
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND2]);
     _renderQueue.push_back(_objList[OBJECT_REAPER_NOTE]);
     _renderQueue.push_back(_objList[OBJECT_NORMAL_NOTE]);
+    _renderQueue.push_back(_objList[OBJECT_INTRO_BLACK_BACKGROUND]);
 }
 
 void IntroScene::Exit()
@@ -58,6 +63,9 @@ void IntroScene::Update(double dt)
         }
         else {
             _fadeQueue.erase(_fadeQueue.begin());
+            if (goToTrain) {
+                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_TRAIN]);
+            }
             iterator2 = 0;
         }
     }
@@ -80,7 +88,8 @@ void IntroScene::HandleInput()
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             if (event.button.button == SDL_BUTTON_LEFT) {
                 if (sceneClicks == 2) {
-                    sceneClicks++;
+                    goToTrain = true;
+                    _fadeQueue.push_back(_objList[OBJECT_INTRO_BLACK_BACKGROUND]);
                     return;
                 }
                 _fadeQueue.push_back(_objList[sceneClicks + 1]);

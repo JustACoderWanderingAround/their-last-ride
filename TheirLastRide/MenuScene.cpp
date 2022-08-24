@@ -10,6 +10,8 @@ const int x_level = 35;
 const int y_level = 480;
 int iterator = 0;
 int frame_count1 = 0;
+int iteratorAlpha = 0;
+bool goIntro = false;
 
 /// <summary>
 /// Constructor, used to initialize values.
@@ -21,6 +23,9 @@ MenuScene::MenuScene()
 
 void MenuScene::Init()
 {
+    goIntro = false;
+    _objList[OBJECT_MAIN_BLACK_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionBG.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_MAIN_BLACK_BACKGROUND]->setToAlpha(0);
     _objList[OBJECT_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
     _objList[OBJECT_TITLE_CARD] = ObjectBuilder::CreateObject("Sprites//TitleScreen//titleCard.png", { 50, 50 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TITLE_CARD]->setToScale(0.5);
@@ -41,6 +46,7 @@ void MenuScene::Init()
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND]);
     _renderQueue.push_back(_objList[OBJECT_TITLE_CARD]);
+    _renderQueue.push_back(_objList[OBJECT_MAIN_BLACK_BACKGROUND]);
 }
 
 void MenuScene::Exit()
@@ -54,7 +60,15 @@ void MenuScene::Exit()
 
 void MenuScene::HandleInput()
 {
-
+    auto events = Application::GetInstance()->GetFrameEvents();
+    for (auto event : events) {
+        if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                goIntro = true;
+                _fadeQueue.push_back(_objList[OBJECT_MAIN_BLACK_BACKGROUND]);              
+            }
+        }
+    }
 }
 
 void MenuScene::Update(double dt)
@@ -74,6 +88,22 @@ void MenuScene::Update(double dt)
         if (iterator > 2)
         {
             iterator = 0;
+        }
+    }
+    if (_fadeQueue.size() > 0) {
+        if (frame_count1 % 3 == 0) {
+            iteratorAlpha++;
+            frame_count1 = 0;
+        }
+        if (iteratorAlpha != 255) {
+            _fadeQueue.front()->setToAlpha(iteratorAlpha);
+        }
+        else {
+            _fadeQueue.erase(_fadeQueue.begin());
+            if (goIntro) {
+                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_INTRO]);
+            }
+            iteratorAlpha = 0;
         }
     }
 }

@@ -15,6 +15,7 @@ enum OBJECT1
 {
 	OBJECT_BACKGROUND,
 	OBJECT_TITLE_CARD,
+	OBJECT_MAIN_BLACK_BACKGROUND,
 	NUM_OBJECT1
 };
 
@@ -34,6 +35,7 @@ private:
 	std::array<Object*, NUM_OBJECT1> _objList;
 	std::array<Texture*, NUM_BG_ANIM1> _tmAnimList;
 	std::vector<Object*> _renderQueue;
+	std::vector<Object*> _fadeQueue;
 public:
 	MenuScene();
 	void Init();

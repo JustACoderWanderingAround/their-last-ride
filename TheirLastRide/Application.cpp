@@ -118,7 +118,7 @@ void Application::Run()
     float time_between_frames = 1 / _targetFps;
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
+    _mainScene = _scenes[SCENE_MAINMENU];//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
@@ -133,43 +133,43 @@ void Application::Run()
             if (_event.type == SDL_MOUSEMOTION) {
                 SDL_GetMouseState(&_mouse_coords.x, &_mouse_coords.y);
             }
-            if (_event.type == SDL_MOUSEBUTTONDOWN) {
-                if (_event.button.button == SDL_BUTTON_LEFT) {
-                    if (_mainScene != trainScene) {
-                        if (_mainScene == _scenes[SCENE_MAINMENU])
-                        {
-                            changeScene(_scenes[SCENE_INTRO]);
-                            GetFrameEvents().clear();
-                            break;
-                        }
-                        else {
-                            if (_mainScene == _scenes[SCENE_INTRO] && static_cast<IntroScene*>(_scenes[SCENE_INTRO])->sceneClicks > 1) {
-                                changeScene(trainScene);
-                                break;
-                            }
-                            else {
-                                /*if (_mainScene == _scenes[SCENE_OVERVIEW] && static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW])->sceneClicks > 5) {
-                                    if(_currentRide + 1 <= _rides.size())
-                                        _currentRide++;
-                                    trainScene->setMainRide(_rides[_currentRide]);
-                                    trainScene->Init();
-                                    changeScene(trainScene);
-                                    GetFrameEvents().clear();
-                                    continue;
-                                }*/
-                            }
-                        }
-                    }
-                    //else {
-                    //    if (trainScene->getMainRide()->getInteractablePeople().size() == 0) {
-                    //        /*_mainScene = _scenes[SCENE_OVERVIEW];*/
-                    //        changeScene(_scenes[SCENE_OVERVIEW]);
-                    //        GetFrameEvents().clear();
-                    //        break;
-                    //    }
-                    //}
-                }
-            }
+            //if (_event.type == SDL_MOUSEBUTTONDOWN) {
+            //    if (_event.button.button == SDL_BUTTON_LEFT) {
+            //        if (_mainScene != trainScene) {
+            //            if (_mainScene == _scenes[SCENE_MAINMENU])
+            //            {
+            //                changeScene(_scenes[SCENE_INTRO]);
+            //                GetFrameEvents().clear();
+            //                break;
+            //            }
+            //            else {
+            //                if (_mainScene == _scenes[SCENE_INTRO] && static_cast<IntroScene*>(_scenes[SCENE_INTRO])->sceneClicks > 1) {
+            //                    changeScene(trainScene);
+            //                    break;
+            //                }
+            //                else {
+            //                    if (_mainScene == _scenes[SCENE_OVERVIEW] && static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW])->sceneClicks > 5) {
+            //                        if(_currentRide + 1 <= _rides.size())
+            //                            _currentRide++;
+            //                        trainScene->setMainRide(_rides[_currentRide]);
+            //                        trainScene->Init();
+            //                        changeScene(trainScene);
+            //                        GetFrameEvents().clear();
+            //                        continue;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        else {
+            //            if (trainScene->getMainRide()->getInteractablePeople().size() == 0) {
+            //                /*_mainScene = _scenes[SCENE_OVERVIEW];*/
+            //                changeScene(_scenes[SCENE_OVERVIEW]);
+            //                GetFrameEvents().clear();
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
         }
         
         //_acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
