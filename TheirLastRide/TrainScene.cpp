@@ -17,6 +17,7 @@ const int y_level = 480;
 const int x_offset = 190;
 const float player_speed = 1.0f;
 const float text_type_speed = 25;
+bool isNonInteracting = false;
 bool isTransitioning = false;
 bool isInteracting = false;
 bool ticketFront = false;
@@ -407,7 +408,7 @@ void TrainScene::Render()
     // UI Rendering
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
 
-    if (isInteracting && _mainRide->checkInteractable(person->getName())){
+    if (isInteracting){
         
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
         RenderAtCoords(_objList[OBJECT_TEXT]);
@@ -452,6 +453,11 @@ void TrainScene::Render()
         RenderAtCoords(_objList[OBJECT_RETURN]);
         RenderAtCoords(_objList[OBJECT_PUNCHER]);
         RenderAtCoords(_objList[OBJECT_STAMPER]);
+    }
+    if (isNonInteracting) {
+        RenderAtCoords(_objList[OBJECT_TEXTBOX]);
+        RenderAtCoords(_objList[OBJECT_TEXT]);
+        RenderAtCoords(_objList[OBJECT_HEAD]);
     }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
@@ -543,18 +549,33 @@ void TrainScene::HandleInput()
                     notebookOpen = false;
                 }
             }
+
+            
+           
             else if (!isInteracting && !writingText) {
                 _interactingPerson = getPersonClick();
                 if (_interactingPerson != nullptr && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y}) <= 150) {
-                    isInteracting = true;
-                    ticketReturn = false;
-                    ticketStamp = false;
-                    playerInteraction();
+                    if (typeid(_interactingPerson) == typeid(InteractablePerson*)) {
+                        isInteracting = true;
+                        ticketReturn = false;
+                        ticketStamp = false;
+                        playerInteraction();
+                    }
+                    else {
+                        isNonInteracting = true;
+                        nonInteractiveInteraction();
+                    }
                 }
             }
             else {
                 if (!writingText)         
-                    playerInteraction(option);               
+                    playerInteraction(option);    
+                
+                else {
+                    if (isNonInteracting) {
+                        isNonInteracting = false;
+                    }
+                }
             }
             break;
         }
@@ -615,8 +636,6 @@ void TrainScene::HandleInput()
         _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P4]));
         break;
     }
-
-    
 
     switch (last_dir)
     {
@@ -756,6 +775,15 @@ void TrainScene::HandleInput()
             last_dir = 4;
     }
    
+}
+
+void TrainScene::nonInteractiveInteraction()
+{
+    WriteText({ static_cast<NonInteractivePerson*>(_interactingPerson)->getMessage(), TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 480, 500 });
+}
+
+void TrainScene::loadNonInteractivePeople()
+{
 }
 
 /// <summary>

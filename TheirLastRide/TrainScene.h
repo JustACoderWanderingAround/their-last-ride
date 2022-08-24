@@ -123,6 +123,8 @@ public:
 	void Update(double dt);
 	void Render();
 	void HandleInput();
+	void loadNonInteractivePeople();
+	void nonInteractiveInteraction();
 	void playerInteraction(int option = NULL);
 	void WriteText(const Text& text, const SDL_Point& pos);
 	float getDistance(const SDL_Point& first, const SDL_Point& second);

@@ -14,3 +14,8 @@ NonInteractivePerson::NonInteractivePerson()
 	selfTexture.setScale(1.1);
 	_txt = selfTexture;
 }
+
+std::string NonInteractivePerson::getMessage() const
+{
+	return msg;
+}
