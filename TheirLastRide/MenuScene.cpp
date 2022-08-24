@@ -22,6 +22,8 @@ MenuScene::MenuScene()
 void MenuScene::Init()
 {
     _objList[OBJECT_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
+    _objList[OBJECT_TITLE_CARD] = ObjectBuilder::CreateObject("Sprites//TitleScreen//titleCard.png", { 50, 50 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TITLE_CARD]->setToScale(0.5);
 
     for (int i = 0; i < NUM_BG_ANIM1; i++)
     {
@@ -38,6 +40,7 @@ void MenuScene::Init()
 
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND]);
+    _renderQueue.push_back(_objList[OBJECT_TITLE_CARD]);
 }
 
 void MenuScene::Exit()
@@ -58,7 +61,6 @@ void MenuScene::Update(double dt)
 {
     HandleInput();
 
-   
     _objList[OBJECT_BACKGROUND]->setTexture(*_tmAnimList[iterator]);
     _objList[OBJECT_BACKGROUND]->setToScale( .77, .77 );
    

@@ -24,6 +24,7 @@ void IntroScene::Init()
     _objList[OBJECT_REAPER_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionReaperNote.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_NORMAL_NOTE]->setToAlpha(0); //make it transparent
     _objList[OBJECT_REAPER_NOTE]->setToAlpha(0); //make it transparent
+   
     /*_fadeQueue.push_back(_objList[OBJECT_NORMAL_NOTE]);
     _fadeQueue.push_back(_objList[OBJECT_REAPER_NOTE]);*/
 
