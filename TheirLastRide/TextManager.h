@@ -20,6 +20,7 @@ const SDL_Color Grey = { 94, 92, 87 };
 const SDL_Color Pink = { 201, 112, 106 };
 const SDL_Color Teal = { 87, 165, 171 };
 const SDL_Color ReaperGrey = { 147, 154, 177 };
+const SDL_Color Black = { 0, 0, 0 };
 
 class TextManager : public Singleton<TextManager>
 {
