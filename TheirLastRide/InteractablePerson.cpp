@@ -117,3 +117,8 @@ void InteractablePerson::setRailPass(RailPass* r)
 {
 	_RailPass = r;
 }
+
+void InteractablePerson::setPredeterminedVerdict(bool pv)
+{
+	_PredetermindedVerdict = pv;
+}

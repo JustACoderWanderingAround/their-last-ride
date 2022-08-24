@@ -119,8 +119,7 @@ void Application::Run()
     float time_between_frames = 1 / _targetFps;
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    auto menuScene = static_cast<MenuScene*>(_scenes[SCENE_MAINMENU]);
-    _mainScene = menuScene;//CHANGE TRAIN TO MAINMENU
+    _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)

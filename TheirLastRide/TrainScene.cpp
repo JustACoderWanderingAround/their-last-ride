@@ -11,12 +11,14 @@
 #include <algorithm>
 #include <functional>
 #include <typeinfo>
+#include <fstream>
 
 const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
 const float player_speed = 1.0f;
 const float text_type_speed = 25;
+bool isNonInteracting = false;
 bool isTransitioning = false;
 bool isInteracting = false;
 bool ticketFront = false;
@@ -85,10 +87,16 @@ void TrainScene::renderCabins()
         if (seats[TrainCabin::ConvertToPosition({ 0, row })] != NULL) {
             if (row < 3) {
                 seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX, initialY + 100 });
+                if (seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() == nullptr) {
+                    seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getWidth() / 3, initialY + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getHeight() / 4 + 40, 60, 100 });
+                }
             }
-            else
+            else {
+                if (seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() == nullptr) {
+                    seats[TrainCabin::ConvertToPosition({ 0, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getWidth() / 3 + 100, initialY + seats[TrainCabin::ConvertToPosition({0, row})]->getTexture().getHeight() / 4 + 40, 60, 100 });
+                }
                 seats[TrainCabin::ConvertToPosition({ 0, row })]->setCoords({ (x_offset * row) + initialX + 100, initialY + 100 });
-             
+            }
 
             RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 0, row })]);
         }
@@ -145,10 +153,17 @@ void TrainScene::renderCabins()
     for (int row = 0; row < 6; row++) {
         if (seats[TrainCabin::ConvertToPosition({ 3, row })] != NULL) {
             if (row < 3) {
-                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 2) + initialY + 55 });
+                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX, (y_offset * 2) + initialY + 40 });
+                if (seats[TrainCabin::ConvertToPosition({ 3, row })]->getCollider() == nullptr) {
+                    seats[TrainCabin::ConvertToPosition({ 3, row })]->getCollider() = new BoxCollider({ (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({3, row})]->getTexture().getWidth() / 3, (y_offset * 2)+ initialY + seats[TrainCabin::ConvertToPosition({3, row})]->getTexture().getHeight() / 4 + 35, 60, 100 });
+                }
             }
-            else
-                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX + 100, (y_offset * 2) + initialY + 55 });
+            else {
+                seats[TrainCabin::ConvertToPosition({ 3, row })]->setCoords({ (x_offset * row) + initialX + 100, (y_offset * 2) + initialY + 40 });
+                if (seats[TrainCabin::ConvertToPosition({ 3, row })]->getCollider() == nullptr) {
+                    seats[TrainCabin::ConvertToPosition({ 3, row })]->getCollider() = new BoxCollider({ 100 + (x_offset * row) + initialX + seats[TrainCabin::ConvertToPosition({3, row})]->getTexture().getWidth() / 3, (y_offset * 2) + initialY + seats[TrainCabin::ConvertToPosition({3, row})]->getTexture().getHeight() / 4 + 35, 60, 100 });
+                }
+            }
 
 
             RenderAtCoords(seats[TrainCabin::ConvertToPosition({ 3, row })]);
@@ -275,6 +290,8 @@ void TrainScene::Init()
     notebookOpen = false;
     fillCabins();
     _currentAnimState = FADE_ANIM::FADE_ANIM_END;
+    loadDeathStatus();
+    loadNonInteractivePeople();
 }
 /// <summary>
 /// Called on scene exit. Used to prevent memory leaks.
@@ -408,7 +425,7 @@ void TrainScene::Render()
     // UI Rendering
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
 
-    if (isInteracting && _mainRide->checkInteractable(person->getName())){
+    if (isInteracting){
         
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
         RenderAtCoords(_objList[OBJECT_TEXT]);
@@ -454,6 +471,11 @@ void TrainScene::Render()
         RenderAtCoords(_objList[OBJECT_PUNCHER]);
         RenderAtCoords(_objList[OBJECT_STAMPER]);
     }
+    if (isNonInteracting) {
+        RenderAtCoords(_objList[OBJECT_TEXTBOX]);
+        RenderAtCoords(_objList[OBJECT_TEXT]);
+        RenderAtCoords(_objList[OBJECT_HEAD]);
+    }
     RenderAtCoords(_objList[OBJECT_NOTEBOOK]);
     if (notebookOpen) {
         RenderAtCoords(_objList[OBJECT_NOTEBOOK_PAGE]);
@@ -466,6 +488,40 @@ void TrainScene::Render()
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
 }
 
+bool TrainScene::loadDeathStatus()
+{
+    std::string fp = "Data\\People.json"; //file path
+    std::ifstream f(fp); // file
+    json j; //json object
+    if (!f) {
+        std::cout << "File not loaded succesfully.\n";
+        return false;
+    }
+    else {
+        try
+        {
+            j = json::parse(f); //load the file contents into the json object
+        }
+        catch (json::parse_error& ex)
+        {
+            std::cout << "parse error " << ex.id << std::endl;
+            return false;
+        }
+    }
+    std::map<std::string, bool> livingStatus = j.get<std::map<std::string, bool>>();
+    auto ip = _mainRide->getInteractablePeople();
+    for (auto& i : ip) {
+        for (auto j : _cabins) {
+            for (auto k : j->getSeats()) {
+                if (k != nullptr && k->getPersonName() == i) {
+                    static_cast<InteractablePerson*>(k)->setPredeterminedVerdict(livingStatus[k->getPersonName()]);
+
+                }
+            }
+        }
+    }
+    return true;
+}
 /// <summary>
 /// Handle key input inside this function. Logic is to be in this function.
 /// </summary>
@@ -490,8 +546,13 @@ void TrainScene::HandleInput()
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (renderAnnoucement) {
+                Application::GetInstance()->getScenes()[SCENE_OVERVIEW];
+                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
                 _currentAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
+            }
+            if (isNonInteracting && !writingText) {
+                isNonInteracting = false;
             }
             if (isInteracting)
             {
@@ -536,18 +597,40 @@ void TrainScene::HandleInput()
                     notebookOpen = false;
                 }
             }
+
+            
+           
             else if (!isInteracting && !writingText) {
                 _interactingPerson = getPersonClick();
-                if (_interactingPerson != nullptr && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y}) <= 150) {
-                    isInteracting = true;
-                    ticketReturn = false;
-                    ticketStamp = false;
-                    playerInteraction();
+                if (_interactingPerson != nullptr) {
+                    if (typeid(*_interactingPerson) == typeid(InteractablePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 150) {
+                        isInteracting = true;
+                        ticketReturn = false;
+                        ticketStamp = false;
+                        playerInteraction();
+                    }
+                    else {
+                        if (typeid(*_interactingPerson) == typeid(NonInteractivePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 250) {
+                            isNonInteracting = true;
+                            nonInteractiveInteraction();
+                        }
+                    }
+                }
+                else {
+                    /*std::cout << (_interactingPerson != nullptr && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 450) << std::endl;*/
+                    /*if (_interactingPerson != nullptr) {
+                        std::cout << _interactingPerson << std::endl;
+                    }*/
+                    /*if (typeid(*_interactingPerson) == typeid(NonInteractivePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 450) {
+                        std::cout << "Work";
+                        isNonInteracting = true;
+                        nonInteractiveInteraction();
+                    }*/
                 }
             }
             else {
                 if (!writingText)         
-                    playerInteraction(option);               
+                    playerInteraction(option);    
             }
             break;
         }
@@ -637,8 +720,6 @@ void TrainScene::HandleInput()
         _objList[OBJECT_NOTEBOOK_PAGE]->setTexture(*(_nbSprites[NOTEBOOK_P4]));
         break;
     }
-
-    
 
     switch (last_dir)
     {
@@ -778,6 +859,53 @@ void TrainScene::HandleInput()
             last_dir = 4;
     }
    
+}
+
+void TrainScene::nonInteractiveInteraction()
+{
+    Texture headTexture;
+    headTexture.loadImage("Sprites\\Ticketmaster\\tmHead.png");
+    headTexture.setBlendMode(SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_HEAD]->setTexture(headTexture);
+    _objList[OBJECT_HEAD]->setToScale(0.9);
+    WriteText({ static_cast<NonInteractivePerson*>(_interactingPerson)->getMessage(), TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 480, 500 });
+}
+
+void TrainScene::loadNonInteractivePeople()
+{
+    std::string fp = "Data\\NonInteractiveData.json"; //file path
+    std::ifstream f(fp); // file
+    json j; //json object
+    if (!f) {
+        std::cout << "File not loaded succesfully.\n";
+        return;
+    }
+    else {
+        try
+        {
+            j = json::parse(f); //load the file contents into the json object
+        }
+        catch (json::parse_error& ex)
+        {
+            std::cout << "parse error " << ex.id << std::endl;
+            return;
+        }
+    }
+    std::vector<std::string> sprites = j.at("sprites").get<std::vector<std::string>>();
+    std::vector<std::string> responses = j.at("responses").get<std::vector<std::string>>();
+    auto ip = _mainRide->getInteractablePeople();
+    for (auto j : _cabins) {
+        for (auto k : j->getSeats()) {
+            if (k != nullptr && typeid(*k) == typeid(NonInteractivePerson)) {
+                Texture tempTxt;
+                tempTxt.loadImage("Sprites\\Passengers\\NonInteractable\\" + sprites[rand() % sprites.size()] + ".png");
+                tempTxt.setBlendMode(SDL_BLENDMODE_BLEND);
+                tempTxt.setScale(1.2);
+                k->setTexture(tempTxt);
+                static_cast<NonInteractivePerson*>(k)->setMessage(responses[rand() % responses.size()]);
+            }
+        }
+    }
 }
 
 /// <summary>
