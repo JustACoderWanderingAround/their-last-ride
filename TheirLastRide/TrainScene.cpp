@@ -215,7 +215,7 @@ void TrainScene::Init()
     _objList[OBJECT_RAILPASS_NAME] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 244 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS_EXPIRY] = ObjectBuilder::CreateTextObject({ "aaaaaaaa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 280 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_HEAD] = ObjectBuilder::CreateObject("Sprites//Passengers//SashaHead.png", { 165, 435 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ "24 August", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Black }, { 1050, 50 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ "24 August", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1050, 50 }, SDL_BLENDMODE_BLEND);
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
