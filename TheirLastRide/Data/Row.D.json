@@ -4,81 +4,96 @@
 			"npcText": "",
 			"results": [
 					1
-			]
+			],
+			"end": 0
 		},   
 		{
 			"playerText": "",
 			"npcText": "Row.D: What are you, a cop ?",
 			"results": [
 				2
-			]
+			],
+			"end": 0
 		},
 		{
 			"playerText": "",
 			"npcText": "He reeks of alchohol and you notice reddish stains down his front",
 			"results": [
 				3, 4, 5
-			]
+			],
+			"end": 0
 		},
 		{
 			"playerText": "Have you been drinking sir ?",
 			"npcText": "Row.D: Whats it to you, bub ?",
-			"results": [10]
+			"results": [10],
+			"end": 0
 		},
 		{
 			"playerText": "What happened to your head ?",
 			"npcText": "Row.D: None of your goddamn business, bruv.",
-			"results": [10]
+			"results": [10],
+			"end": 0
 		},
 		{
 			"playerText": "Is that vodka ?",
 			"npcText": "Row.D: Yea, you got a problem with that ?",
-			"results": [6, 7]
+			"results": [6, 7],
+			"end": 0
 		},
 		{
 			"playerText": "You do know alchohol is prohitbited on this train",
 			"npcText": "What are you gonna do about it huh ?",
-			"results": [10]
+			"results": [10],
+			"end": 0
 		},
 		{
 			"playerText": "I'm just impressed you can down it straight",
 			"npcText": "Ah, this is like water to me",
-			"results": [8]
+			"results": [8],
+			"end": 0
 		},
 		{
 			"playerText": "So, what happened to your head ?",
 			"npcText": "Some idiot from the bar jumped me while I was walking home",
-			"results": [9]
+			"results": [9],
+			"end": 0
 		},
 		{
 			"playerText": "Sounds like a rough time. Tell you what, if you show me your ticket I can get you a drink from the back.",
 			"npcText": "You got yourself a deal",
-			"results": []
+			"results": [0],
+			"end": "goodstart"
 		},
 		{
 			"playerText": "I still need to see that ticket",
 			"npcText": "piss off bruv. My head hurts.",
-			"results": [11, 12]
+			"results": [11, 12],
+			"end": 0
 		},
 		{
 			"playerText": "You need medical assistance.",
 			"npcText": "I don't need jack from you. Piss off",
-			"results": []
+			"results": [],
+			"end": "bad"
 		},
 		{
 			"playerText": "So what happened ?",
 			"npcText": "I got jumped you twat",
-			"results": [13, 14]
+			"results": [13, 14],
+			"end": 0
 		},
 		{
 			"playerText": "You want some water to sober up ?",
 			"npcText": "Hell no, I don't want to be sober.'",
-			"results": []
-		}
+			"results": [],
+			"end": "bad"
+		},
 		{
 			"playerText": "Sounds like a rough time. Tell you what, if you show me your ticket I can get you a drink from the back.",
 			"npcText": "Fine.",
-			"results": []
+			"results": [1],
+			"end": "goodstart"
 		}
 	
 ]

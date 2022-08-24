@@ -37,7 +37,6 @@ constexpr int SCR_HEIGHT = 720;
 /// </summary>
 bool isWritingText = false;
 
-bool menuLoaded = false;
 
 /// <summary>
 /// Initialise the application.

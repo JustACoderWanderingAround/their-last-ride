@@ -27,6 +27,9 @@ bool ticketReturn = false;
 bool ticketPunch = false;
 bool moveDirectionRight = false;
 bool renderAnnoucement = false;
+bool showTicket = false;
+bool showRailpass = false;
+bool showTools = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
@@ -382,6 +385,7 @@ void TrainScene::Update(double dt)
         break;
     case FADE_ANIM_MIDDLE:
         if (renderAnnoucement) {
+            Application::GetInstance()->getScenes()[SCENE_OVERVIEW]->Init();
             Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
             break;
         }
@@ -431,7 +435,7 @@ void TrainScene::Render()
         RenderAtCoords(_objList[OBJECT_TEXT]);
         RenderAtCoords(_objList[OBJECT_HEAD]);
 
-        if (!ticketFront)
+        if (!ticketFront && showTicket)
         {
             RenderAtCoords(_objList[OBJECT_TICKET]);
             RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
@@ -443,33 +447,37 @@ void TrainScene::Render()
             }
         }
        
-        bool isRailpass = _interactingPerson; //attach to getRailpass
-        if (isRailpass)
+        /*bool isRailpass = _interactingPerson;*/ //attach to getRailpass
+        if (showRailpass)
         {
             RenderAtCoords(_objList[OBJECT_RAILPASS]);
             RenderAtCoords(_objList[OBJECT_RAILPASS_NAME]);
             RenderAtCoords(_objList[OBJECT_RAILPASS_EXPIRY]);
         }
 
-        if (ticketFront && isRailpass)
+        if (ticketFront && showRailpass)
         {
-            RenderAtCoords(_objList[OBJECT_TICKET]);
-            RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
-            RenderAtCoords(_objList[OBJECT_TICKET_TO]);
-            RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
-           
-            if (ticketStamp) {
-                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+            if (showTicket) {
+                RenderAtCoords(_objList[OBJECT_TICKET]);
+                RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
+                RenderAtCoords(_objList[OBJECT_TICKET_TO]);
+                RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
+
+                if (ticketStamp) {
+                    RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+                }
             }
         }
 
         if (ticketStamp && ticketFront) {
             RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
         }
-       
-        RenderAtCoords(_objList[OBJECT_RETURN]);
-        RenderAtCoords(_objList[OBJECT_PUNCHER]);
-        RenderAtCoords(_objList[OBJECT_STAMPER]);
+        if (showTools) {
+            RenderAtCoords(_objList[OBJECT_RETURN]);
+            RenderAtCoords(_objList[OBJECT_PUNCHER]);
+            RenderAtCoords(_objList[OBJECT_STAMPER]);
+        };
+        
     }
     if (isNonInteracting) {
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
@@ -547,7 +555,6 @@ void TrainScene::HandleInput()
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (renderAnnoucement) {
                 Application::GetInstance()->getScenes()[SCENE_OVERVIEW];
-                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
                 _currentAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
             }
@@ -601,10 +608,14 @@ void TrainScene::HandleInput()
             else if (!isInteracting && !writingText) {
                 _interactingPerson = getPersonClick();
                 if (_interactingPerson != nullptr) {
-                    if (typeid(*_interactingPerson) == typeid(InteractablePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 150) {
+                    /*std::cout << (_interactingPerson->getPersonName()) << _mainRide->getInteractablePeople().front() << std::endl;*/
+                    if (typeid(*_interactingPerson) == typeid(InteractablePerson) && getDistance({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y }, { _interactingPerson->getCoords().x, _interactingPerson->getCoords().y }) <= 150 && _mainRide->checkInteractable(_interactingPerson->getPersonName())) {
                         isInteracting = true;
                         ticketReturn = false;
                         ticketStamp = false;
+                        showTicket = false;
+                        showRailpass = false;
+                        showTools = false;
                         playerInteraction();
                     }
                     else {
@@ -905,7 +916,6 @@ void TrainScene::loadNonInteractivePeople()
 /// </summary>
 void TrainScene::playerInteraction(int option)
 {
-    
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
     Ticket* comparisonTicket = person->getTicket();
     RailPass* comparisonRailpass = person->getRailPass();
@@ -919,7 +929,6 @@ void TrainScene::playerInteraction(int option)
     _objList[OBJECT_TICKET_DOI]->updateText("June " + std::to_string(person->getTicket()->getIssueDate()), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_TO]->updateText(person->getTicket()->getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM]->updateText(_mainRide->getStart(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-    
     
     if (!person->getPassType())
     {
@@ -962,43 +971,32 @@ void TrainScene::playerInteraction(int option)
     }
     if (currentNode == nullptr)
         currentNode = nodes.front();
-    if (ticketReturn) {
-        /*for (int i = 0; i < 2; i++)
-        {
-            _renderQueue.pop_back();
-        }*/
-        /*if (person->verdictChecker(ticketStamp) == false)
-        {
-            _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
-        }*/
-        auto ppl = _mainRide->getInteractablePeople();
-        ppl.erase(std::remove(ppl.begin(), ppl.end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), ppl.end());
-        _mainRide->setInteractablePeople(ppl);
-        person->getCurrentNode() = nullptr;
-        _interactingPerson = nullptr;
-        isInteracting = false;
-        return;
+    if (currentNode->ending == NODE_ENDING::NODE_GOOD_START_END) {
+        if (showTicket == false) {
+            if (person->getRailPass() != nullptr) {
+                showRailpass = true;
+            }
+            showTicket = true;
+            showTools = true;
+        }
     }
-    if (_dT == currentNode->npcText && currentNode->results.size() == 0) {
-        if (person->getTicket()->getClippedState() && _mainRide->checkInteractable(person->getName())) {
-            /*for (int i = 0; i < 2; i++)
-            {
-                _renderQueue.pop_back();
-            }*/
+    if ((_dT == currentNode->npcText && currentNode->results.size() == 0) || ticketReturn) {
+        if (person->getTicket()->getClippedState()) {
             if (person->verdictChecker(ticketStamp) == false)
             {
                 _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
             }
-            auto ppl = _mainRide->getInteractablePeople();
-            ppl.erase(std::remove(ppl.begin(), ppl.end(), static_cast<InteractablePerson*>(_interactingPerson)->getName()), ppl.end());
-            _mainRide->setInteractablePeople(ppl);
-            person->getCurrentNode() = nullptr;
-            _interactingPerson = nullptr;
-            isInteracting = false;
         }
-        else {
-            return;
+        auto ppl = _mainRide->getInteractablePeople();
+        ppl.erase(std::remove(ppl.begin(), ppl.end(), person->getName()), ppl.end());
+        _mainRide->setInteractablePeople(ppl);
+        if (currentNode->ending == NODE_ENDING::NODE_BAD_END) {
+            //play an animation.
         }
+        person->getCurrentNode() = nullptr;
+        _interactingPerson = nullptr;
+        isInteracting = false;
+        return;
     }
 
    
@@ -1010,6 +1008,7 @@ void TrainScene::playerInteraction(int option)
     }
     else {
         //write npc 
+
         WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
         for (int i = 0; i < currentNode->results.size(); i++)
         {
