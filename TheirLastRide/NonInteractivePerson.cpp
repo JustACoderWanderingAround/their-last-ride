@@ -17,5 +17,10 @@ NonInteractivePerson::NonInteractivePerson()
 
 std::string NonInteractivePerson::getMessage() const
 {
-	return msg;
+	return _msg;
+}
+
+void NonInteractivePerson::setMessage(const std::string& m)
+{
+	_msg = m;
 }

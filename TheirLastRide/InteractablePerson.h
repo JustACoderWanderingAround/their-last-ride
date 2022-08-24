@@ -21,6 +21,7 @@ public:
     Node*& getCurrentNode();
     void setTicket(Ticket* t);
     void setRailPass(RailPass* r);
+    void setPredeterminedVerdict(bool pv);
 protected:
 
     //data members

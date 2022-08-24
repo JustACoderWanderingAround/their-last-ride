@@ -1,58 +1,47 @@
-[
-  {
-    "sprites": [
-      "child1",
-      "child2",
-      "child3",
-      "child4",
-      "child5",
-      "child6",
-      "child7",
-      "child8",
-      "child9",
-      "child10",
-      "child11",
-      "child12",
-      "adult1",
-      "adult2",
-      "adult3",
-      "adult4",
-      "adult5",
-      "adult6",
-      "adult7",
-      "adult8",
-      "adult9",
-      "adult10",
-      "adult11",
-      "adult12",
-      "old1",
-      "old2",
-      "old3",
-      "old4",
-      "old5",
-      "old6",
-      "old7",
-      "old8",
-      "old9",
-      "old10",
-      "old11",
-      "old12"
-    ],
+{
+  "sprites": [
+    "child1",
+    "child2",
+    "child3",
+    "child4",
+    "child5",
+    "child6",
+    "child7",
+    "child8",
+    "child9",
+    "child10",
+    "child11",
+    "child12",
+    "adult1",
+    "adult2",
+    "adult3",
+    "adult4",
+    "adult5",
+    "adult6",
+    "adult7",
+    "adult8",
+    "adult9",
+    "adult10",
+    "adult11",
+    "adult12",
+    "old1",
+    "old2",
+    "old3",
+    "old4",
+    "old5",
+    "old6",
+    "old7",
+    "old8",
+    "old9",
+    "old10",
+    "old11",
+    "old12"
+  ],
+  "responses": [
+    "They are sleeping.",
+    "You have checked their ticket already."
+  ]
+}
 
-    "responses": [
-      "G'day",
-      "Nice day out",
-      "Hi",
-      "Hiya",
-      "Hello",
-      "'Lo",
-      "Can I help you?",
-      ""
-      
-    ]
-    
-  }
-  
-]
 
 
