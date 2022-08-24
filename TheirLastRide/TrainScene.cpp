@@ -43,6 +43,17 @@ bool inBoundsDown(int y)
     return false;
 }
 
+bool inBoundsLeft(int x)
+{
+    if (x <= 220)
+    return false;
+}
+
+bool inBoundsRight(int x)
+{
+    if (x <= 220)
+    return false;
+}
 /// <summary>
 /// Constructor, used to initialize values.
 /// </summary>
@@ -581,7 +592,6 @@ void TrainScene::HandleInput()
 
                 if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
                 {
-                    std::cout << "LOLLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL" << std::endl;
                     _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET]);
                     ticketReturn = true;
                 }
