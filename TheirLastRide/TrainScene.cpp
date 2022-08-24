@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <functional>
 #include <typeinfo>
+#include <fstream>
 
 const int x_level = 35;
 const int y_level = 480;
@@ -275,6 +276,7 @@ void TrainScene::Init()
     notebookOpen = false;
     fillCabins();
     _currentAnimState = FADE_ANIM::FADE_ANIM_END;
+    loadDeathStatus();
 }
 /// <summary>
 /// Called on scene exit. Used to prevent memory leaks.
@@ -471,6 +473,40 @@ void TrainScene::Render()
     SDL_RenderPresent(Application::GetInstance()->getRenderer()); // Render everything on the screen. 
 }
 
+bool TrainScene::loadDeathStatus()
+{
+    std::string fp = "Data\\People.json"; //file path
+    std::ifstream f(fp); // file
+    json j; //json object
+    if (!f) {
+        std::cout << "File not loaded succesfully.\n";
+        return false;
+    }
+    else {
+        try
+        {
+            j = json::parse(f); //load the file contents into the json object
+        }
+        catch (json::parse_error& ex)
+        {
+            std::cout << "parse error " << ex.id << std::endl;
+            return false;
+        }
+    }
+    std::map<std::string, bool> livingStatus = j.get<std::map<std::string, bool>>();
+    auto ip = _mainRide->getInteractablePeople();
+    for (auto& i : ip) {
+        for (auto j : _cabins) {
+            for (auto k : j->getSeats()) {
+                if (k != nullptr && k->getPersonName() == i) {
+                    static_cast<InteractablePerson*>(k)->setPredeterminedVerdict(livingStatus[k->getPersonName()]);
+
+                }
+            }
+        }
+    }
+    return true;
+}
 /// <summary>
 /// Handle key input inside this function. Logic is to be in this function.
 /// </summary>
@@ -495,6 +531,8 @@ void TrainScene::HandleInput()
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (renderAnnoucement) {
+                Application::GetInstance()->getScenes()[SCENE_OVERVIEW];
+                Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
                 _currentAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
             }

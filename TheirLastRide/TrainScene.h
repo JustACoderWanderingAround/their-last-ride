@@ -113,6 +113,7 @@ private:
 	Ride* _mainRide;
 public:
 	bool writingText;
+	bool loadDeathStatus();
 	TrainScene();
 	Person* getPersonClick();
 	void renderCabins();
