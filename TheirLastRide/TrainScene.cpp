@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <functional>
+#include <typeinfo>
 
 const int x_level = 35;
 const int y_level = 480;
@@ -31,16 +32,8 @@ int keyTimer = 0;
 int blackScreenAlpha = 0;
 std::string _dT;
 
-bool inBoundsUp(int y)
-{
-    if (y <= 220)
-    return false;
-}
-
-bool inBoundsDown(int y)
-{
-    if (y >= 320)
-    return false;
+bool inBounds(SDL_Point coords) {
+    return (coords.y >= 220 && coords.y <= 320) && (coords.x >= -45 && coords.x <= 1050);
 }
 
 /// <summary>
@@ -681,7 +674,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('W'))
     {
-        if (frame_count % 3 == 0 && inBoundsUp(playerY) != false)
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y - 1 }))
         {
             playerY -= player_speed;
         }
@@ -707,7 +700,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('A'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x - 1, _objList[OBJECT_PLAYER]->getCoords().y}))
         {
             playerX -= player_speed;
         }
@@ -743,7 +736,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('S'))
     {
-        if (frame_count % 3 == 0 && inBoundsDown(playerY) != false) 
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y + 1 }))
         {
             playerY += player_speed;
         }
@@ -768,7 +761,7 @@ void TrainScene::HandleInput()
 
     if (Application::IsKeyPressed('D'))
     {
-        if (frame_count % 3 == 0)
+        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x + 1, _objList[OBJECT_PLAYER]->getCoords().y}))
         {
             playerX += player_speed;
         }
@@ -805,6 +798,7 @@ void TrainScene::HandleInput()
 /// </summary>
 void TrainScene::playerInteraction(int option)
 {
+    
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
     Ticket* comparisonTicket = person->getTicket();
     RailPass* comparisonRailpass = person->getRailPass();
