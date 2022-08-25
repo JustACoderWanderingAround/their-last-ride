@@ -37,6 +37,9 @@ int last_dir = 0;
 int pageChanger = 0;
 int keyTimer = 0;
 int blackScreenAlpha = 0;
+int numAlive = 0;
+int numDead = 0;
+
 std::string _dT;
 
 bool inBounds(SDL_Point coords) {
@@ -298,6 +301,7 @@ void TrainScene::Init()
     _currentAnimState = FADE_ANIM::FADE_ANIM_END;
     loadDeathStatus();
     loadNonInteractivePeople();
+    numAlive = 0;
 }
 /// <summary>
 /// Called on scene exit. Used to prevent memory leaks.
@@ -311,6 +315,8 @@ void TrainScene::Exit()
                 seat = nullptr;
             }
         }
+        delete cabin;
+        cabin = nullptr;
     }
     for (auto i : _objList) {
         if (i != nullptr) {
@@ -389,6 +395,7 @@ void TrainScene::Update(double dt)
     case FADE_ANIM_MIDDLE:
         if (renderAnnoucement) {
             //static_cast<OverviewScene*>(Application::GetInstance()->getScenes()[SCENE_OVERVIEW])->setActual(mainRide);
+            Application::GetInstance()->getScenes()[SCENE_OVERVIEW]->Init();
             Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
             break;
         }
@@ -526,7 +533,7 @@ bool TrainScene::loadDeathStatus()
             for (auto k : j->getSeats()) {
                 if (k != nullptr && k->getPersonName() == i) {
                     static_cast<InteractablePerson*>(k)->setPredeterminedVerdict(livingStatus[k->getPersonName()]);
-
+                   
                 }
             }
         }
@@ -557,7 +564,9 @@ void TrainScene::HandleInput()
         case SDL_MOUSEBUTTONDOWN: {
             std::cout << "Mouse down at\n" << _mouse_coords.x << "," << _mouse_coords.y << "\n";
             if (renderAnnoucement) {
-                Application::GetInstance()->getScenes()[SCENE_OVERVIEW];
+                static_cast<OverviewScene*>(Application::GetInstance()->getScenes()[SCENE_OVERVIEW])->setActual(numAlive, numDead);
+                static_cast<OverviewScene*>(Application::GetInstance()->getScenes()[SCENE_OVERVIEW])->setExpected(_mainRide->getNumAlive(), _mainRide->getNumDead());
+                
                 _currentAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
             }
@@ -985,10 +994,18 @@ void TrainScene::playerInteraction(int option)
     }
     if ((_dT == currentNode->npcText && currentNode->results.size() == 0) || ticketReturn) {
         if (person->getTicket()->getClippedState()) {
+
+            if (!ticketStamp) {
+                numDead += 1;
+            }
+            else
+                numAlive += 1;
             if (person->verdictChecker(ticketStamp) == false)
             {
                 _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
             }
+                      
+
         }
         auto ppl = _mainRide->getInteractablePeople();
         ppl.erase(std::remove(ppl.begin(), ppl.end(), person->getName()), ppl.end());

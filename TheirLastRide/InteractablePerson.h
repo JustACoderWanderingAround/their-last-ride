@@ -23,6 +23,7 @@ public:
     void setTicket(Ticket* t);
     void setRailPass(RailPass* r);
     void setPredeterminedVerdict(bool pv);
+    bool getStatus();
 protected:
 
     //data members

@@ -156,3 +156,8 @@ void InteractablePerson::setPredeterminedVerdict(bool pv)
 {
 	_PredeterminedVerdict = pv;
 }
+
+bool InteractablePerson::getStatus()
+{
+	return _PredeterminedVerdict;
+}

@@ -117,16 +117,21 @@ void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
+    _rides[RIDE_1]->setNumDead(3);
+    _rides[RIDE_1]->setNumAlive(1);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
     auto menuScene = static_cast<MenuScene*>(_scenes[SCENE_MAINMENU]);
     _mainScene = menuScene;//CHANGE TRAIN TO MAINMENU
  //   auto menuScene = static_cast<MenuScene*>(_scenes[SCENE_MAINMENU]);
     auto overView = static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW]);
-    _mainScene = overView;//CHANGE TRAIN TO MAINMENU
+    _mainScene = menuScene;//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
     {
+        // todo: remove before releasse
+        //if (i == SCENE_TRAIN)
+            //continue;
         _scenes[i]->Init();
     }
     _timer.startTimer();
