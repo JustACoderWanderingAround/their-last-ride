@@ -8,6 +8,8 @@ class Ride
 	int _carriageNum;
 	int _date;
 	int _wrongVerdictCount;
+	int _numAlive;
+	int _numDead;
 	std::string _start;
 	std::vector<std::string> _stops;
 	std::vector<std::string> _invalidStops;
@@ -26,6 +28,10 @@ public:
 	int getCarriageNum() const;
 	int getDate() const;
 	int getWrongVerdict();
+	void setNumAlive(int nA);
+	void setNumDead(int nD);
+	int getNumAlive();
+	int getNumDead();
 	/*bool loadAttributes(int rideNumber);*/
 	void setStart(const std::string& s);
 	void setStops(const std::vector<std::string>& s);

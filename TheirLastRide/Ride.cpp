@@ -62,17 +62,33 @@ void Ride::setStops(const std::vector<std::string>& s)
 {
 	_stops = s;
 }
+void Ride::setNumAlive(int nA)
+{
+	_numAlive = nA;
+}
 void Ride::setInvalidStops(const std::vector<std::string>& is)
 {
 	_invalidStops = is;
+}
+void Ride::setNumDead(int nD)
+{
+	_numDead = nD;
 }
 void Ride::setInteractablePeople(const std::vector<std::string>& ip)
 {
 	_interactablePeople = ip;
 }
+int Ride::getNumAlive()
+{
+	return _numAlive;
+}
 std::string Ride::getStart() const
 {
 	return _start;
+}
+int Ride::getNumDead()
+{
+	return _numDead;
 }
 std::vector<std::string> Ride::getStops() const
 {
