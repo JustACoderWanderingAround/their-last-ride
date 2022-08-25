@@ -273,49 +273,6 @@ void TrainScene::Init()
     }
 
 
-    for (int i = 0; i < NUM_TM_SWITCH; i++)
-    {
-        _tmSwitchList[i] = new Texture();
-    }
-
-    _tmSwitchList[TM_SWITCH_1]->loadImage("Sprites//TicketMaster//tmSwitch1.png");
-    _tmSwitchList[TM_SWITCH_2]->loadImage("Sprites//TicketMaster//tmSwitch2.png");
-    _tmSwitchList[TM_SWITCH_3]->loadImage("Sprites//TicketMaster//tmSwitch3.png");
-    _tmSwitchList[TM_SWITCH_4]->loadImage("Sprites//TicketMaster//tmSwitch4.png");
-    _tmSwitchList[TM_SWITCH_5]->loadImage("Sprites//TicketMaster//tmSwitch5.png");
-    _tmSwitchList[TM_SWITCH_6]->loadImage("Sprites//TicketMaster//tmSwitch6.png");
-    _tmSwitchList[TM_SWITCH_7]->loadImage("Sprites//TicketMaster//tmSwitch7.png");
-    _tmSwitchList[TM_SWITCH_8]->loadImage("Sprites//TicketMaster//tmSwitch8.png");
-
-    for (int i = 0; i < NUM_TM_SWITCH; i++)
-    {
-        _tmSwitchList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
-        _tmSwitchList[i]->setScale(1.2);
-    }
-
-    for (int i = 0; i < NUM_TM_SWING; i++)
-    {
-        _tmSwingList[i] = new Texture();
-    }
-
-    _tmSwingList[TM_SWING_1]->loadImage("Sprites//TicketMaster//tmSwitch1.png");
-    _tmSwingList[TM_SWING_2]->loadImage("Sprites//TicketMaster//tmSwitch2.png");
-    _tmSwingList[TM_SWING_3]->loadImage("Sprites//TicketMaster//tmSwitch3.png");
-    _tmSwingList[TM_SWING_4]->loadImage("Sprites//TicketMaster//tmSwitch4.png");
-    _tmSwingList[TM_SWING_5]->loadImage("Sprites//TicketMaster//tmSwitch5.png");
-    _tmSwingList[TM_SWING_6]->loadImage("Sprites//TicketMaster//tmSwitch6.png");
-    _tmSwingList[TM_SWING_7]->loadImage("Sprites//TicketMaster//tmSwitch7.png");
-    _tmSwingList[TM_SWING_8]->loadImage("Sprites//TicketMaster//tmSwitch8.png");
-    _tmSwingList[TM_SWING_9]->loadImage("Sprites//TicketMaster//tmSwitch9.png");
-    _tmSwingList[TM_SWING_10]->loadImage("Sprites//TicketMaster//tmSwitch10.png");
-    _tmSwingList[TM_SWING_11]->loadImage("Sprites//TicketMaster//tmSwitch11.png");
-
-    for (int i = 0; i < NUM_TM_SWING; i++)
-    {
-        _tmSwingList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
-        _tmSwingList[i]->setScale(1.2);
-    }
-
     for (int j = 0; j < NUM_NOTEBOOK; j++) {
         _nbSprites[j] = new Texture();
     }
@@ -700,7 +657,7 @@ void TrainScene::HandleInput()
                 static_cast<OverviewScene*>(Application::GetInstance()->getScenes()[SCENE_OVERVIEW])->setActual(numAlive, numDead);
                 static_cast<OverviewScene*>(Application::GetInstance()->getScenes()[SCENE_OVERVIEW])->setExpected(_mainRide->getNumAlive(), _mainRide->getNumDead());
                 
-                _currentAnimState = FADE_ANIM::FADE_ANIM_START;
+                _currentFadeAnimState = FADE_ANIM::FADE_ANIM_START;
                 return;
             }
             
@@ -938,6 +895,7 @@ void TrainScene::HandleInput()
                     frame_count = 0;
                 }
             }
+            last_dir = 2;
 
         if (_currentCabin - 1 >= 0 && playerX <= -45 && _currentFadeAnimState == FADE_ANIM::FADE_ANIM_OFF)
         {
@@ -949,7 +907,7 @@ void TrainScene::HandleInput()
             std::cout << "hehexd" << _currentCabin << std::endl;
         }
 
-            last_dir = 2;
+           
         }
 
         if (Application::IsKeyPressed('S'))
@@ -998,17 +956,18 @@ void TrainScene::HandleInput()
                     frame_count = 0;
                 }
             }
-    }
+            last_dir = 4;
+        }
     
 
-        if (_currentCabin + 1 < _cabins.size() && playerX >= 1050 && _currentAnimState == FADE_ANIM::FADE_ANIM_OFF)
+        if (_currentCabin + 1 < _cabins.size() && playerX >= 1050 && _currentFadeAnimState == FADE_ANIM::FADE_ANIM_OFF)
         {
             _currentFadeAnimState = FADE_ANIM::FADE_ANIM_START;
             moveDirectionRight = true;
             std::cout << "pogchamp ?!" << std::endl;
         }
 
-            last_dir = 4;
+            
     }
    
 }
@@ -1129,7 +1088,7 @@ void TrainScene::playerInteraction(int option)
             showTools = true;
         }
     }
-    if ((_dT == currentNode->npcText && currentNode->results.size() == 0 && person->getTicket()->getClippedState()) || ticketReturn) {
+    if ((_dT == currentNode->npcText && currentNode->results.size() == 0) || ticketReturn) {
         if (person->getTicket()->getClippedState() && showTicket) {
             if (!ticketStamp) {
                 numDead += 1;
@@ -1141,11 +1100,11 @@ void TrainScene::playerInteraction(int option)
                 _mainRide->setWrongVerdict(_mainRide->getWrongVerdict() + 1);
             }
         }
+        else {
+            if (showTicket && !ticketReturn)
+                return;
+        }
         auto ppl = _mainRide->getInteractablePeople();
-        ppl.erase(std::remove(ppl.begin(), ppl.end(), person->getName()), ppl.end());
-        _mainRide->setInteractablePeople(ppl);
-        if (currentNode->ending == NODE_ENDING::NODE_BAD_END) {
-            std::cout << "Bad end\n";
         ppl.erase(std::remove(ppl.begin(), ppl.end(), person->getName()), ppl.end());
         _mainRide->setInteractablePeople(ppl);
         if (currentNode->ending == NODE_ENDING::NODE_BAD_END) {
@@ -1193,7 +1152,7 @@ void TrainScene::playerInteraction(int option)
 /// </summary>
 /// <param name="text">The text to be written (Text is a struct containing the string, font and colour of the text)</param>
 /// <param name="pos">The position of the text on the surface (SDL_Point, a integer Vector2)</param>
-void TrainScene::WriteText(const Text& text, const SDL_Point& pos)
+void TrainScene::WriteText(const Text & text, const SDL_Point & pos)
 {
     iterator = 0;
     _displayText = " ";

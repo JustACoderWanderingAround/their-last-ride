@@ -78,35 +78,6 @@ enum TM_ANIM {
 	NUM_TM_ANIM
 };
 
-enum TM_SWITCH {
-
-	TM_SWITCH_1,
-	TM_SWITCH_2,
-	TM_SWITCH_3,
-	TM_SWITCH_4,
-	TM_SWITCH_5,
-	TM_SWITCH_6,
-	TM_SWITCH_7,
-	TM_SWITCH_8,
-	NUM_TM_SWITCH
-};
-
-enum TM_SWING {
-
-	TM_SWING_1,
-	TM_SWING_2,
-	TM_SWING_3,
-	TM_SWING_4,
-	TM_SWING_5,
-	TM_SWING_6,
-	TM_SWING_7,
-	TM_SWING_8,
-	TM_SWING_9,
-	TM_SWING_10,
-	TM_SWING_11,
-	NUM_TM_SWING
-};
-
 enum PASS_TXTR {
 	
 	CHILD_PASS,
@@ -154,8 +125,6 @@ private:
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
-	std::array<Texture*, NUM_TM_SWITCH> _tmSwitchList;
-	std::array<Texture*, NUM_TM_SWING> _tmSwingList;
 	std::array<Texture*, NUM_NOTEBOOK> _nbSprites;
 	std::array<Texture*, NUM_PASS_TXTR> _passTextureList;
 	std::vector<Button*> _buttons;
