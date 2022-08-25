@@ -6,6 +6,7 @@
 #include "ObjectBuilder.h"
 #include "Application.h"
 #include "TextManager.h"
+#include "Ride.h"
 #include <map>
 using json = nlohmann::json;
 
@@ -105,7 +106,10 @@ InteractablePerson::InteractablePerson(const std::string& name)
 	_txt.setBlendMode(SDL_BLENDMODE_BLEND);
 	_txt.setScale(1.1);
 	loadNodes();
-	_RailPass = new RailPass(name, true, 2);
+	
+	int i = rand() % 12 + 15;
+	
+	_RailPass = new RailPass(name, true, i);
 
 }
 

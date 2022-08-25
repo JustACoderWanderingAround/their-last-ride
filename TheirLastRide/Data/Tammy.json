@@ -5,7 +5,7 @@
 			"results": [
 					1
 			],
-			"end": 0
+			"end": "good"
 		},   
 		{
 			"playerText": "",
@@ -21,7 +21,7 @@
 			"results": [
 				5, 6
 			],
-			"end": "good"
+			"end": 0
 		},
 		{
 			"playerText": "What brings you here ?",

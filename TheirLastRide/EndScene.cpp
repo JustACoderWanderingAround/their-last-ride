@@ -57,7 +57,10 @@ void EndScene::Init()
         nNote.setBlendMode(SDL_BLENDMODE_BLEND);
         _objList[OBJECT_END_NORMAL_NOTE]->setTexture(rNote);
         _objList[OBJECT_END_REAPER_NOTE]->setTexture(nNote);
+        _objList[OBJECT_END_NORMAL_NOTE]->setToAlpha(0); //make it transparent
+        _objList[OBJECT_END_REAPER_NOTE]->setToAlpha(0); //make it transparent
         _renderQueue.push_back(_objList[OBJECT_END_CHEQUE]);
+        _objList[OBJECT_END_CHEQUE]->setToAlpha(0);//make it transparent
     }
 
     if (numWrong > 12)
@@ -68,6 +71,8 @@ void EndScene::Init()
         nNote.setBlendMode(SDL_BLENDMODE_BLEND);
         _objList[OBJECT_END_NORMAL_NOTE]->setTexture(rNote);
         _objList[OBJECT_END_REAPER_NOTE]->setTexture(nNote);
+        _objList[OBJECT_END_NORMAL_NOTE]->setToAlpha(0); //make it transparent
+        _objList[OBJECT_END_REAPER_NOTE]->setToAlpha(0); //make it transparent
     }
 
 }

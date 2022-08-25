@@ -328,6 +328,7 @@ void TrainScene::Init()
     loadDeathStatus();
     loadRailpassStatus();
     loadPassType();
+    loadPrintPassType();
     loadNonInteractivePeople();
     numAlive = 0;
     numDead = 0;
@@ -801,7 +802,6 @@ void TrainScene::HandleInput()
 
                 if (_objList[OBJECT_RETURN]->getCollider()->isColliding(_mouseCollider))
                 {
-                    _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET]);
                     ticketReturn = true;
                 }
 
@@ -979,6 +979,7 @@ void TrainScene::HandleInput()
 
     if (!isInteracting)
     {
+        _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET]);
         if (Application::IsKeyPressed('W'))
         {
             if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y - 1 }))
