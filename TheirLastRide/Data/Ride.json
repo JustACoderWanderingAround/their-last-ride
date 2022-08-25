@@ -3,7 +3,7 @@
     "start": "NOSTON CTRL",
     "stops": ["NOSTON EAST", "EWING BRIDGE"],
     "invalid": [ "BENTON CTRL", "LLYN L LVL", "W ARCH" ],
-    "people": [ "RowD", "George" ],
+    "people": [ "George", "Sasha", "Bill", "Emily", "Montag", "Richward" ],
     "carriageNum" : 2,
     "nonInteractableNum" : 4,
     "date" : 5
@@ -12,7 +12,7 @@
     "start": "NOSTON CTRL",
     "stops": [ "NOSTON EAST", "EWING BRIDGE", "FORT KNIGHT", "HATFIELD H." ],
     "invalid": [ "BENTON CTRL", "LLYN L LVL", "W ARCH", "KIRKEN VIC", "TORQUAY TOWN" ],
-    "people": [ "George" ],
+    "people": [ "Maisie", "Jeanie", "Nolan", "Charlie", "Sophie", "Beth" ],
     "carriageNum" : 2,
     "nonInteractableNum" : 3,
     "date" : 16
@@ -21,7 +21,7 @@
     "start": "NOSTON CTRL", 
     "stops": [ "NOSTON EAST", "EWING BRIDGE", "EWING TOWN", "HARBOURSIDE" ],
     "invalid": [ "BENTON CTRL", "BENTON SID ST", "LLYN L LVL", "LLYN BY SEA", "W ARCH", "KIRKEN VIC", "TORQUAY TOWN", "TORQUAY HAM RD", "HATFIELD H", "FORT KNIGHT", "HATFIELD H" ],
-    "people": [  "George", "Sasha", "Emily", "Montag", "Bill" ],
+    "people": [ "Pat", "Sanders", "Keith", "Dorian", "John", "Timmy", "Tammy", "Billy" ],
     "carriageNum" : 3,
     "nonInteractableNum" : 5,
     "date" : 25
