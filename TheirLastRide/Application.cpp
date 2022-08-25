@@ -11,7 +11,7 @@
 #include <fstream>
 
 void to_json(json& j, const Ride& n) {
-    j = json{ {"start", n.getStart() }, {"stops", n.getStops() }, {"invalid", n.getInvalidStops() }, {"people", n.getInteractablePeople() }, {"carriageNum", n.getCarriageNum() } , {"nonInteractableNum", n.getNonInteractable() } , {"date", n.getDate() } };
+    j = json{ {"start", n.getStart() }, {"stops", n.getStops() }, {"invalid", n.getInvalidStops() }, {"people", n.getInteractablePeople() }, {"carriageNum", n.getCarriageNum() } , {"nonInteractableNum", n.getNonInteractable() } , {"date", n.getDate() }};
 }
 
 void from_json(const json& j, Ride& n) {
@@ -117,12 +117,17 @@ void Application::Run()
 {
     float time_between_frames = 1 / _targetFps;
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
+    //_rides[RIDE_1]->setNumDead(3);
+    //ides[RIDE_1]->setNumAlive(1);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
     _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
     {
+        // todo: remove before releasse
+        //if (i == SCENE_TRAIN)
+            //continue;
         _scenes[i]->Init();
     }
     _timer.startTimer();
