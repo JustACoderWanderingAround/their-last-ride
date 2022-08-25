@@ -1,0 +1,52 @@
+[
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		],
+		"end": "good"
+	},
+	{
+		"playerText": "",
+		"npcText": "He is wearing a striped swimsuit, and you can see small droplets of water falling onto his face. His large eyes seem rather unfocused, gazing at nothing in particular.",
+		"results": [
+			2
+		],
+		"end": 0
+	},
+	{
+		"playerText": "Are you alright, lad?",
+		"npcText": "Charlie: maybe... maybe not... I 'dunno.'",
+		"results": [
+			3,
+			4,
+			5
+		],
+		"end": 0
+	},
+	{
+		"playerText": "Do you need a towel?",
+		"npcText": "Charlie: No it's okay... 'm brother will bring one over for me.",
+		"results": [4, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Where were you before this?",
+		"npcText": "Swimmin'! My brother took me to the pool. He said he won't be able to if he gets 'drafted'. I'm not sure what that meanns, though...",
+		"results": [3, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Did you come with someone?",
+		"npcText": "Charlie: Well, I was with m' brother... I fell asleep in the pool so he probably brought me here.",
+		"results": [3, 4, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Have a good day, kid.",
+		"npcText": "Press anywhere after clipping to confirm.",
+		"results": [ ],
+		"end": 0
+	}
+]

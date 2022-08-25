@@ -1,0 +1,52 @@
+[
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		],
+		"end": "good"
+	},
+	{
+		"playerText": "",
+		"npcText": "She is a petite old woman, gently cradling a small bear in her hands. She is looking out of the window wistfully, lightly stroking the bear's well-loved fur.'",
+		"results": [
+			2
+		],
+		"end": 0
+	},
+	{
+		"playerText": "Feeling alright, Madam?",
+		"npcText": "Beth: ...No, I suppose not, darling.",
+		"results": [
+			3,
+			4,
+			5
+		],
+		"end": 0
+	},
+	{
+		"playerText": "Oh dear, can I ask why?",
+		"npcText": "Beth: Well, I'm here aren't I? And the news has been just terrible recently...",
+		"results": [4, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Whose bear is that?",
+		"npcText": "Beth: Charles', my grandson. Heavens, I hope he isn't too upset...'",
+		"results": [3, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Where are you headed to?",
+		"npcText": "Beth: Well i was planning to meet someone. But I sppose that's been cancelled. Do you think you could read the ticket for me dear? My eyes arent what they used to be.",
+		"results": [3, 4, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Lovely chat. Thanks",
+		"npcText": "Press anywhere after clipping to confirm.",
+		"results": [ ],
+		"end": 0
+	}
+]

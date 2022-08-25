@@ -64,7 +64,6 @@ void OverviewScene::Update(double dt)
     HandleInput();
     frame_count3++;
     if (_fadeQueue.size() > 0) {
-        std::cout << changeToScene;
         isFading_overview = true;
         if (frame_count3 % 3 == 0) {
             iterator3++;

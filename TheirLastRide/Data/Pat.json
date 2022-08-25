@@ -1,0 +1,52 @@
+[
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		],
+		"end": "good"
+	},
+	{
+		"playerText": "",
+		"npcText": "He leans heavily agaist the train window, and he stares at the harbour outside. His chest rises and falls steadily, a small locket hanging loosely around his neck.",
+		"results": [
+			2
+		],
+		"end": 0
+	},
+	{
+		"playerText": "How are you doing, Sir?",
+		"npcText": "Pat : *laughs* You tell me.",
+		"results": [
+			3,
+			4,
+			5
+		],
+		"end": 0
+	},
+	{
+		"playerText": "Beautiful locket. Who is it for?",
+		"npcText": "Pat: My Lilianne... why I haven't seen her in ages...'",
+		"results": [4, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Where are you headed today?",
+		"npcText": "Pat: Home. It feels good to be back.",
+		"results": [3, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Enjoying the ride so far?",
+		"npcText": "Pat: It's great! I haven't been this comfortable in a while.",
+		"results": [3, 4, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Nice chat. Thanks",
+		"npcText": "Press anywhere after clipping to confirm.",
+		"results": [ ],
+		"end": 0
+	}
+]

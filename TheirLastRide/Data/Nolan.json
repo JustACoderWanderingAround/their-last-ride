@@ -1,0 +1,52 @@
+[
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		],
+		"end": "good"
+	},
+	{
+		"playerText": "",
+		"npcText": "He seems to be a younger, possibly in his late teens. he hums idly as he stares at the the space in front of him.",
+		"results": [
+			2
+		],
+		"end": 0
+	},
+	{
+		"playerText": "How are you doing today, Sir?",
+		"npcText": "Nolan:'m doing alright.",
+		"results": [
+			3,
+			4,
+			5
+		],
+		"end": 0
+	},
+	{
+		"playerText": "How old are you?",
+		"npcText": "Nolan: I just turned 18, mate.",
+		"results": [4, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Do you take the train often?",
+		"npcText": "Nolan: Nah, 's the first time I've riddn since I was aboput 15.",
+		"results": [3, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Why are you travelling today?",
+		"npcText": "Nolan: Well, we all gotta register for the draft. Might 's well get it over with.",
+		"results": [3, 4, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Nice chat. Thanks",
+		"npcText": "Press anywhere after clipping to confirm.",
+		"results": [ ],
+		"end": 0
+	}
+]

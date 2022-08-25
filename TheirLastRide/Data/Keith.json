@@ -1,0 +1,52 @@
+[
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		],
+		"end": "good"
+	},
+	{
+		"playerText": "",
+		"npcText": "He looks incredibly pallid, and clutching his side as hhis breaths become shallow.",
+		"results": [
+			2
+		],
+		"end": 0
+	},
+	{
+		"playerText": "Doing well, Sir?",
+		"npcText": "Sanders: Aye lad, I'm doing well.'",
+		"results": [
+			3,
+			4,
+			5
+		],
+		"end": 0
+	},
+	{
+	"playerText": "What are the embellishments?",
+		"npcText": "Sanders: These? These let the boys know my rank at a glance, I'm a colonel, you see.",
+		"results": [4, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "How long have you been in the military",
+		"npcText": "Sanders: 2 decades and counting. It's hard work, the army. '",
+		"results": [3, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Where were you before this?",
+		"npcText": "Sanders: Headquarters. Someone has to organise military strategy.",
+		"results": [3, 4, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Nice chat. Thanks",
+		"npcText": "Press anywhere after clipping to confirm.",
+		"results": [ ],
+		"end": 0
+	}
+]

@@ -1,0 +1,52 @@
+[
+	{
+		"playerText": "TM: Tickets please",
+		"npcText": "",
+		"results": [
+			1
+		],
+		"end": "good"
+	},
+	{
+		"playerText": "",
+		"npcText": "She wears a simple blue dress and has a soft smile on her face. She would be a completely average young woman... if it weren't for the silvery hair falling across her shoulders.",
+		"results": [
+			2
+		],
+		"end": 0
+	},
+	{
+		"playerText": "How's your day, Miss?",
+		"npcText": "Sophie: Wonderful, really. It's been a while since I took the train.",
+		"results": [
+			3,
+			4,
+			5
+		],
+		"end": 0
+	},
+	{
+		"playerText": "Where are you headed to today?",
+		"npcText": "Sophie: Well, Ingary ultimately. But I'm making a stop first.",
+		"results": [4, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "You have lovely hair, Miss. Is that natural?",
+		"npcText": "Sophie: *laughs* It used to be brown, but it's grown silver sincew an incident a while back.",
+		"results": [3, 5, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Why don't you take the train usually?",
+		"npcText": "Sophie: *chuckles* i usually travel in a more eficient way... but let's just say the driver is little burnt out.",
+		"results": [3, 4, 6],
+		"end": 0
+	},
+	{
+		"playerText": "Thank you, Miss.",
+		"npcText": "Press anywhere after clipping to confirm.",
+		"results": [ ],
+		"end": 0
+	}
+]
