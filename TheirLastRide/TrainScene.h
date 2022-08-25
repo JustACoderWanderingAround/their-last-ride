@@ -56,6 +56,25 @@ enum TM_ANIM {
 	TM_ANIM_FRONT_WALK_2,
 	TM_ANIM_BACK_WALK_1,
 	TM_ANIM_BACK_WALK_2,
+	TM_SWING_1,
+	TM_SWING_2,
+	TM_SWING_3,
+	TM_SWING_4,
+	TM_SWING_5,
+	TM_SWING_6,
+	TM_SWING_7,
+	TM_SWING_8,
+	TM_SWING_9,
+	TM_SWING_10,
+	TM_SWING_11,
+	TM_SWITCH_1,
+	TM_SWITCH_2,
+	TM_SWITCH_3,
+	TM_SWITCH_4,
+	TM_SWITCH_5,
+	TM_SWITCH_6,
+	TM_SWITCH_7,
+	TM_SWITCH_8,
 	NUM_TM_ANIM
 };
 
@@ -86,12 +105,21 @@ enum FADE_ANIM {
 	NUM_FADE_ANIM_STATES
 };
 
+enum TM_SWITCH_SWING_ANIM {
+	TM_SWITCH_SWING_ANIM_OFF,
+	TM_SWITCH_SWING_ANIM_START,
+	TM_SWITCH_SWING_ANIM_MIDDLE,
+	TM_SWITCH_SWING_ANIM_END,
+	NUM_TM_SWITCH_SWING_ANIM_STATES
+};
+
 class Person;
 class Scene;
 class TrainScene : public Scene
 {
 private:
-	FADE_ANIM _currentAnimState;
+	TM_SWITCH_SWING_ANIM _currentTMAnimState;
+	FADE_ANIM _currentFadeAnimState;
 	int level;
 	int _currentCabin;
 	BoxCollider* _mouseCollider;

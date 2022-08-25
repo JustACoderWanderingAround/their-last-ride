@@ -26,8 +26,8 @@
 		{
 			"playerText": "Have you been drinking sir ?",
 			"npcText": "Row.D: Whats it to you, bub ?",
-			"results": [10],
-			"end": 0
+			"results": [],
+			"end": "bad"
 		},
 		{
 			"playerText": "What happened to your head ?",
