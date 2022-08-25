@@ -1,0 +1,115 @@
+[
+		{
+			"playerText": "TM: Hey I see your ticket ?",
+			"npcText": "*mumbles*",
+			"results": [
+				1
+			],
+			"end": 0
+		},   
+		{
+			"playerText": "",
+			"npcText": "He is averagely built man with wild, uncouth hair and a face that hasn't felt the touch of a razor in weeks.",
+			"results": [
+				2
+			],
+			"end": 0
+		},
+		{
+			"playerText": "I'm sorry could you please repeat that ?",
+			"npcText": "Dorian: ...",
+			"results": [5],
+			"end": 0
+		},
+		{
+			"playerText": "Can I see your ticket ?",
+			"npcText": "Dorian: ...",
+			"results": [5],
+			"end": 0
+		},
+		{
+			"playerText": "Speak up will you ?",
+			"npcText": "Dorian: ...",
+			"results": [16],
+			"end": 0
+		},
+		{
+			"playerText": "Would you like some time alone. Sir ?",
+			"npcText": "*mumbles* just start the damn train.",
+			"results": [6, 16],
+			"end": 0
+		},
+		{
+			"playerText": "Did something happen out there.",
+			"npcText": "...I don't want to think about it",
+			"results": [7],
+			"end": 0
+		},
+		{
+			"playerText": "I'm sorry.",
+			"npcText": "Does it matter ? They're all dead anyways, thanks to me.",
+			"results": [8, 13],
+			"end": 0
+		},
+		{
+			"playerText": "Your squad ?",
+			"npcText": "... I watched them die. We were surrounded. I didn't even help. I just hid, like a coward.",
+			"results": [9],
+			"end": 0
+		},
+		{
+			"playerText": "Thats not cowardly, I would have done the same.",
+			"npcText": "But I should have died with them or helped. I didn't do anything. My best friend died in front of my eyes.",
+			"results": [10],
+			"end": 0
+		},
+		{
+			"playerText": "Your best friend ?",
+			"npcText": "It should have been me... He has a wife... and kids... I don't have anything. I should just die.",
+			"results": [11],
+			"end": 0
+		},
+		{
+			"playerText": "I don't think he would have wanted that. At least someone can tell his family what happened. ?",
+			"npcText": "His kids will never see him again.",
+			"results": [12],
+			"end": 0
+		},
+		{
+			"playerText": "You could tell them about him. This train goes back into town. I just need the ticket.",
+			"npcText": "Guess you're right.",
+			"results": [],
+			"end": "good"
+		},
+		{
+			"playerText": "Would talking about it help ?",
+			"npcText": "...",
+			"results": [14],
+			"end": 0
+		}
+		{
+			"playerText": "Well would you like to talk about it ?",
+			"npcText": "...no",
+			"results": [15],
+			"end": 0
+		}
+		{
+			"playerText": "Aw come on. Let it out dude. I don't have all day.",
+			"npcText": "...Just take it and leave me alone",
+			"results": [],
+			"end": "good"
+		}
+		{
+			"playerText": "Sir the train can't leave until I check your ticket",
+			"npcText": "...",
+			"results": [17],
+			"end": 0
+		}
+		{
+			"playerText": "If you don't comply I will have to use force. Your ticket please. Else leave the train.",
+			"npcText": "...make me",
+			"results": [],
+			"end": "bad"
+		}
+	
+]
