@@ -5,7 +5,8 @@
 #include <fstream>
 #include "ObjectBuilder.h"
 #include "Application.h"
-#include "TextManager.h";
+#include "TextManager.h"
+#include <map>
 using json = nlohmann::json;
 
 void to_json(json& j, const Node& n) {
@@ -53,10 +54,40 @@ bool InteractablePerson::loadNodes()
 	return true;
 }
 
+bool InteractablePerson::loadDeathStatus()
+{
+	std::string fp = "Data\\People.json"; //file path
+	std::ifstream f(fp); // file
+	json j; //json object
+	if (!f) {
+		std::cout << "File not loaded succesfully.\n";
+		return false;
+	}
+	else {
+		try
+		{
+			j = json::parse(f); //load the file contents into the json object
+		}
+		catch (json::parse_error& ex)
+		{
+			std::cout << "parse error " << ex.id << std::endl;
+		}
+	}
+	std::map<std::string, bool> livingStatus = j.get<std::map<std::string, bool>>();
+	for (std::map<std::string, bool>::iterator iter = livingStatus.begin(); iter != livingStatus.end(); ++iter)
+	{
+		auto k = iter->first;
+		//ignore value
+		//Value v = iter->second;
+	}
+
+	return true;
+}
+
 InteractablePerson::InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass)
 	: 
 	_PassType (passType),
-	_PredetermindedVerdict (verdict),
+	_PredeterminedVerdict (verdict),
 	_Ticket (ticket),
 	_RailPass (railpass),
 	_currentNode(nullptr)
@@ -82,7 +113,7 @@ InteractablePerson::InteractablePerson(const std::string& name)
 bool InteractablePerson::verdictChecker(bool _PlayerVerdict)
 {
 	
-	return (_PlayerVerdict == _PredetermindedVerdict);
+	return (_PlayerVerdict == _PredeterminedVerdict);
 	std::cout << "correct" << std::endl;
 	
 }
@@ -123,5 +154,5 @@ void InteractablePerson::setRailPass(RailPass* r)
 
 void InteractablePerson::setPredeterminedVerdict(bool pv)
 {
-	_PredetermindedVerdict = pv;
+	_PredeterminedVerdict = pv;
 }

@@ -11,7 +11,7 @@
 #include <fstream>
 
 void to_json(json& j, const Ride& n) {
-    j = json{ {"start", n.getStart() }, {"stops", n.getStops() }, {"invalid", n.getInvalidStops() }, {"people", n.getInteractablePeople() }, {"carriageNum", n.getCarriageNum() } , {"nonInteractableNum", n.getNonInteractable() } , {"date", n.getDate() } };
+    j = json{ {"start", n.getStart() }, {"stops", n.getStops() }, {"invalid", n.getInvalidStops() }, {"people", n.getInteractablePeople() }, {"carriageNum", n.getCarriageNum() } , {"nonInteractableNum", n.getNonInteractable() } , {"date", n.getDate() }};
 }
 
 void from_json(const json& j, Ride& n) {
@@ -118,7 +118,11 @@ void Application::Run()
     float time_between_frames = 1 / _targetFps;
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    _mainScene = _scenes[SCENE_MAINMENU];//CHANGE TRAIN TO MAINMENU
+    auto menuScene = static_cast<MenuScene*>(_scenes[SCENE_MAINMENU]);
+    _mainScene = menuScene;//CHANGE TRAIN TO MAINMENU
+ //   auto menuScene = static_cast<MenuScene*>(_scenes[SCENE_MAINMENU]);
+    auto overView = static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW]);
+    _mainScene = overView;//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)

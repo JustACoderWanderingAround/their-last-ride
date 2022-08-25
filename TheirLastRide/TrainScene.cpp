@@ -12,6 +12,7 @@
 #include <functional>
 #include <typeinfo>
 #include <fstream>
+#include "OverviewScene.h"
 
 const int x_level = 35;
 const int y_level = 480;
@@ -387,7 +388,7 @@ void TrainScene::Update(double dt)
         break;
     case FADE_ANIM_MIDDLE:
         if (renderAnnoucement) {
-            Application::GetInstance()->getScenes()[SCENE_OVERVIEW]->Init();
+            //static_cast<OverviewScene*>(Application::GetInstance()->getScenes()[SCENE_OVERVIEW])->setActual(mainRide);
             Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);
             break;
         }

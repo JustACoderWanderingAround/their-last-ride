@@ -7,6 +7,17 @@ int iterator4 = 255;
 int frame_count3 = 0;
 bool isFading_overview = false;
 bool changeToScene = false;
+
+void OverviewScene::setExpected(int expA, int expD)
+{
+    expectedAlive = expA;
+    expectedDead = expD;
+}
+void OverviewScene::setActual(int actA, int actD)
+{
+    actualAlive = actA;
+    actualDead = actD;
+}
 OverviewScene::OverviewScene()
     : rideNumber(1)
 {
@@ -28,6 +39,16 @@ void OverviewScene::Init()
     _objList[OBJECT_OVERVIEW_REAPER_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionReaperSummary.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RIDE_NUMBER] = ObjectBuilder::CreateTextObject({ std::to_string(rideNumber), TextManager::GetInstance()->getFonts()[FONT_REDENSEK], ReaperGrey }, { 700, 217 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RIDE_NUMBER]->setToScale(1.35);
+    _objList[OBJECT_REPORTED_ALIVE] = ObjectBuilder::CreateTextObject({ std::to_string(actualAlive), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],ReaperGrey }, { 755, 369 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_REPORTED_DEAD] = ObjectBuilder::CreateTextObject({ std::to_string(actualDead), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],ReaperGrey }, { 765, 408 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_EXPECTED_ALIVE] = ObjectBuilder::CreateTextObject({ std::to_string(expectedAlive), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],ReaperGrey}, {700, 488}, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_EXPECTED_DEAD] = ObjectBuilder::CreateTextObject({ std::to_string(expectedDead), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],ReaperGrey }, { 720, 527 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_DISPARITY_ALIVE] = ObjectBuilder::CreateTextObject({ std::to_string(abs(actualAlive - expectedDead)), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],ReaperGrey }, { 652, 605 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_DISPARITY_DEAD] = ObjectBuilder::CreateTextObject({ std::to_string(abs(actualAlive - expectedDead)), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],ReaperGrey }, { 652, 645}, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_EXPECTED_PASS] = ObjectBuilder::CreateTextObject({ std::to_string(expectedAlive + expectedDead) , TextManager::GetInstance()->getFonts()[FONT_REDENSEK],Grey }, { 980, 350 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_REPORTED_PASS] = ObjectBuilder::CreateTextObject({ std::to_string(actualDead + actualAlive), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],Grey }, { 980,  390 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_DISPARITY] = ObjectBuilder::CreateTextObject({std::to_string(abs((expectedAlive + expectedDead) - (actualDead + actualAlive))), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],Grey }, {795,  415}, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_LOST_REV] = ObjectBuilder::CreateTextObject({ std::to_string(abs((expectedAlive + expectedDead) - (actualDead + actualAlive)) * 35), TextManager::GetInstance()->getFonts()[FONT_REDENSEK],Grey }, { 850, 500 }, SDL_BLENDMODE_BLEND);
 
     for (int i = 1; i < NUM_OBJECT_OVERVIEW; i++)
     {

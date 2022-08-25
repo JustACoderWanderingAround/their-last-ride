@@ -11,6 +11,7 @@ class InteractablePerson :
 public:
     InteractablePerson();
     bool loadNodes();
+    bool loadDeathStatus();
     InteractablePerson(std::string name, bool passType, bool verdict, Ticket* ticket, RailPass* railpass);
     InteractablePerson(const std::string& name);
     bool verdictChecker(bool _PlayerVerdict);
@@ -26,7 +27,7 @@ protected:
 
     //data members
     bool _PredeterminedPassType;
-    bool _PredetermindedVerdict;
+    bool _PredeterminedVerdict; // false is dead
     bool _PassType;
     int _ScytheUse; //for unwilling passengers only 
 
