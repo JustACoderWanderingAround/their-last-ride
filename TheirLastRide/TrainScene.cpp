@@ -42,7 +42,7 @@ int wait = 0;
 int tmSwingIt = 0;
 int numAlive = 0;
 int numDead = 0;
-int correctlyProcessed;
+int correctlyProcessed = 0;
 
 std::string _dT;
 
@@ -619,10 +619,12 @@ bool TrainScene::loadDeathStatus()
             for (auto k : j->getSeats()) {
                 if (k != nullptr && k->getPersonName() == i) {
                     static_cast<InteractablePerson*>(k)->setPredeterminedVerdict(livingStatus[k->getPersonName()]);
-                    if (livingStatus[k->getPersonName()]) {
-                        _mainRide->setNumAlive(_mainRide->getNumAlive() + 1);
-                    }
-                    else
+                }
+                if (k != nullptr && livingStatus[k->getPersonName()]) {
+                    _mainRide->setNumAlive(_mainRide->getNumAlive() + 1);
+                }
+                else {
+                    if (k!= nullptr)
                         _mainRide->setNumDead(_mainRide->getNumDead() + 1);
                 }
             }
@@ -1091,10 +1093,10 @@ void TrainScene::playerInteraction(int option)
     }
     if ((_dT == currentNode->npcText && currentNode->results.size() == 0) || ticketReturn) {
         if (person->getTicket()->getClippedState() && showTicket) {
-            if (_mainPlayer->compareToBook(person)) {
+            /*if (_mainPlayer->compareToBook(person)) {
                 correctlyProcessed += 1;
                 std::cout << correctlyProcessed + " passengers processed" << std::endl;
-            }
+            }*/
             if (!ticketStamp) {
                 numDead += 1;
             }
