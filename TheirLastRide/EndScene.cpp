@@ -28,6 +28,9 @@ void EndScene::Init()
     _objList[OBJECT_END_REAPER_NOTE]->setToAlpha(0); //make it transparent
     _objList[OBJECT_END_CHEQUE]->setToAlpha(0);//make it transparent
 
+    Texture rNote;
+    Texture nNote;
+
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND5]);
     _renderQueue.push_back(_objList[OBJECT_END_REAPER_NOTE]);
@@ -46,15 +49,23 @@ void EndScene::Init()
 
     if (numWrong < 5)
     {
-        _objList[OBJECT_END_NORMAL_NOTE]->getTexture().loadImage("Sprites//LoadingScreen//goodNormalNote.png");
-        _objList[OBJECT_END_REAPER_NOTE]->getTexture().loadImage("Sprites//LoadingScreen//goodReaperNote.png");
+        rNote.loadImage("Sprites\\LoadingScreen\\goodReaperNote.png");
+        nNote.loadImage("Sprites\\LoadingScreen\\goodNormalNote.png");
+        rNote.setBlendMode(SDL_BLENDMODE_BLEND);
+        nNote.setBlendMode(SDL_BLENDMODE_BLEND);
+        _objList[OBJECT_END_NORMAL_NOTE]->setTexture(rNote);
+        _objList[OBJECT_END_REAPER_NOTE]->setTexture(nNote);
         _renderQueue.push_back(_objList[OBJECT_END_CHEQUE]);
     }
 
     if (numWrong > 12)
     {
-        _objList[OBJECT_END_NORMAL_NOTE]->getTexture().loadImage("Sprites//LoadingScreen//badNormalNote.png");
-        _objList[OBJECT_END_REAPER_NOTE]->getTexture().loadImage("Sprites//LoadingScreen//badReaperNote.png");
+        rNote.loadImage("Sprites\\LoadingScreen\\badReaperNote.png");
+        nNote.loadImage("Sprites\\LoadingScreen\\badNormalNote.png");
+        rNote.setBlendMode(SDL_BLENDMODE_BLEND);
+        nNote.setBlendMode(SDL_BLENDMODE_BLEND);
+        _objList[OBJECT_END_NORMAL_NOTE]->setTexture(rNote);
+        _objList[OBJECT_END_REAPER_NOTE]->setTexture(nNote);
     }
 
 }
