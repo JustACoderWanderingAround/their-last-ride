@@ -1,0 +1,50 @@
+[
+		{
+			"playerText": "TM: Ticket please ?", 
+			"npcText": "",
+			"results": [
+					1
+			],
+			"end": 0
+		},   
+		{
+			"playerText": "",
+			"npcText": "She is a muscular young woman, with ash and soot smeared across her face. She seems to be  frantically looking around the cabin for something... or someone ?",
+			"results": [
+				2, 3, 4
+			],
+			"end": 0
+		},
+		{
+			"playerText": "Are you looking for something ?",
+			"npcText": "Tammy: Have you seen a little boy Timmy ? His hair is like mine, around 7-8.", 
+			"results": [
+				5, 6
+			],
+			"end": "good"
+		},
+		{
+			"playerText": "What brings you here ?",
+			"npcText": "Tammy: I don't know. One minute a bomb is falling on he barn and next, I'm here.", 
+			"results": [],
+			"end": 0
+		},
+		{
+			"playerText": "Where are you headed to ?",
+			"npcText": "Tammy: No clue. One minute a bomb is falling on the barn and next, I'm here.", 
+			"results": [],
+			"end": 0
+		},
+		{
+			"playerText": "I think so.",
+			"npcText": "Tammy: Really ? Can yoy tell him I'm looking for him. Thanks.", 
+			"results": [],
+			"end": 0
+		},
+		{
+			"playerText": "No. I'm sorry but I'll let you know if I do.",
+			"npcText": "Tammy: Alright. Thanks.", 
+			"results": [],
+			"end": 0
+		}
+]
