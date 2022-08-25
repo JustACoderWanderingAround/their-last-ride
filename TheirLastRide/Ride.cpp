@@ -6,6 +6,7 @@ using json = nlohmann::json;
 
 
 Ride::Ride()
+	:_numAlive(0), _numDead(0)
 {
 	_interactableNumber = 1;
 	_nonInteractableNumber = 1;

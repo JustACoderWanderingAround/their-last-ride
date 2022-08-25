@@ -3,7 +3,7 @@
     "start": "NOSTON CTRL",
     "stops": ["NOSTON EAST", "EWING BRIDGE"],
     "invalid": [ "BENTON CTRL", "LLYN L LVL", "W ARCH" ],
-    "people": [ "RowD", "George" ],
+    "people": [ "George" ],
     "carriageNum" : 2,
     "nonInteractableNum" : 4,
     "date" : 5

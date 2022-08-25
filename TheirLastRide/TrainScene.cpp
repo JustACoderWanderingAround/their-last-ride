@@ -619,13 +619,12 @@ bool TrainScene::loadDeathStatus()
             for (auto k : j->getSeats()) {
                 if (k != nullptr && k->getPersonName() == i) {
                     static_cast<InteractablePerson*>(k)->setPredeterminedVerdict(livingStatus[k->getPersonName()]);
-                }
-                if (k != nullptr && livingStatus[k->getPersonName()]) {
-                    _mainRide->setNumAlive(_mainRide->getNumAlive() + 1);
-                }
-                else {
-                    if (k!= nullptr)
+                    if (livingStatus[k->getPersonName()]) {
+                        _mainRide->setNumAlive(_mainRide->getNumAlive() + 1);
+                    }
+                    else {
                         _mainRide->setNumDead(_mainRide->getNumDead() + 1);
+                    }
                 }
             }
         }
@@ -1097,7 +1096,7 @@ void TrainScene::playerInteraction(int option)
                 correctlyProcessed += 1;
                 std::cout << correctlyProcessed + " passengers processed" << std::endl;
             }*/
-            if (!ticketStamp) {
+            if (ticketStamp) {
                 numDead += 1;
             }
             else
