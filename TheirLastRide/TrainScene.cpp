@@ -114,7 +114,8 @@ void TrainScene::renderCabins()
             if (column == 2) {
                 RenderAtCoords(_objList[OBJECT_PLAYER]);
                 RenderAtCoords(_objList[OBJECT_CHAIR_ROW]);
-                RenderAtCoords(_objList[OBJECT_DATE]);
+                RenderAtCoords(_objList[OBJECT_TIME_BOX]);
+                //RenderAtCoords(_objList[OBJECT_DATE]);
             }
             for (int row = 0; row < 6; row++)
             {
@@ -219,7 +220,8 @@ void TrainScene::Init()
     _objList[OBJECT_RAILPASS_NAME] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 244 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS_EXPIRY] = ObjectBuilder::CreateTextObject({ "aaaaaaaa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 280 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_HEAD] = ObjectBuilder::CreateObject("Sprites//Passengers//SashaHead.png", { 165, 435 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ "24 August", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Black }, { 1050, 50 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TIME_BOX] = ObjectBuilder::CreateObject("Sprites//UI//timeBox.png", { 950, -10 }, SDL_BLENDMODE_BLEND);
+    //_objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ "24 August", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Black }, { 1050, 50 }, SDL_BLENDMODE_BLEND);
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
@@ -402,6 +404,7 @@ void TrainScene::Update(double dt)
         _currentCabin = (moveDirectionRight) ? _currentCabin + 1 : _currentCabin - 1;
         playerX = (moveDirectionRight) ? 30 : 980;
         _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
+        _objList[OBJECT_PLAYER]->setTexture((moveDirectionRight) ? *(_tmAnimList[TM_ANIM_STAND_R]) : *(_tmAnimList[TM_ANIM_STAND_L]));
         _currentAnimState = FADE_ANIM::FADE_ANIM_END;
         break;
     case FADE_ANIM_END:
@@ -983,7 +986,7 @@ void TrainScene::playerInteraction(int option)
     }
     if (currentNode == nullptr)
         currentNode = nodes.front();
-    if (currentNode->ending == NODE_ENDING::NODE_GOOD_START_END) {
+    if (currentNode->ending == NODE_ENDING::NODE_GOOD_END) {
         if (showTicket == false) {
             if (person->getRailPass() != nullptr) {
                 showRailpass = true;
@@ -992,7 +995,7 @@ void TrainScene::playerInteraction(int option)
             showTools = true;
         }
     }
-    if ((_dT == currentNode->npcText && currentNode->results.size() == 0) || ticketReturn) {
+    if ((_dT == currentNode->npcText && currentNode->results.size() == 0 && person->getTicket()->getClippedState()) || ticketReturn) {
         if (person->getTicket()->getClippedState()) {
 
             if (!ticketStamp) {
@@ -1011,7 +1014,7 @@ void TrainScene::playerInteraction(int option)
         ppl.erase(std::remove(ppl.begin(), ppl.end(), person->getName()), ppl.end());
         _mainRide->setInteractablePeople(ppl);
         if (currentNode->ending == NODE_ENDING::NODE_BAD_END) {
-            //play an animation.
+            std::cout << "Bad end\n";
         }
         person->getCurrentNode() = nullptr;
         _interactingPerson = nullptr;

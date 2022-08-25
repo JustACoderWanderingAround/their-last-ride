@@ -120,11 +120,7 @@ void Application::Run()
     _rides[RIDE_1]->setNumDead(3);
     _rides[RIDE_1]->setNumAlive(1);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    auto menuScene = static_cast<MenuScene*>(_scenes[SCENE_MAINMENU]);
-    _mainScene = menuScene;//CHANGE TRAIN TO MAINMENU
- //   auto menuScene = static_cast<MenuScene*>(_scenes[SCENE_MAINMENU]);
-    auto overView = static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW]);
-    _mainScene = menuScene;//CHANGE TRAIN TO MAINMENU
+    _mainScene = trainScene;//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
