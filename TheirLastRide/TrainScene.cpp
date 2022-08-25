@@ -394,6 +394,7 @@ void TrainScene::Update(double dt)
         _currentCabin = (moveDirectionRight) ? _currentCabin + 1 : _currentCabin - 1;
         playerX = (moveDirectionRight) ? 30 : 980;
         _objList[OBJECT_PLAYER]->setCoords({ playerX, playerY });
+        _objList[OBJECT_PLAYER]->setTexture((moveDirectionRight) ? *(_tmAnimList[TM_ANIM_STAND_R]) : *(_tmAnimList[TM_ANIM_STAND_L]));
         _currentAnimState = FADE_ANIM::FADE_ANIM_END;
         break;
     case FADE_ANIM_END:
@@ -973,7 +974,7 @@ void TrainScene::playerInteraction(int option)
     }
     if (currentNode == nullptr)
         currentNode = nodes.front();
-    if (currentNode->ending == NODE_ENDING::NODE_GOOD_START_END) {
+    if (currentNode->ending == NODE_ENDING::NODE_GOOD_END) {
         if (showTicket == false) {
             if (person->getRailPass() != nullptr) {
                 showRailpass = true;
@@ -982,7 +983,7 @@ void TrainScene::playerInteraction(int option)
             showTools = true;
         }
     }
-    if ((_dT == currentNode->npcText && currentNode->results.size() == 0) || ticketReturn) {
+    if ((_dT == currentNode->npcText && currentNode->results.size() == 0 && person->getTicket()->getClippedState()) || ticketReturn) {
         if (person->getTicket()->getClippedState()) {
             if (person->verdictChecker(ticketStamp) == false)
             {
@@ -993,7 +994,7 @@ void TrainScene::playerInteraction(int option)
         ppl.erase(std::remove(ppl.begin(), ppl.end(), person->getName()), ppl.end());
         _mainRide->setInteractablePeople(ppl);
         if (currentNode->ending == NODE_ENDING::NODE_BAD_END) {
-            //play an animation.
+            std::cout << "Bad end\n";
         }
         person->getCurrentNode() = nullptr;
         _interactingPerson = nullptr;

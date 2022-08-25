@@ -16,7 +16,7 @@
 			"end": 0
 		},
 		{
-			"playerText": "",
+			"playerText": "Bruh momento numero dos",
 			"npcText": "He reeks of alchohol and you notice reddish stains down his front",
 			"results": [
 				3, 4, 5
@@ -62,8 +62,8 @@
 		{
 			"playerText": "Sounds like a rough time. Tell you what, if you show me your ticket I can get you a drink from the back.",
 			"npcText": "You got yourself a deal",
-			"results": [0],
-			"end": "goodstart"
+			"results": [],
+			"end": "good"
 		},
 		{
 			"playerText": "I still need to see that ticket",
@@ -92,8 +92,8 @@
 		{
 			"playerText": "Sounds like a rough time. Tell you what, if you show me your ticket I can get you a drink from the back.",
 			"npcText": "Fine.",
-			"results": [1],
-			"end": "goodstart"
+			"results": [],
+			"end": "good"
 		}
 	
 ]
