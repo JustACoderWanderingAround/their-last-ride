@@ -63,5 +63,6 @@ public:
 	void updateCurrentRide();
 	std::vector<SDL_Event>& GetFrameEvents();
 	void changeScene(Scene* scene);
+	void endGame();
 };
 

@@ -779,18 +779,22 @@ void TrainScene::HandleInput()
             if (isInteracting)
             {
                
-                
-                if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
-                {
-                    ticketFront = true;
-                    break;
-                }
-                else {
-                    if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
+                if (static_cast<InteractablePerson*>(_interactingPerson)->getisRailpass()) {
+                    if (!ticketFront && _objList[OBJECT_TICKET]->getCollider()->isColliding(_mouseCollider))
                     {
-                        ticketFront = false;
+                        ticketFront = true;
                         break;
                     }
+                    else {
+                        if (ticketFront && _objList[OBJECT_RAILPASS]->getCollider()->isColliding(_mouseCollider))
+                        {
+                            ticketFront = false;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    ticketFront = true;
                 }
                 
 
@@ -1247,6 +1251,7 @@ void TrainScene::playerInteraction(int option)
         if (currentNode->ending != NODE_ENDING::NODE_BAD_END) {
             _interactingPerson = nullptr;
         }
+        _objList[OBJECT_TICKET]->setTexture(*_passTextureList[TICKET]);
         isInteracting = false;
         return;
     }
