@@ -304,6 +304,7 @@ void TrainScene::Init()
     loadDeathStatus();
     loadNonInteractivePeople();
     numAlive = 0;
+    numDead = 0;
 }
 /// <summary>
 /// Called on scene exit. Used to prevent memory leaks.
@@ -536,7 +537,11 @@ bool TrainScene::loadDeathStatus()
             for (auto k : j->getSeats()) {
                 if (k != nullptr && k->getPersonName() == i) {
                     static_cast<InteractablePerson*>(k)->setPredeterminedVerdict(livingStatus[k->getPersonName()]);
-                   
+                    if (livingStatus[k->getPersonName()]) {
+                        _mainRide->setNumAlive(_mainRide->getNumAlive() + 1);
+                    }
+                    else
+                        _mainRide->setNumDead(_mainRide->getNumDead() + 1);
                 }
             }
         }
