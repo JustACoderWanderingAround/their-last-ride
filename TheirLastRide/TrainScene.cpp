@@ -225,7 +225,7 @@ void TrainScene::Init()
     _objList[OBJECT_RAILPASS_EXPIRY] = ObjectBuilder::CreateTextObject({ "aaaaaaaa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 280 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_HEAD] = ObjectBuilder::CreateObject("Sprites//Passengers//SashaHead.png", { 165, 435 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TIME_BOX] = ObjectBuilder::CreateObject("Sprites//UI//timeBox.png", { 950, -10 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ std::to_string(_mainRide->getDate()) + " June", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White}, {1050, 37}, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ std::to_string(_mainRide->getDate()) + " June", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White}, {1035, 37}, SDL_BLENDMODE_BLEND);
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
@@ -1264,6 +1264,7 @@ void TrainScene::playerInteraction(int option)
         WriteText({ currentNode->npcText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK] }, { 480, 500 });
         for (int i = 0; i < currentNode->results.size(); i++)
         {
+
             _buttons.push_back(new Button(i + 1));
             _buttons.back()->setCoords({ button_x, button_y + y_offset * i });
             _buttons.back()->getCollider() = new BoxCollider({ button_x + 600, button_y + y_offset * i + 250, 300, 60 });

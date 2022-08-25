@@ -90,10 +90,16 @@
 			"end": "bad"
 		},
 		{
-			"playerText": "Sounds like a rough time. Tell you what, if you show me your ticket I can get you a drink from the back.",
-			"npcText": "Fine.",
-			"results": [],
+			"playerText": "Sounds like a rough time. Let's make a deal.",
+			"npcText": "Fine. A drink from the back.",
+			"results": [15],
 			"end": "good"
+		},
+		{
+			"playerText": "One cold drink coming right up.",
+			"npcText": "Press anywhere after clipping to confirm.",
+			"results": [],
+			"end": 0
 		}
 	
 ]

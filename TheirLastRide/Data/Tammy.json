@@ -26,24 +26,36 @@
 		{
 			"playerText": "What brings you here ?",
 			"npcText": "Tammy: I don't know. One minute a bomb is falling on he barn and next, I'm here.", 
-			"results": [],
+			"results": [7],
 			"end": 0
 		},
 		{
 			"playerText": "Where are you headed to ?",
 			"npcText": "Tammy: No clue. One minute a bomb is falling on the barn and next, I'm here.", 
-			"results": [],
+			"results": [7],
 			"end": 0
 		},
 		{
 			"playerText": "I think so.",
-			"npcText": "Tammy: Really ? Can yoy tell him I'm looking for him. Thanks.", 
-			"results": [],
+			"npcText": "Tammy: Really ? Can you tell him I'm looking for him. Thanks.", 
+			"results": [8],
 			"end": 0
 		},
 		{
 			"playerText": "No. I'm sorry but I'll let you know if I do.",
 			"npcText": "Tammy: Alright. Thanks.", 
+			"results": [8],
+			"end": 0
+		},
+		{
+			"playerText": "Huh?",
+			"npcText": "Press anywhere after clipping to confirm.",
+			"results": [],
+			"end": 0
+		},
+		{
+			"playerText": "Your welcome.",
+			"npcText": "Press anywhere after clipping to confirm.",
 			"results": [],
 			"end": 0
 		}

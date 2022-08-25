@@ -44,7 +44,7 @@
 		{
 			"playerText": "Isn't that kind of unethical ?",
 			"npcText": "Billy: You call this unethical ? How about the ones that started this war ? Are a couple wallets going to compare to a single one of the lives lost ?",
-			"results": [],
+			"results": [10],
 			"end": 0
 		},
 		{
@@ -56,12 +56,12 @@
 		{
 			"playerText": "What do you do to make money ?",
 			"npcText": "I guess I could tell you since I won't see you again. I sell stuff I find in the battlefield.",
-			"results": [9],
+			"results": [10],
 			"end": 0
 		},
 		{
-			"playerText": "What do you do to make money ?",
-			"npcText": "I guess I could tell you since I won't see you again. i sell stuff I find in the battlefield.",
+			"playerText": "Thanks, have a nice day.",
+			"npcText": "Press anywhere after clipping to confirm.",
 			"results": [],
 			"end": 0
 		}
