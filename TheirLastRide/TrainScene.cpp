@@ -313,7 +313,7 @@ void TrainScene::Init()
     _objList[OBJECT_STAMP_MARK] = ObjectBuilder::CreateObject("Sprites//Items//deathStampMark.png", _objList[OBJECT_TICKET]->getCoords(), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER] = ObjectBuilder::CreateObject("Sprites//Items//punchOpen.png", {150, 20}, new BoxCollider({ 150 + 50, 20 + 50, 150, 150 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PUNCHER]->setToScale(0.4);
-    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 890, 200 }, new BoxCollider({850 + 85, 90 + 85, 342, 85 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.png", { 0, 200 }, new BoxCollider({850 + 85, 90 + 85, 342, 85 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RETURN]->setToScale(0.75);
     _objList[OBJECT_ANNOUCEMENT] = ObjectBuilder::CreateTextObject({ "Press anywhere to whistle!", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2 - 150, 0 }, SDL_BLENDMODE_BLEND);
     // Render queue
