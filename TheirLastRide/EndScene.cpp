@@ -23,8 +23,10 @@ void EndScene::Init()
     _objList[OBJECT_BACKGROUND5] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
     _objList[OBJECT_END_NORMAL_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//neutralNormalNote.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_END_REAPER_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//neutralReaperNote.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_END_CHEQUE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//goodCheque.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_END_NORMAL_NOTE]->setToAlpha(0); //make it transparent
     _objList[OBJECT_END_REAPER_NOTE]->setToAlpha(0); //make it transparent
+    _objList[OBJECT_END_CHEQUE]->setToAlpha(0);//make it transparent
 
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND5]);
@@ -46,6 +48,7 @@ void EndScene::Init()
     {
         _objList[OBJECT_END_NORMAL_NOTE]->getTexture().loadImage("Sprites//LoadingScreen//goodNormalNote.png");
         _objList[OBJECT_END_REAPER_NOTE]->getTexture().loadImage("Sprites//LoadingScreen//goodReaperNote.png");
+        _renderQueue.push_back(_objList[OBJECT_END_CHEQUE]);
     }
 
     if (numWrong > 12)

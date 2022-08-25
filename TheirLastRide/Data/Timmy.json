@@ -55,8 +55,8 @@
 		},
 		{
 			"playerText": "I'll keep an eye out for her",
-			"npcText": "Thanks !", 8
-			"results": [0],
+			"npcText": "Thanks !", 
+			"results": [11],
 			"end": 0
 		},
 		{
@@ -69,6 +69,12 @@
 			"playerText": "Where's the soot from ?' ?",
 			"npcText": "I got caught in a barn fire after the bombs fell. I'm alright now though ! This train is very nice", 
 			"results": [6],
+			"end": 0
+		}
+		{
+			"playerText": "",
+			"npcText": "Press anywhere after clipping to confirm.", 
+			"results": [],
 			"end": 0
 		}
 	

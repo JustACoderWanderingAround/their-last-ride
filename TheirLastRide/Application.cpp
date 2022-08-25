@@ -122,7 +122,7 @@ void Application::Run()
     //_rides[RIDE_1]->setNumDead(3);
     //ides[RIDE_1]->setNumAlive(1);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    _mainScene = _scenes[SCENE_MAINMENU];//CHANGE TRAIN TO MAINMENU
+    _mainScene = _scenes[SCENE_END];//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
