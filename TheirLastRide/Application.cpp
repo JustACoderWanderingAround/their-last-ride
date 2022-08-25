@@ -11,6 +11,8 @@
 #include "Player.h"
 #include <fstream>
 
+bool gameRunning = false;
+
 void to_json(json& j, const Ride& n) {
     j = json{ {"start", n.getStart() }, {"stops", n.getStops() }, {"invalid", n.getInvalidStops() }, {"people", n.getInteractablePeople() }, {"carriageNum", n.getCarriageNum() } , {"nonInteractableNum", n.getNonInteractable() } , {"date", n.getDate() }};
 }
@@ -117,12 +119,13 @@ Application::Application()
 /// </summary>
 void Application::Run()
 {
+    gameRunning = true;
     float time_between_frames = 1 / _targetFps;
     Player* player1 = new Player(_rides[RIDE_1]->getStops());
     //_rides[RIDE_1]->setNumDead(3);
     //ides[RIDE_1]->setNumAlive(1);
     auto trainScene = static_cast<TrainScene*>(_scenes[SCENE_TRAIN]);
-    _mainScene = _scenes[SCENE_END];//CHANGE TRAIN TO MAINMENU
+    _mainScene = _scenes[SCENE_TRAIN];//CHANGE TRAIN TO MAINMENU
     trainScene->setRide(_rides[_currentRide]);
     trainScene->setPlayer(player1);
     for (int i = 0; i < NUM_SCENE; i++)
@@ -133,7 +136,7 @@ void Application::Run()
         _scenes[i]->Init();
     }
     _timer.startTimer();
-    while (!IsKeyPressed(VK_ESCAPE)) {
+    while (!IsKeyPressed(VK_ESCAPE) && gameRunning) {
         while (SDL_PollEvent(&_event) != 0)
         {
             GetFrameEvents().push_back(_event);
@@ -286,3 +289,10 @@ void Application::changeScene(Scene* scene)
     _mainScene = scene;
     GetFrameEvents().clear();
 }
+
+void Application::endGame()
+{
+    gameRunning = false;
+}
+
+

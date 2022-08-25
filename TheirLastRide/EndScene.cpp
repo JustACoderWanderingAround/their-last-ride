@@ -9,6 +9,7 @@
 
 int iterator5 = 0;
 int frame_count5 = 0;
+bool endgame = false;
 
 EndScene::EndScene()
 {
@@ -17,6 +18,7 @@ EndScene::EndScene()
 
 void EndScene::Init()
 {
+    endgame = false;
     sceneClicks = 0;
     _objList[OBJECT_END_BLACK_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_END_BLACK_BACKGROUND]->setToAlpha(0);
@@ -93,6 +95,8 @@ void EndScene::Update(double dt)
         }
         else {
             _fadeQueue.erase(_fadeQueue.begin());
+            if (endgame)
+                Application::GetInstance()->endGame();
             iterator5 = 0;
         }
     }
@@ -116,6 +120,7 @@ void EndScene::HandleInput()
             if (event.button.button == SDL_BUTTON_LEFT) {
                 if (sceneClicks == 2) {
                     _fadeQueue.push_back(_objList[OBJECT_END_BLACK_BACKGROUND]);
+                    endgame = true;
                     return;
                 }
                 _fadeQueue.push_back(_objList[sceneClicks + 1]);
