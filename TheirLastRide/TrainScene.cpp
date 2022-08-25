@@ -193,14 +193,14 @@ void TrainScene::Init()
 
     _objList[OBJECT_BLACK_SCREEN] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_BLACK_SCREEN]->setToAlpha(blackScreenAlpha);
-    _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", {0, 0}, SDL_BLENDMODE_NONE);
-    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (playerX) + 700 / 3, (playerY) + 300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_BACKGROUND1] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
+    _objList[OBJECT_PLAYER] = ObjectBuilder::CreateObject("Sprites//TicketMaster//tmLeftStand.png", { 700, 300 }, new BoxCollider({ (playerX)+700 / 3, (playerY)+300 / 4, 100, 100 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_PLAYER]->setToScale(1.2);
     _objList[OBJECT_TEXT] = ObjectBuilder::CreateTextObject({ _displayText, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2, 720 / 2 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_CHAIR_ROW] = ObjectBuilder::CreateObject("Sprites//chairRow.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TEXTBOX] = ObjectBuilder::CreateObject("Sprites//UI//dialogueBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_NOTEBOOK_PAGE] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookPage1Txt.png", { 0, 200 }, SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_NOTEBOOK] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookClosed.png", { 0, 600 }, new BoxCollider({0, 600, 150, 300}), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_NOTEBOOK] = ObjectBuilder::CreateObject("Sprites//Items//notebook//notebookClosed.png", { 0, 600 }, new BoxCollider({ 0, 600, 150, 300 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_NOTEBOOK]->setToScale(0.5);
     _objList[OBJECT_RETURN] = ObjectBuilder::CreateObject("Sprites//UI//returnTicketBox.PNG", { 930, 90 }, new BoxCollider({ 930 + 85, 90 + 85, 342, 85 }), SDL_BLENDMODE_BLEND);
     //_objList[OBJECT_CHOICE] = ObjectBuilder::CreateObject("Sprites//UI//optionBox.PNG", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -208,9 +208,9 @@ void TrainScene::Init()
     //_objList[OBJECT_SASHA]
   /*  _objList[OBJECT_GEORGE] = ObjectBuilder::CreateObject("Sprites//Passengers//George.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_SASHA] = ObjectBuilder::CreateObject("Sprites//Passengers//Sasha.png", { 0, 0 }, SDL_BLENDMODE_BLEND);*/
-    _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, new BoxCollider({414, 120, 452, 272}), SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET] = ObjectBuilder::CreateObject("Sprites//Items//ticket.png", { 384, 0 }, new BoxCollider({ 414, 120, 452, 272 }), SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS] = ObjectBuilder::CreateObject("Sprites//Items//adultPass.png", { 420, 36 }, new BoxCollider({ 456, 156, 452, 272 }), SDL_BLENDMODE_BLEND);
-    _objList[OBJECT_TICKET_FROM] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey}, {600, 192}, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_TICKET_FROM] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 192 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_TO] = ObjectBuilder::CreateTextObject({ "owa owa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 228 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_DOI] = ObjectBuilder::CreateTextObject({ "pain", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Grey }, { 600, 264 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_RAILPASS_NAME] = ObjectBuilder::CreateTextObject({ "girl help", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 244 }, SDL_BLENDMODE_BLEND);
@@ -239,6 +239,50 @@ void TrainScene::Init()
     {
         _tmAnimList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
         _tmAnimList[i]->setScale(1.2);
+    }
+
+
+    for (int i = 0; i < NUM_TM_SWITCH; i++)
+    {
+        _tmSwitchList[i] = new Texture();
+    }
+
+    _tmSwitchList[TM_SWITCH_1]->loadImage("Sprites//TicketMaster//tmSwitch1.png");
+    _tmSwitchList[TM_SWITCH_2]->loadImage("Sprites//TicketMaster//tmSwitch2.png");
+    _tmSwitchList[TM_SWITCH_3]->loadImage("Sprites//TicketMaster//tmSwitch3.png");
+    _tmSwitchList[TM_SWITCH_4]->loadImage("Sprites//TicketMaster//tmSwitch4.png");
+    _tmSwitchList[TM_SWITCH_5]->loadImage("Sprites//TicketMaster//tmSwitch5.png");
+    _tmSwitchList[TM_SWITCH_6]->loadImage("Sprites//TicketMaster//tmSwitch6.png");
+    _tmSwitchList[TM_SWITCH_7]->loadImage("Sprites//TicketMaster//tmSwitch7.png");
+    _tmSwitchList[TM_SWITCH_8]->loadImage("Sprites//TicketMaster//tmSwitch8.png");
+
+    for (int i = 0; i < NUM_TM_SWITCH; i++)
+    {
+        _tmSwitchList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
+        _tmSwitchList[i]->setScale(1.2);
+    }
+
+    for (int i = 0; i < NUM_TM_SWING; i++)
+    {
+        _tmSwingList[i] = new Texture();
+    }
+
+    _tmSwingList[TM_SWING_1]->loadImage("Sprites//TicketMaster//tmSwitch1.png");
+    _tmSwingList[TM_SWING_2]->loadImage("Sprites//TicketMaster//tmSwitch2.png");
+    _tmSwingList[TM_SWING_3]->loadImage("Sprites//TicketMaster//tmSwitch3.png");
+    _tmSwingList[TM_SWING_4]->loadImage("Sprites//TicketMaster//tmSwitch4.png");
+    _tmSwingList[TM_SWING_5]->loadImage("Sprites//TicketMaster//tmSwitch5.png");
+    _tmSwingList[TM_SWING_6]->loadImage("Sprites//TicketMaster//tmSwitch6.png");
+    _tmSwingList[TM_SWING_7]->loadImage("Sprites//TicketMaster//tmSwitch7.png");
+    _tmSwingList[TM_SWING_8]->loadImage("Sprites//TicketMaster//tmSwitch8.png");
+    _tmSwingList[TM_SWING_9]->loadImage("Sprites//TicketMaster//tmSwitch9.png");
+    _tmSwingList[TM_SWING_10]->loadImage("Sprites//TicketMaster//tmSwitch10.png");
+    _tmSwingList[TM_SWING_11]->loadImage("Sprites//TicketMaster//tmSwitch11.png");
+
+    for (int i = 0; i < NUM_TM_SWING; i++)
+    {
+        _tmSwingList[i]->setBlendMode(SDL_BLENDMODE_BLEND);
+        _tmSwingList[i]->setScale(1.2);
     }
 
     for (int j = 0; j < NUM_NOTEBOOK; j++) {
