@@ -29,6 +29,7 @@ void MenuScene::Init()
     _objList[OBJECT_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//trainCarBG.png", { 0, 0 }, SDL_BLENDMODE_NONE);
     _objList[OBJECT_TITLE_CARD] = ObjectBuilder::CreateObject("Sprites//TitleScreen//titleCard.png", { 50, 50 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TITLE_CARD]->setToScale(0.5);
+    _objList[OBJECT_CONTINUE_TEXT] = ObjectBuilder::CreateTextObject({ "Click anywhere to continue", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Black }, {40, 610}, SDL_BLENDMODE_BLEND);
 
     for (int i = 0; i < NUM_BG_ANIM1; i++)
     {
@@ -46,6 +47,7 @@ void MenuScene::Init()
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND]);
     _renderQueue.push_back(_objList[OBJECT_TITLE_CARD]);
+    _renderQueue.push_back(_objList[OBJECT_CONTINUE_TEXT]);
     _renderQueue.push_back(_objList[OBJECT_MAIN_BLACK_BACKGROUND]);
 }
 
