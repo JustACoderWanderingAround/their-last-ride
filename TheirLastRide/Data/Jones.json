@@ -16,7 +16,7 @@
 		"end": 0
 	},
 	{
-		"playerText": "",
+		"playerText": "Thanks",
 		"npcText": "He holds a lit cigar to his mouth, eyes shifting about the cabin. With every exhale, his face is engulfed in thunderheads of tobacco smoke.",
 		"results": [
 			3,
@@ -82,12 +82,18 @@
 	{
 		"playerText": "Sorry, Sir. I will take my leave.",
 		"npcText": "Jones: Damn straight.",
-		"results": [],
+		"results": [14],
 		"end": 0
 	},
 	{
 		"playerText": "Sure. You do you, I suppose.",
-		"npcText": "",
+		"npcText": "...",
+		"results": [14],
+		"end": 0
+	},
+	{
+		"playerText": "Have a good day.",
+		"npcText": "Press anywhere after clipping to confirm.",
 		"results": [],
 		"end": 0
 	}

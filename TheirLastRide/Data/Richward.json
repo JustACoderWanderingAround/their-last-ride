@@ -42,8 +42,8 @@
 			"end": 0
 		},
 		{
-			"playerText": "",
-			"npcText": "*grunts*",
+			"playerText": "Have a nice day.",
+			"npcText": "Press anywhere after clipping to confirm.",
 			"results": [],
 			"end": 0
 		}

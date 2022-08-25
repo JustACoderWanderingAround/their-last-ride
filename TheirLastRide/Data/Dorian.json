@@ -86,30 +86,36 @@
 			"npcText": "...",
 			"results": [14],
 			"end": 0
-		}
+		},
 		{
 			"playerText": "Well would you like to talk about it ?",
 			"npcText": "...no",
 			"results": [15],
 			"end": 0
-		}
+		},
 		{
 			"playerText": "Aw come on. Let it out dude. I don't have all day.",
 			"npcText": "...Just take it and leave me alone",
-			"results": [],
+			"results": [18],
 			"end": "good"
-		}
+		},
 		{
 			"playerText": "Sir the train can't leave until I check your ticket",
 			"npcText": "...",
 			"results": [17],
 			"end": 0
-		}
+		},
 		{
 			"playerText": "If you don't comply I will have to use force. Your ticket please. Else leave the train.",
 			"npcText": "...make me",
 			"results": [],
 			"end": "bad"
+		},
+		{
+			"playerText": "Thank you.",
+			"npcText": "Press anywhere after clipping to confirm.",
+			"results": [],
+			"end": 0
 		}
 	
 ]

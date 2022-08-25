@@ -64,23 +64,29 @@
 			"npcText": "I wish I could have saved more people. At least I don't have any blood on my hands.",
 			"results": [10],
 			"end": 0
-		}
+		},
 		{
 			"playerText": "We all wish we could have done more, but we rarely think about what we have done",
 			"npcText": "I guess you're right.",
-			"results": [],
+			"results": [13],
 			"end": 0
-		}
+		},
 		{
 			"playerText": "So what happened ?",
 			"npcText": "Stray bullet hit me while I was trying to retrieve someone.",
 			"results": [12],
 			"end": 0
-		}
+		},
 		{
 			"playerText": "Why didn't you wait for backup ?",
 			"npcText": "He would have been dead by then. I couldn't let that happen. Though he probably died anyways, seeing that i'm here.",
 			"results": [9],
+			"end": 0
+		},
+		{
+			"playerText": "Thanks.",
+			"npcText": "Press anywhere after clipping to confirm.",
+			"results": [],
 			"end": 0
 		}
 	
