@@ -1,0 +1,88 @@
+[
+		{
+			"playerText": "TM: Ticket please ?",
+			"npcText": "",
+			"results": [
+					1
+			],
+			"end": 0
+		},   
+		{
+			"playerText": "",
+			"npcText": "He rests his head against the back of the seat. He wears a small white armband with a red cross with a red cross. There is a growing red stain at the front of the uniform.",
+			"results": [
+				2, 3
+			],
+			"end": "good"
+		},
+		{
+			"playerText": "Coming from the frontlines ?",
+			"npcText": "John: It's that obvious huh ?'",
+			"results": [
+				4
+			],
+			"end": 0
+		},
+		{
+			"playerText": "*gestures at armband*",
+			"npcText": "John: Oh this ? I'm a frontline medic",
+			"results": [8, 11],
+			"end": 0
+		},
+		{
+			"playerText": "Is that blood ?",
+			"npcText": "John: What else ? It's all mine though, never likes shooting at others.",
+			"results": [5, 6],
+			"end": 0
+		},
+		{
+			"playerText": "Isn't that bad for a soldier ?",
+			"npcText": "I'm a medic, and I've never shot a single round in my life.",
+			"results": [8],
+			"end": 0
+		},
+		{
+			"playerText": "That's very noble of you.",
+			"npcText": "Yea well, nobility doesn't get you very far in war",
+			"results": [8],
+			"end": 0
+		},
+		{
+			"playerText": "What sorta stuff ?",
+			"npcText": "Wallets, watches, rings... anything of value really.",
+			"results": [5],
+			"end": 0
+		},
+		{
+			"playerText": "Why did you choose to be a medic ?",
+			"npcText": "My brother died in the war because there weren't enough medics. I didn't want anyone to go through what I did.",
+			"results": [9],
+			"end": 0
+		},
+		{
+			"playerText": "Any regrets ?",
+			"npcText": "I wish I could have saved more people. At least I don't have any blood on my hands.",
+			"results": [10],
+			"end": 0
+		}
+		{
+			"playerText": "We all wish we could have done more, but we rarely think about what we have done",
+			"npcText": "I guess you're right.",
+			"results": [],
+			"end": 0
+		}
+		{
+			"playerText": "So what happened ?",
+			"npcText": "Stray bullet hit me while I was trying to retrieve someone.",
+			"results": [12],
+			"end": 0
+		}
+		{
+			"playerText": "Why didn't you wait for backup ?",
+			"npcText": "He would have been dead by then. I couldn't let that happen. Though he probably died anyways, seeing that i'm here.",
+			"results": [9],
+			"end": 0
+		}
+	
+	
+]
