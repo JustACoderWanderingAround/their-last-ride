@@ -39,6 +39,7 @@ enum OBJECT {
 	OBJECT_ANNOUCEMENT,
 	OBJECT_HEAD,
 	OBJECT_TIME_BOX,
+	OBJECT_DATE,
 	NUM_OBJECT
 };
 
@@ -171,6 +172,6 @@ public:
 	Ride* getMainRide();
 	void setMainRide(Ride* ride);
 	void fade(bool dir);
-	void scythe
+	//void scythe;
 };
 
