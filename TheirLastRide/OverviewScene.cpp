@@ -19,13 +19,14 @@ void OverviewScene::setActual(int actA, int actD)
     actualDead = actD;
 }
 OverviewScene::OverviewScene()
-    : rideNumber(1)
+    : rideNumber(-1)
 {
 
 }
 
 void OverviewScene::Init()
 {
+    rideNumber++;
     iterator3 = 0;
     iterator4 = 255;
     sceneClicks = 0;
@@ -33,6 +34,7 @@ void OverviewScene::Init()
     changeToScene = false;
     changeToEnd = false;
     _objList[OBJECT_OVERVIEW_BLACK_SCREEN] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_OVERVIEW_NEWS] = ObjectBuilder::CreateObject("Sprites//blackScreen.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
 	_objList[OBJECT_OVERVIEW_BACKGROUND] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionBG.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
 	_objList[OBJECT_OVERVIEW_BLANK_NORMAL_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionNormalNoteBlank.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_OVERVIEW_NORMAL_NOTE] = ObjectBuilder::CreateObject("Sprites//LoadingScreen//transitionNormalSummary.png", { 0, 0 }, SDL_BLENDMODE_BLEND);
@@ -62,6 +64,19 @@ void OverviewScene::Init()
     _objList[OBJECT_OVERVIEW_BLACK_SCREEN]->setToAlpha(255);
     _unfadeQueue.push_back(_objList[OBJECT_OVERVIEW_BLACK_SCREEN]);
     
+    std::cout << rideNumber;
+    if (rideNumber == 2 || rideNumber == 3) {
+        Texture news;
+        news.loadImage("Sprites\\LoadingScreen\\transitionNews" + std::to_string(rideNumber - 1) + ".png");
+        news.setBlendMode(SDL_BLENDMODE_BLEND);
+        news.setAlpha(0);
+        _objList[OBJECT_OVERVIEW_NEWS]->setTexture(news);
+    }
+    else {
+        Texture news;
+        news.createBlank(1, 1);
+        _objList[OBJECT_OVERVIEW_NEWS]->setTexture(news);
+    }
 }
 
 void OverviewScene::Update(double dt)
@@ -107,7 +122,7 @@ void OverviewScene::Update(double dt)
 
 void OverviewScene::UpdateText(Ride* r)
 {
-    rideNumber++;
+    
 }
 
 void OverviewScene::Render()
@@ -140,7 +155,7 @@ void OverviewScene::HandleInput()
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             if (event.button.button == SDL_BUTTON_LEFT) {
                 if (!changeToScene) {
-                    if (sceneClicks >= _objList.size() - 2) {
+                    if (sceneClicks >= _objList.size() - (3 + (rideNumber == 1))) {
                         if (Application::GetInstance()->getCurrentRide() + 1 < Application::GetInstance()->getRides().size())
                             Application::GetInstance()->setCurrentRide(Application::GetInstance()->getCurrentRide() + 1);
 
@@ -157,7 +172,10 @@ void OverviewScene::HandleInput()
                         return;
                     }
                     /*if (sceneClicks != 0)*/
-                    _fadeQueue.push_back(_objList[sceneClicks + 1]);
+                    if (rideNumber == 1)
+                        _fadeQueue.push_back(_objList[sceneClicks + 2]);
+                    else
+                        _fadeQueue.push_back(_objList[sceneClicks + 1]);
                     /*else
                         _unfadeQueue.push_back(_objList[OBJECT_OVERVIEW_BLACK_SCREEN]);*/
                     sceneClicks++;
