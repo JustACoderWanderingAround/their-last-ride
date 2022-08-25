@@ -18,7 +18,7 @@ const int x_level = 35;
 const int y_level = 480;
 const int x_offset = 190;
 const float player_speed = 1.0f;
-const float text_type_speed = 25;
+float text_type_speed = 25;
 bool isNonInteracting = false;
 bool isTransitioning = false;
 bool isInteracting = false;
@@ -31,6 +31,7 @@ bool renderAnnoucement = false;
 bool showTicket = false;
 bool showRailpass = false;
 bool showTools = false;
+bool increasedSpeed = false;
 double iterator = 0;
 int frame_count = 0;
 int last_dir = 0;
@@ -762,6 +763,18 @@ void TrainScene::HandleInput()
 
             case SDLK_UP:
                 break;
+
+            case SDLK_x:
+                if (increasedSpeed == false)
+                {
+                    text_type_speed = 100;
+                    increasedSpeed = true;
+                }
+                else 
+                {
+                    text_type_speed = 25;
+                    increasedSpeed = false;
+                }
             }
         }
     }
