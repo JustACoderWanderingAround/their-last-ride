@@ -35,7 +35,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -153,6 +153,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="InteractablePerson.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="MenuScene.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="InteractablePerson.h" />
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="json.hpp" />

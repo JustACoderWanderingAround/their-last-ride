@@ -135,6 +135,9 @@ void OverviewScene::HandleInput()
                     if (sceneClicks >= _objList.size() - 2) {
                         if (Application::GetInstance()->getCurrentRide() + 1 <= Application::GetInstance()->getRides().size())
                             Application::GetInstance()->setCurrentRide(Application::GetInstance()->getCurrentRide() + 1);
+
+                        else
+                            Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_END]);
                         Application::GetInstance()->updateCurrentRide();
                         Application::GetInstance()->getScenes()[SCENE_TRAIN]->Init();
                         _fadeQueue.push_back(_objList[OBJECT_OVERVIEW_BLACK_SCREEN]);

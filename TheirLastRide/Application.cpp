@@ -2,6 +2,7 @@
 #include "TrainScene.h"
 #include "MenuScene.h"
 #include "IntroScene.h"
+#include "EndScene.h"
 #include "OverviewScene.h"
 #include <WinUser.h>
 #include <iostream>
@@ -108,6 +109,7 @@ Application::Application()
     _scenes[SCENE_MAINMENU] = new MenuScene();
     _scenes[SCENE_INTRO] = new IntroScene();
     _scenes[SCENE_OVERVIEW] = new OverviewScene();
+    _scenes[SCENE_END] = new EndScene();
 }
 
 /// <summary>
@@ -138,43 +140,7 @@ void Application::Run()
             if (_event.type == SDL_MOUSEMOTION) {
                 SDL_GetMouseState(&_mouse_coords.x, &_mouse_coords.y);
             }
-            //if (_event.type == SDL_MOUSEBUTTONDOWN) {
-            //    if (_event.button.button == SDL_BUTTON_LEFT) {
-            //        if (_mainScene != trainScene) {
-            //            if (_mainScene == _scenes[SCENE_MAINMENU])
-            //            {
-            //                changeScene(_scenes[SCENE_INTRO]);
-            //                GetFrameEvents().clear();
-            //                break;
-            //            }
-            //            else {
-            //                if (_mainScene == _scenes[SCENE_INTRO] && static_cast<IntroScene*>(_scenes[SCENE_INTRO])->sceneClicks > 1) {
-            //                    changeScene(trainScene);
-            //                    break;
-            //                }
-            //                else {
-            //                    if (_mainScene == _scenes[SCENE_OVERVIEW] && static_cast<OverviewScene*>(_scenes[SCENE_OVERVIEW])->sceneClicks > 5) {
-            //                        if(_currentRide + 1 <= _rides.size())
-            //                            _currentRide++;
-            //                        trainScene->setMainRide(_rides[_currentRide]);
-            //                        trainScene->Init();
-            //                        changeScene(trainScene);
-            //                        GetFrameEvents().clear();
-            //                        continue;
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        else {
-            //            if (trainScene->getMainRide()->getInteractablePeople().size() == 0) {
-            //                /*_mainScene = _scenes[SCENE_OVERVIEW];*/
-            //                changeScene(_scenes[SCENE_OVERVIEW]);
-            //                GetFrameEvents().clear();
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
+
         }
         
         //_acceptInput = !static_cast<TrainScene*>(mainScene)->writingText;
