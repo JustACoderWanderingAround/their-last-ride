@@ -1,0 +1,76 @@
+[
+		{
+			"playerText": "TM: Ticket please ?", 
+			"npcText": "",
+			"results": [
+					1
+			],
+			"end": 0
+		},   
+		{
+			"playerText": "",
+			"npcText": "He seems to be a child not over the age of eight, with ash and soot covering him from head to toe.", 
+			"results": [
+				2, 3, 4
+			],
+			"end": 0
+		},
+		{
+			"playerText": "How old are you ?",
+			"npcText": "Timmy: 7 ! I just started school this year.", 
+			"results": [
+				5
+			],
+			"end": "good"
+		},
+		{
+			"playerText": "Where are you coming from ?",
+			"npcText": "Timmy: Somersby. Down near Fort Knight.", 
+			"results": [9],
+			"end": 0
+		},
+		{
+			"playerText": "Would you like a towel to clean up ?",
+			"npcText": "Timmy: No thanks, I've tried but it won't come off.", 
+			"results": [10],
+			"end": 0
+		},
+		{
+			"playerText": "Do you like school ?",
+			"npcText": "Timmy: Well I haven't been in a while. 's alright though ! I don't like homework.", 
+			"results": [6],
+			"end": 0
+		},
+		{
+			"playerText": "Are you with your parents ?",
+			"npcText": "Timmy: I haven't seen Daddy since the army men took him away. Mummy went to look for him when we didn't get letters back ?", 
+			"results": [7],
+			"end": 0
+		},
+		{
+			"playerText": "How did you get here ?",
+			"npcText": "Dunno ! I remember hearing a whistling noise in the barn, then a big boom and I blacked out. My sister Tammy probably brought me here. Have you seen her ?", 
+			"results": [8],
+			"end": 0
+		},
+		{
+			"playerText": "I'll keep an eye out for her",
+			"npcText": "Thanks !", 8
+			"results": [0],
+			"end": 0
+		},
+		{
+			"playerText": "Somersby ?",
+			"npcText": "It's a farming area ! We used to have really big apple orchards. Most of them burned down though.", 
+			"results": [6],
+			"end": 0
+		}
+		{
+			"playerText": "Where's the soot from ?' ?",
+			"npcText": "I got caught in a barn fire after the bombs fell. I'm alright now though ! This train is very nice", 
+			"results": [6],
+			"end": 0
+		}
+	
+	
+]

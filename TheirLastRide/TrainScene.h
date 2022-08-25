@@ -57,24 +57,6 @@ enum TM_ANIM {
 	TM_ANIM_FRONT_WALK_2,
 	TM_ANIM_BACK_WALK_1,
 	TM_ANIM_BACK_WALK_2,
-	NUM_TM_ANIM
-};
-
-enum TM_SWITCH {
-
-	TM_SWITCH_1,
-	TM_SWITCH_2,
-	TM_SWITCH_3,
-	TM_SWITCH_4,
-	TM_SWITCH_5,
-	TM_SWITCH_6,
-	TM_SWITCH_7,
-	TM_SWITCH_8,
-	NUM_TM_SWITCH
-};
-
-enum TM_SWING {
-
 	TM_SWING_1,
 	TM_SWING_2,
 	TM_SWING_3,
@@ -86,7 +68,15 @@ enum TM_SWING {
 	TM_SWING_9,
 	TM_SWING_10,
 	TM_SWING_11,
-	NUM_TM_SWING
+	TM_SWITCH_1,
+	TM_SWITCH_2,
+	TM_SWITCH_3,
+	TM_SWITCH_4,
+	TM_SWITCH_5,
+	TM_SWITCH_6,
+	TM_SWITCH_7,
+	TM_SWITCH_8,
+	NUM_TM_ANIM
 };
 
 enum PASS_TXTR {
@@ -116,19 +106,26 @@ enum FADE_ANIM {
 	NUM_FADE_ANIM_STATES
 };
 
+enum TM_SWITCH_SWING_ANIM {
+	TM_SWITCH_SWING_ANIM_OFF,
+	TM_SWITCH_SWING_ANIM_START,
+	TM_SWITCH_SWING_ANIM_MIDDLE,
+	TM_SWITCH_SWING_ANIM_END,
+	NUM_TM_SWITCH_SWING_ANIM_STATES
+};
+
 class Person;
 class Scene;
 class TrainScene : public Scene
 {
 private:
-	FADE_ANIM _currentAnimState;
+	TM_SWITCH_SWING_ANIM _currentTMAnimState;
+	FADE_ANIM _currentFadeAnimState;
 	int level;
 	int _currentCabin;
 	BoxCollider* _mouseCollider;
 	std::array<Object*, NUM_OBJECT> _objList;
 	std::array<Texture*, NUM_TM_ANIM> _tmAnimList;
-	std::array<Texture*, NUM_TM_SWITCH> _tmSwitchList;
-	std::array<Texture*, NUM_TM_SWING> _tmSwingList;
 	std::array<Texture*, NUM_NOTEBOOK> _nbSprites;
 	std::array<Texture*, NUM_PASS_TXTR> _passTextureList;
 	std::vector<Button*> _buttons;
@@ -172,6 +169,5 @@ public:
 	Ride* getMainRide();
 	void setMainRide(Ride* ride);
 	void fade(bool dir);
-	//void scythe;
 };
 
