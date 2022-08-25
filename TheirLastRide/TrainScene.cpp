@@ -802,114 +802,118 @@ void TrainScene::HandleInput()
         break;
     }
 
-    if (Application::IsKeyPressed('W'))
+    if (!isInteracting)
     {
-        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y - 1 }))
+        if (Application::IsKeyPressed('W'))
         {
-            playerY -= player_speed;
-        }
-       
-        if (frame_count < 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK_WALK_1]));
-        }
-
-        if (frame_count >= 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK_WALK_2]));
-
-            if (frame_count >= 360)
+            if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y - 1 }))
             {
-                frame_count = 0;
+                playerY -= player_speed;
             }
+
+            if (frame_count < 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK_WALK_1]));
+            }
+
+            if (frame_count >= 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_BACK_WALK_2]));
+
+                if (frame_count >= 360)
+                {
+                    frame_count = 0;
+                }
+            }
+
+            last_dir = 1;
+
         }
 
-        last_dir = 1; 
+        if (Application::IsKeyPressed('A'))
+        {
+            if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x - 1, _objList[OBJECT_PLAYER]->getCoords().y }))
+            {
+                playerX -= player_speed;
+            }
+            // offSetX -= player_speed;
 
+            if (frame_count < 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_L_1]));
+            }
+
+            if (frame_count >= 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_L_2]));
+
+                if (frame_count >= 360)
+                {
+                    frame_count = 0;
+                }
+            }
+
+            if (_currentCabin - 1 >= 0 && playerX <= -45 && _currentAnimState == FADE_ANIM::FADE_ANIM_OFF)
+            {
+                /*fade(false);*/
+                _currentAnimState = FADE_ANIM::FADE_ANIM_START;
+                moveDirectionRight = false;
+                /*_currentCabin -= 1;
+                playerX = 980;*/
+                std::cout << "hehexd" << _currentCabin << std::endl;
+            }
+
+            last_dir = 2;
+        }
+
+        if (Application::IsKeyPressed('S'))
+        {
+            if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y + 1 }))
+            {
+                playerY += player_speed;
+            }
+
+            if (frame_count < 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT_WALK_1]));
+            }
+
+            if (frame_count >= 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT_WALK_2]));
+
+                if (frame_count >= 360)
+                {
+                    frame_count = 0;
+                }
+            }
+
+            last_dir = 3;
+        }
+
+        if (Application::IsKeyPressed('D'))
+        {
+            if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x + 1, _objList[OBJECT_PLAYER]->getCoords().y }))
+            {
+                playerX += player_speed;
+            }
+
+            if (frame_count < 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_R_1]));
+            }
+
+            if (frame_count >= 180)
+            {
+                _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_R_2]));
+
+                if (frame_count >= 360)
+                {
+                    frame_count = 0;
+                }
+            }
     }
-
-    if (Application::IsKeyPressed('A'))
-    {
-        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x - 1, _objList[OBJECT_PLAYER]->getCoords().y}))
-        {
-            playerX -= player_speed;
-        }
-       // offSetX -= player_speed;
-
-        if (frame_count < 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_L_1]));
-        }
-        
-        if (frame_count >= 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_L_2]));
-            
-            if (frame_count >= 360)
-            {
-                frame_count = 0;
-            }
-        }
-
-        if (_currentCabin - 1 >= 0 && playerX <= -45 && _currentAnimState == FADE_ANIM::FADE_ANIM_OFF)
-        {
-            /*fade(false);*/
-            _currentAnimState = FADE_ANIM::FADE_ANIM_START;
-            moveDirectionRight = false;
-            /*_currentCabin -= 1;
-            playerX = 980;*/
-            std::cout << "hehexd" << _currentCabin << std::endl;
-        }
-
-        last_dir = 2; 
-    }
-
-    if (Application::IsKeyPressed('S'))
-    {
-        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x, _objList[OBJECT_PLAYER]->getCoords().y + 1 }))
-        {
-            playerY += player_speed;
-        }
-
-        if (frame_count < 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT_WALK_1]));
-        }
-
-        if (frame_count >= 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_FRONT_WALK_2]));
-
-            if (frame_count >= 360)
-            {
-                frame_count = 0;
-            }
-        }
-
-        last_dir = 3;
-    }
-
-    if (Application::IsKeyPressed('D'))
-    {
-        if (frame_count % 3 == 0 && inBounds({ _objList[OBJECT_PLAYER]->getCoords().x + 1, _objList[OBJECT_PLAYER]->getCoords().y}))
-        {
-            playerX += player_speed;
-        }
-
-        if (frame_count < 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_R_1]));
-        }
-
-        if (frame_count >= 180)
-        {
-            _objList[OBJECT_PLAYER]->setTexture(*(_tmAnimList[TM_ANIM_WALK_R_2]));
-
-            if (frame_count >= 360)
-            {
-                frame_count = 0;
-            }
-        }
+    
 
         if (_currentCabin + 1 < _cabins.size() && playerX >= 1050 && _currentAnimState == FADE_ANIM::FADE_ANIM_OFF)
         {

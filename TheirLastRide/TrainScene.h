@@ -171,6 +171,5 @@ public:
 	Ride* getMainRide();
 	void setMainRide(Ride* ride);
 	void fade(bool dir);
-	void scythe
 };
 
