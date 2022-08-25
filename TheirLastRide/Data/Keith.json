@@ -9,15 +9,15 @@
 	},
 	{
 		"playerText": "",
-		"npcText": "He looks incredibly pallid, and clutching his side as hhis breaths become shallow.",
+		"npcText": "He looks incredibly pallid, hand clutching his side as his breaths become shallow. You can see a growing red stain bloom from the area he is holding.",
 		"results": [
 			2
 		],
 		"end": 0
 	},
 	{
-		"playerText": "Doing well, Sir?",
-		"npcText": "Sanders: Aye lad, I'm doing well.'",
+		"playerText": "Do you need help?",
+		"npcText": "Keith: *grunts* Not sure how much you can help, frankly.",
 		"results": [
 			3,
 			4,
@@ -26,25 +26,25 @@
 		"end": 0
 	},
 	{
-	"playerText": "What are the embellishments?",
-		"npcText": "Sanders: These? These let the boys know my rank at a glance, I'm a colonel, you see.",
+	"playerText": "What happened?",
+		"npcText": "Keith: War. Don't think I need to explain.",
 		"results": [4, 5, 6],
 		"end": 0
 	},
 	{
-		"playerText": "How long have you been in the military",
-		"npcText": "Sanders: 2 decades and counting. It's hard work, the army. '",
+		"playerText": "Where are you headed to?",
+		"npcText": "Keith: No idea. I'm really just glad to be off-duty.",
 		"results": [3, 5, 6],
 		"end": 0
 	},
 	{
-		"playerText": "Where were you before this?",
-		"npcText": "Sanders: Headquarters. Someone has to organise military strategy.",
+		"playerText": "How are you feeling now?",
+		"npcText": "Keith: Weirdly enough, I don't feel that bad. Like, I'm bleeding but I don't actually feel any pain.",
 		"results": [3, 4, 6],
 		"end": 0
 	},
 	{
-		"playerText": "Nice chat. Thanks",
+		"playerText": "Rest well.",
 		"npcText": "Press anywhere after clipping to confirm.",
 		"results": [ ],
 		"end": 0

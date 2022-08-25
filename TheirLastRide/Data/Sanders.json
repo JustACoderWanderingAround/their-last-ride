@@ -17,7 +17,7 @@
 	},
 	{
 		"playerText": "Doing well, Sir?",
-		"npcText": "Sanders: Aye lad, I'm doing well.'",
+		"npcText": "Sanders: Aye lad, I'm doing well.",
 		"results": [
 			3,
 			4,
@@ -32,8 +32,8 @@
 		"end": 0
 	},
 	{
-		"playerText": "How long have you been in the military",
-		"npcText": "Sanders: 2 decades and counting. It's hard work, the army. '",
+		"playerText": "How long have you been in the military?",
+		"npcText": "Sanders: 2 decades and counting. It's hard work, the army.",
 		"results": [3, 5, 6],
 		"end": 0
 	},
