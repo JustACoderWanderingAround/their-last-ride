@@ -330,6 +330,8 @@ void TrainScene::Init()
     fillCabins();
     _currentFadeAnimState = FADE_ANIM::FADE_ANIM_END;
     loadDeathStatus();
+    loadRailpassStatus();
+    loadPassType();
     loadNonInteractivePeople();
     numAlive = 0;
     numDead = 0;
@@ -526,12 +528,13 @@ void TrainScene::Render()
     // UI Rendering
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
 
-    if (isInteracting){
+    if (isInteracting) {
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
         RenderAtCoords(_objList[OBJECT_TEXT]);
         RenderAtCoords(_objList[OBJECT_HEAD]);
 
-        if (!ticketFront && showTicket)
+
+        if (showTicket)
         {
             RenderAtCoords(_objList[OBJECT_TICKET]);
             RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
@@ -539,21 +542,14 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
 
             if (ticketStamp) {
-            RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+                RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
             }
         }
-       
-        /*bool isRailpass = _interactingPerson;*/ //attach to getRailpass
-        if (showRailpass)
-        {
-            RenderAtCoords(_objList[OBJECT_RAILPASS]);
-            RenderAtCoords(_objList[OBJECT_RAILPASS_NAME]);
-            RenderAtCoords(_objList[OBJECT_RAILPASS_EXPIRY]);
-        }
 
-        if (ticketFront && showRailpass)
+        if (person->getisRailpass())
         {
-            if (showTicket) {
+            if (!ticketFront && showTicket)
+            {
                 RenderAtCoords(_objList[OBJECT_TICKET]);
                 RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
                 RenderAtCoords(_objList[OBJECT_TICKET_TO]);
@@ -563,7 +559,29 @@ void TrainScene::Render()
                     RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
                 }
             }
+
+            if (showRailpass)
+            {
+                RenderAtCoords(_objList[OBJECT_RAILPASS]);
+                RenderAtCoords(_objList[OBJECT_RAILPASS_NAME]);
+                RenderAtCoords(_objList[OBJECT_RAILPASS_EXPIRY]);
+            }
+
+            if (ticketFront && showRailpass)
+            {
+                if (showTicket) {
+                    RenderAtCoords(_objList[OBJECT_TICKET]);
+                    RenderAtCoords(_objList[OBJECT_TICKET_FROM]);
+                    RenderAtCoords(_objList[OBJECT_TICKET_TO]);
+                    RenderAtCoords(_objList[OBJECT_TICKET_DOI]);
+
+                    if (ticketStamp) {
+                        RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
+                    }
+                }
+            }
         }
+
 
         if (ticketStamp && ticketFront) {
             RenderAtCoords(_objList[OBJECT_STAMP_MARK]);
@@ -573,8 +591,9 @@ void TrainScene::Render()
             RenderAtCoords(_objList[OBJECT_PUNCHER]);
             RenderAtCoords(_objList[OBJECT_STAMPER]);
         };
-        
-    }
+
+    };
+
     if (isNonInteracting) {
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
         RenderAtCoords(_objList[OBJECT_TEXT]);
@@ -626,6 +645,105 @@ bool TrainScene::loadDeathStatus()
                 else {
                     if (k!= nullptr)
                         _mainRide->setNumDead(_mainRide->getNumDead() + 1);
+                }
+            }
+        }
+    }
+    return true;
+}
+bool TrainScene::loadRailpassStatus()
+{
+    std::string fp = "Data\\Railpass.json"; //file path
+    std::ifstream f(fp); // file
+    json j; //json object
+    if (!f) {
+        std::cout << "File not loaded succesfully.\n";
+        return false;
+    }
+    else {
+        try
+        {
+            j = json::parse(f); //load the file contents into the json object
+        }
+        catch (json::parse_error& ex)
+        {
+            std::cout << "parse error " << ex.id << std::endl;
+            return false;
+        }
+    }
+    std::map<std::string, bool> railpassStatus = j.get<std::map<std::string, bool>>();
+    auto ip = _mainRide->getInteractablePeople();
+    for (auto& i : ip) {
+        for (auto j : _cabins) {
+            for (auto k : j->getSeats()) {
+                if (k != nullptr && k->getPersonName() == i) {
+                    static_cast<InteractablePerson*>(k)->setisRailpass(railpassStatus[k->getPersonName()]);
+                }
+            }
+        }
+    }
+    return true;
+}
+bool TrainScene::loadPrintPassType()
+{
+    std::string fp = "Data\\printPassType.json"; //file path
+    std::ifstream f(fp); // file
+    json j; //json object
+    if (!f) {
+        std::cout << "File not loaded succesfully.\n";
+        return false;
+    }
+    else {
+        try
+        {
+            j = json::parse(f); //load the file contents into the json object
+        }
+        catch (json::parse_error& ex)
+        {
+            std::cout << "parse error " << ex.id << std::endl;
+            return false;
+        }
+    }
+    std::map<std::string, bool> printPassType = j.get<std::map<std::string, bool>>();
+    auto ip = _mainRide->getInteractablePeople();
+    for (auto& i : ip) {
+        for (auto j : _cabins) {
+            for (auto k : j->getSeats()) {
+                if (k != nullptr && k->getPersonName() == i) {
+                    static_cast<InteractablePerson*>(k)->getRailPass()->setPassType(printPassType[k->getPersonName()]);
+                }
+            }
+        }
+    }
+    return true;
+}
+bool TrainScene::loadPassType()
+{
+    std::string fp = "Data\\PassType.json"; //file path
+    std::ifstream f(fp); // file
+    json j; //json object
+    if (!f) {
+        std::cout << "File not loaded succesfully.\n";
+        return false;
+    }
+    else {
+        try
+        {
+            j = json::parse(f); //load the file contents into the json object
+        }
+        catch (json::parse_error& ex)
+        {
+            std::cout << "parse error " << ex.id << std::endl;
+            return false;
+        }
+    }
+    std::map<std::string, bool> passType = j.get<std::map<std::string, bool>>();
+    auto ip = _mainRide->getInteractablePeople();
+    for (auto& i : ip) {
+        for (auto j : _cabins) {
+            for (auto k : j->getSeats()) {
+                if (k != nullptr && k->getPersonName() == i) {
+                    static_cast<InteractablePerson*>(k)->setPassType(passType[k->getPersonName()]);
                 }
             }
         }
@@ -1041,14 +1159,14 @@ void TrainScene::playerInteraction(int option)
     _objList[OBJECT_TICKET_TO]->updateText(person->getTicket()->getDestination(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TICKET_FROM]->updateText(_mainRide->getStart(), Grey, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     
-    if (!person->getPassType())
+    if (person->getRailPass()->getPassType())
     {
         _objList[OBJECT_RAILPASS]->setTexture(*(_passTextureList[ADULT_PASS]));
         _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
         _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June "  +std::to_string(person->getRailPass()->getExpiry() + 1), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     }
 
-    if (person->getPassType())
+    if (!person->getRailPass()->getPassType())
     {
         _objList[OBJECT_RAILPASS]->setTexture(*(_passTextureList[CHILD_PASS]));
         _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Pink, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);

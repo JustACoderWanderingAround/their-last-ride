@@ -23,13 +23,17 @@ public:
     void setTicket(Ticket* t);
     void setRailPass(RailPass* r);
     void setPredeterminedVerdict(bool pv);
+    void setisRailpass(bool rp);
+    void setPassType(bool pt);
     bool getStatus();
+    bool getisRailpass();
+
 protected:
 
     //data members
-    bool _PredeterminedPassType;
     bool _PredeterminedVerdict; // false is dead
-    bool _PassType;
+    bool _isRailpass;
+    bool _PassType; //true adult, false child
     int _ScytheUse; //for unwilling passengers only 
 
 

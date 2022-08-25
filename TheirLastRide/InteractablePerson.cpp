@@ -157,7 +157,22 @@ void InteractablePerson::setPredeterminedVerdict(bool pv)
 	_PredeterminedVerdict = pv;
 }
 
+void InteractablePerson::setisRailpass(bool rp)
+{
+	_isRailpass = rp;
+}
+
+void InteractablePerson::setPassType(bool pt)
+{
+	_PassType = pt;
+}
+
 bool InteractablePerson::getStatus()
 {
 	return _PredeterminedVerdict;
+}
+
+bool InteractablePerson::getisRailpass()
+{
+	return _isRailpass;
 }

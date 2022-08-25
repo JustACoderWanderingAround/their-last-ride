@@ -9,6 +9,7 @@ public:
 	~RailPass();
 	std::string getName();
 	bool getPassType();
+	void setPassType(bool pt); //true adult, false child
 	int getExpiry();
 
 protected:

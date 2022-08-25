@@ -37,6 +37,11 @@ bool RailPass::getPassType()
 	return _PassType;
 }
 
+void RailPass::setPassType(bool pt)
+{
+	_PassType = pt;
+}
+
 int RailPass::getExpiry()
 {
 	return _Expiry;

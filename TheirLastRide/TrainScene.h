@@ -143,6 +143,9 @@ private:
 public:
 	bool writingText;
 	bool loadDeathStatus();
+	bool loadRailpassStatus(); 
+	bool loadPrintPassType(); //true adult, false child
+	bool loadPassType(); //true adult, false child
 	TrainScene();
 	Person* getPersonClick();
 	void renderCabins();
