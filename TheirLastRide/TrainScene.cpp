@@ -42,6 +42,7 @@ int wait = 0;
 int tmSwingIt = 0;
 int numAlive = 0;
 int numDead = 0;
+int correctlyProcessed = 0;
 
 std::string _dT;
 
@@ -118,7 +119,7 @@ void TrainScene::renderCabins()
                 RenderAtCoords(_objList[OBJECT_PLAYER]);
                 RenderAtCoords(_objList[OBJECT_CHAIR_ROW]);
                 RenderAtCoords(_objList[OBJECT_TIME_BOX]);
-                //RenderAtCoords(_objList[OBJECT_DATE]);
+                RenderAtCoords(_objList[OBJECT_DATE]);
             }
             for (int row = 0; row < 6; row++)
             {
@@ -228,7 +229,7 @@ void TrainScene::Init()
     _objList[OBJECT_RAILPASS_EXPIRY] = ObjectBuilder::CreateTextObject({ "aaaaaaaa", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Pink }, { 636, 280 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_HEAD] = ObjectBuilder::CreateObject("Sprites//Passengers//SashaHead.png", { 165, 435 }, SDL_BLENDMODE_BLEND);
     _objList[OBJECT_TIME_BOX] = ObjectBuilder::CreateObject("Sprites//UI//timeBox.png", { 950, -10 }, SDL_BLENDMODE_BLEND);
-    //_objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ "24 August", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], Black }, { 1050, 50 }, SDL_BLENDMODE_BLEND);
+    _objList[OBJECT_DATE] = ObjectBuilder::CreateTextObject({ std::to_string(_mainRide->getDate()) + " June", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White}, {1050, 37}, SDL_BLENDMODE_BLEND);
 
     for (int i = 0; i < NUM_TM_ANIM; i++)
     {
@@ -318,7 +319,6 @@ void TrainScene::Init()
     _objList[OBJECT_ANNOUCEMENT] = ObjectBuilder::CreateTextObject({ "Press anywhere to whistle!", TextManager::GetInstance()->getFonts()[FONT_REDENSEK], White }, { 1280 / 2 - 150, 0 }, SDL_BLENDMODE_BLEND);
     // Render queue
     _renderQueue.push_back(_objList[OBJECT_BACKGROUND1]);
-
     
     //createBottomRowChairs();
     Player* testPlayer = new Player(_mainRide->getStops());
@@ -333,6 +333,7 @@ void TrainScene::Init()
     loadNonInteractivePeople();
     numAlive = 0;
     numDead = 0;
+    correctlyProcessed = 0;
 }
 /// <summary>
 /// Called on scene exit. Used to prevent memory leaks.
@@ -388,7 +389,7 @@ void TrainScene::Update(double dt)
     if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
         renderAnnoucement = true;
         /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
-        std::cout << "Done.\n";
+        //std::cout << "Done.\n";
     }
     switch (_currentFadeAnimState) {
     case FADE_ANIM_OFF:
@@ -526,7 +527,6 @@ void TrainScene::Render()
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
 
     if (isInteracting){
-        
         RenderAtCoords(_objList[OBJECT_TEXTBOX]);
         RenderAtCoords(_objList[OBJECT_TEXT]);
         RenderAtCoords(_objList[OBJECT_HEAD]);
@@ -619,10 +619,12 @@ bool TrainScene::loadDeathStatus()
             for (auto k : j->getSeats()) {
                 if (k != nullptr && k->getPersonName() == i) {
                     static_cast<InteractablePerson*>(k)->setPredeterminedVerdict(livingStatus[k->getPersonName()]);
-                    if (livingStatus[k->getPersonName()]) {
-                        _mainRide->setNumAlive(_mainRide->getNumAlive() + 1);
-                    }
-                    else
+                }
+                if (k != nullptr && livingStatus[k->getPersonName()]) {
+                    _mainRide->setNumAlive(_mainRide->getNumAlive() + 1);
+                }
+                else {
+                    if (k!= nullptr)
                         _mainRide->setNumDead(_mainRide->getNumDead() + 1);
                 }
             }
@@ -1027,6 +1029,7 @@ void TrainScene::playerInteraction(int option)
     InteractablePerson* person = static_cast<InteractablePerson*>(_interactingPerson);
     Ticket* comparisonTicket = person->getTicket();
     RailPass* comparisonRailpass = person->getRailPass();
+    std::cout << comparisonTicket->getDestination();
     std::string filepath = "Sprites//Passengers//" + person->getName() + "Head.png";
     Texture headTexture;
     headTexture.loadImage(filepath);
@@ -1042,7 +1045,7 @@ void TrainScene::playerInteraction(int option)
     {
         _objList[OBJECT_RAILPASS]->setTexture(*(_passTextureList[ADULT_PASS]));
         _objList[OBJECT_RAILPASS_NAME]->updateText(person->getRailPass()->getName(), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
-        _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June " + std::to_string(person->getRailPass()->getExpiry() + 1), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
+        _objList[OBJECT_RAILPASS_EXPIRY]->updateText("June "  +std::to_string(person->getRailPass()->getExpiry() + 1), Teal, TextManager::GetInstance()->getFonts()[FONT_REDENSEK], SDL_BLENDMODE_BLEND);
     }
 
     if (person->getPassType())
@@ -1090,6 +1093,10 @@ void TrainScene::playerInteraction(int option)
     }
     if ((_dT == currentNode->npcText && currentNode->results.size() == 0) || ticketReturn) {
         if (person->getTicket()->getClippedState() && showTicket) {
+            /*if (_mainPlayer->compareToBook(person)) {
+                correctlyProcessed += 1;
+                std::cout << correctlyProcessed + " passengers processed" << std::endl;
+            }*/
             if (!ticketStamp) {
                 numDead += 1;
             }
