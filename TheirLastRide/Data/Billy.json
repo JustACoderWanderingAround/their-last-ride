@@ -1,0 +1,70 @@
+[
+		{
+			"playerText": "TM: Ticket please ?",
+			"npcText": "",
+			"results": [
+					1
+			],
+			"end": 0
+		},   
+		{
+			"playerText": "",
+			"npcText": "Billy: Here ya go",
+			"results": [
+				2, 3
+			],
+			"end": "good"
+		},
+		{
+			"playerText": "So where did you come from ?",
+			"npcText": "Billy: Just back from the battlefield. I'm a uh... medic...'",
+			"results": [
+				4
+			],
+			"end": 0
+		},
+		{
+			"playerText": "Carrying a lot of stuff huh ?",
+			"npcText": "Billy: You know... bits and bobs. Man's got to make money somehow.?",
+			"results": [9],
+			"end": 0
+		},
+		{
+			"playerText": "Why so shifty ?",
+			"npcText": "Billy: I guess i could tell you since I won't see you again. I sell stuff I find on the battlefield.",
+			"results": [5, 7],
+			"end": 0
+		},
+		{
+			"playerText": "So how do you get this... Stuff ?",
+			"npcText": "Billy: I take it from the dead soldiers if you really need to know. I mean, not like they would be needing it anytime soon.",
+			"results": [6],
+			"end": 0
+		},
+		{
+			"playerText": "Isn't that kind of unethical ?",
+			"npcText": "Billy: You call this unethical ? How about the ones that started this war ? Are a couple wallets going to compare to a single one of the lives lost ?",
+			"results": [],
+			"end": 0
+		},
+		{
+			"playerText": "What sorta stuff ?",
+			"npcText": "Wallets, watches, rings... anything of value really.",
+			"results": [5],
+			"end": 0
+		},
+		{
+			"playerText": "What do you do to make money ?",
+			"npcText": "I guess I could tell you since I won't see you again. I sell stuff I find in the battlefield.",
+			"results": [9],
+			"end": 0
+		},
+		{
+			"playerText": "What do you do to make money ?",
+			"npcText": "I guess I could tell you since I won't see you again. i sell stuff I find in the battlefield.",
+			"results": [],
+			"end": 0
+		}
+	
+	
+]
