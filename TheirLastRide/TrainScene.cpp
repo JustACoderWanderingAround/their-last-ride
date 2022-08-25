@@ -384,15 +384,16 @@ void TrainScene::Exit()
 /// <param name="dt">Delta time(time inbetween frames)</param>
 void TrainScene::Update(double dt)
 {
-    if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
-        renderAnnoucement = true;
-        /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
-        //std::cout << "Done.\n";
-    }
+    
     switch (_currentFadeAnimState) {
     case FADE_ANIM_OFF:
         switch (_currentTMAnimState) {
         case TM_SWITCH_SWING_ANIM_OFF:
+            if (_mainRide != nullptr && _mainRide->getInteractablePeople().size() == 0) {
+                renderAnnoucement = true;
+                /*Application::GetInstance()->changeScene(Application::GetInstance()->getScenes()[SCENE_OVERVIEW]);*/
+                //std::cout << "Done.\n";
+            }
             HandleInput();
             /*_objList[OBJECT_TICKET]->setTexture((_interactingPerson != nullptr && static_cast<InteractablePerson*>(_interactingPerson)->getTicket().getClippedState()) ? *_passTextureList[TICKET_PUNCH] : *_passTextureList[TICKET]);*/
             _mouseCollider->moveCollider(_mouse_coords);
